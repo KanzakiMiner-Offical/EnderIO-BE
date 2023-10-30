@@ -5,10 +5,10 @@ namespace Machine {
 
     readonly tier: number;
     readonly capacity: number;
-    readonly guiScreen: UI.StandartWindow;
+    readonly guiScreen: UI.StandardWindow;
     readonly maxOutputPower: number
 
-    constructor(tier: number, maxOutputPower: number, capacity: number, guiScreen: UI.StandartWindow) {
+    constructor(tier: number, maxOutputPower: number, capacity: number, guiScreen: UI.StandardWindow) {
       super();
       this.tier = tier;
       this.capacity = capacity;
@@ -16,7 +16,7 @@ namespace Machine {
       this.guiScreen = guiScreen;
     }
 
-    getScreenByName(): UI.StandartWindow {
+    getScreenByName(): UI.StandardWindow {
       return this.guiScreen;
     }
 

@@ -9,7 +9,7 @@ ItemRegistry.createItem("dustPhotovoltaic", {
 
 
 class BlockPhotovoltaic extends BlockBase {
-  constructor(id: string, name: string, texture, miningLevel ? : number) {
+  constructor(id: string, name: string, texture: [string, number][], miningLevel ? : number) {
     miningLevel = miningLevel || 1
     super(id, "stone")
     this.addVariation(name, texture, true)

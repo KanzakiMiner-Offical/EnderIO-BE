@@ -28,8 +28,9 @@ Base/Items/powder.ts
 Base/Items/SoulVessel.js
 Base/Items/Capacitor/Capacitor.ts
 Base/Items/Capacitor/defined.ts
-Base/Items/Tools /**/*
-
+Base/Items/Tools/ItemElectric.ts
+Base/Items/Tools/wrench.ts
+Base/Items/Tools/darkSteel.ts
 Base/Blocks/Resources_block.ts
 Base/Blocks/Glass.ts
 Base/Blocks/MachineChassis.ts
@@ -54,6 +55,7 @@ Base/Blocks/Machine/killer.ts
 Base/Blocks/Machine/Crafter.ts
 Base/Blocks/Machine/vat.ts
 Base/Blocks/Machine/soulBinder.ts
+Base/Blocks/Machine/sands.ts
 
 Base/Blocks/Storage/basic.ts
 Base/Blocks/Storage/vibrant.ts
@@ -65,7 +67,7 @@ Machine/Machines/alloyMelter.ts
 Machine/Machines/furnace.ts
 Machine/Machines/SAGmill.ts
 
-Endergy /**/*
+Endergy/**/*
 
 Base/Integration/thermal.ts
 Base/Integration/ic2.ts

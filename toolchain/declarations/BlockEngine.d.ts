@@ -1,5 +1,6 @@
 /// <reference path="./core-engine.d.ts" />
 
+
 declare namespace BlockEngine {
     /**
      * @returns game version as array
@@ -1874,8 +1875,7 @@ declare abstract class TileEntityBase implements TileEntity {
     clientTick(): void;
     onCheckerTick(isInitialized: boolean, isLoaded: boolean, wasLoaded: boolean): void;
     getScreenName(player: number, coords: Callback.ItemUseCoordinates): string;
-    // getScreenByName(screenName: string, container: ItemContainer): UI.IWindow;
-    getScreenByName(screenName?: string): UI.IWindow
+    getScreenByName(screenName: string, container: ItemContainer): UI.IWindow;
     /**
      * Called when player uses some item on a TileEntity. Replaces "click" function.
      * @returns true if should prevent opening UI.

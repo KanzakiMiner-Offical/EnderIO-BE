@@ -5,7 +5,7 @@
             "author": "KanzakiMiner",
             "version": "1.0",
             "description": "Unofficial port of EnderIO for PC to Minecraft on Android",
-            "clientside": true
+            "icon": "src/icon.png"
         },
         "api": "CoreEngine"
     },
@@ -69,7 +69,7 @@
     ],
     "additional": [
         {
-            "source": "src/assets/root/*",
+            "source": "src/root/*",
             "targetDir": "."
         }
     ]

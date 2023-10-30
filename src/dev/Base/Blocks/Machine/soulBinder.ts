@@ -2,16 +2,16 @@ BlockRegistry.createBlock("soulBinder", [
   {
     name: "tile.block_soul_binder.name",
     texture: [
-	["blockSoulMachineBottom", 0], ["blockSoulMachineTop", 0], ["blockSoulBinder", 0], ["blockSoulBinder", 1], ["blockSoulBinder", 2], ["blockSoulBinder", 3]],
+      ["blockSoulMachineBottom", 0], ["blockSoulMachineTop", 0], ["blockSoulBinder", 0], ["blockSoulBinder", 1], ["blockSoulBinder", 2], ["blockSoulBinder", 3]],
     inCreative: true
   }
 ], "machine")
 
 TileRenderer.setHandAndUiModel(BlockID.soulBinder, 0, [
-	["blockSoulMachineBottom", 0], ["blockSoulMachineTop", 0], ["blockSoulBinder", 0], ["blockSoulBinder", 1], ["blockSoulBinder", 2], ["blockSoulBinder", 3]])
+  ["blockSoulMachineBottom", 0], ["blockSoulMachineTop", 0], ["blockSoulBinder", 0], ["blockSoulBinder", 1], ["blockSoulBinder", 2], ["blockSoulBinder", 3]])
 TileRenderer.setStandardModelWithRotation(BlockID.soulBinder, 2, [["blockSoulMachineBottom", 0], ["blockSoulMachineTop", 0], ["blockSoulBinder", 0], ["blockSoulBinder", 1], ["blockSoulBinder", 2], ["blockSoulBinder", 3]])
 TileRenderer.registerModelWithRotation(BlockID.soulBinder, 2, [
-	["blockSoulMachineBottom", 0], ["blockSoulMachineTop", 0], ["blockSoulBinder", 0], ["blockSoulBinder", 1], ["blockSoulBinder", 2], ["blockSoulBinder", 3]])
+  ["blockSoulMachineBottom", 0], ["blockSoulMachineTop", 0], ["blockSoulBinder", 0], ["blockSoulBinder", 1], ["blockSoulBinder", 2], ["blockSoulBinder", 3]])
 
 TileRenderer.setRotationFunction(BlockID.soulBinder)
 
@@ -30,7 +30,7 @@ let soulBinderGUI = MachineRegistry.createInventoryWindow("Soul Binder", {
       bitmap: "bar_progress1",
       scale: 3.2,
       clicker: {
-        onClick: function() {
+        onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("ender_soulbinder");
         }
       }
@@ -49,7 +49,7 @@ let soulBinderGUI = MachineRegistry.createInventoryWindow("Soul Binder", {
       bitmap2: "RS_empty_button_pressed",
       scale: 2.2,
       clicker: {
-        onClick: function(_, container: ItemContainer) {
+        onClick: function (_, container: ItemContainer) {
           container.sendEvent("addXP", {})
         }
       }
@@ -59,7 +59,7 @@ let soulBinderGUI = MachineRegistry.createInventoryWindow("Soul Binder", {
 
   }
 });
-Callback.addCallback("PreLoaded", function() {
+Callback.addCallback("PreLoaded", function () {
   RecipeRegistry.addSBinder({
     soul: "minecraft:enderman",
     lvl: 8,
@@ -162,6 +162,18 @@ namespace Machine {
       this.container.sendChanges()
     }
 
+    destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
+      let extra: ItemExtraData
+      let region = BlockSource.getDefaultForActor(player)
+      let liquid = this.liquidTank.getLiquidStored()
+      if (liquid == "xpjuice") {
+        extra = new ItemExtraData()
+        extra.putString("fluid", liquid)
+        extra.putInt("amount", this.liquidTank.getAmount(liquid))
+      }
+      region.spawnDroppedItem(coords.x + .5, coords.y + .5, coords.z + .5, BlockID.experience_obelisk, 1, 0, extra)
+    }
+
     @ContainerEvent(Side.Server)
     addXP(eventData, connectedClient): void {
       let player = new PlayerActor(connectedClient.getPlayerUid())
@@ -175,4 +187,7 @@ namespace Machine {
   }
 
   MachineRegistry.registerPrototype(BlockID.soulBinder, new SoulBinder())
+  MachineRegistry.setTankPlaceFunction("soulBinder");
+  MachineRegistry.addTankTooltip(BlockID.soulBinder);
 }
+

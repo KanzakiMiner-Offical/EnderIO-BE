@@ -2,7 +2,6 @@ BlockRegistry.registerBlock(new BlockPhotovoltaic("simplePhotovoltaicCell", "til
 
 namespace Machine {
   export class SimplePhotovoltaicCell extends Generator {
-
     defaultValues = {
       energy: 0,
       canSeeSky: false

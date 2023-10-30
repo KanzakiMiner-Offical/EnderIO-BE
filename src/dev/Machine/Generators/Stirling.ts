@@ -6,18 +6,18 @@ BlockRegistry.createBlock("simpleStirlingGen", [
   }
 ], "machine");
 
-
+TileRenderer.setHandAndUiModel(BlockID.simpleStirlingGen, 0, [["simple_machine_bottom", 0], ["simple_machine_top", 0], ["simple_machine_side", 0], ["block_stirling_gen_simple_front_off", 0], ["simple_machine_side", 0], ["simple_machine_side", 0]]);
 TileRenderer.setStandardModelWithRotation(BlockID.simpleStirlingGen, 2, [["simple_machine_bottom", 0], ["simple_machine_top", 0], ["simple_machine_side", 0], ["block_stirling_gen_simple_front_off", 0], ["simple_machine_side", 0], ["simple_machine_side", 0]]);
 TileRenderer.registerModelWithRotation(BlockID.simpleStirlingGen, 2, [["simple_machine_bottom", 0], ["simple_machine_top", 0], ["simple_machine_side", 0], ["block_stirling_gen_simple_front_on", 0], ["simple_machine_side", 0], ["simple_machine_side", 0]]);
 
-TileRenderer.setRotationPlaceFunction(BlockID.simpleStirlingGen);
+TileRenderer.setRotationFunction(BlockID.simpleStirlingGen);
 
-Callback.addCallback("PreLoaded", function() {
+Callback.addCallback("PreLoaded", function () {
 
   Recipes.addShaped({ id: BlockID.simpleStirlingGen, count: 1, data: 0 },
     ["sas",
-     "sfs",
-     "gpg"],
+      "sfs",
+      "gpg"],
     ['s', VanillaBlockID.stonebrick, 0, 'f', BlockID.machineChassiSimple, 0, 'g', ItemID.ironGear, 0, "p", VanillaBlockID.piston, 0, "a", 61, 0]);
 
 });
@@ -25,7 +25,7 @@ var simpleStirlingGenGUI = MachineRegistry.createInventoryWindow("Simple Stirlin
   drawing: [
     { type: "bitmap", x: 450, y: 135, bitmap: "fire_scale0", scale: 3.2 },
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
-	],
+  ],
 
   elements: {
     "energyScale": { type: "scale", x: 335, y: 140, direction: 1, value: 0.5, bitmap: "redflux_bar1", scale: 3.2 },
@@ -73,7 +73,7 @@ namespace Machine {
       StorageInterface.checkHoppers(this);
       if (this.data.energy >= 0.1)
         this.data.energy -= 0.1;
-        
+
       let newActive = false;
       const energyStorage = 2000;
       if (this.data.energy + 30 <= energyStorage) {
@@ -89,7 +89,7 @@ namespace Machine {
       this.setActive(newActive);
 
       this.container.setScale("burningScale", this.data.burn / this.data.burnMax || 0);
-      this.container.setScale("energyScale", this.data.energy/2000);
+      this.container.setScale("energyScale", this.data.energy / 2000);
       this.container.sendChanges();
     };
   };

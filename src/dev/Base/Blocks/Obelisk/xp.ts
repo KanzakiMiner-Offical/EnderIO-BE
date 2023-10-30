@@ -1,7 +1,7 @@
 BlockRegistry.createBlock("experience_obelisk", [
   {
     name: "tile.block_experience_obelisk.name",
-    texture: [["experience_obelisk", 0]], 
+    texture: [["experience_obelisk", 0]],
     inCreative: true
   }
 ], "machine")
@@ -12,7 +12,7 @@ ToolAPI.registerBlockMaterial(BlockID.experience_obelisk, "stone")
 
 ObeliskCore.registerModel("experience_obelisk", "experience_obelisk")
 
-Block.registerPlaceFunction("experience_obelisk", function(coords: Callback.ItemUseCoordinates, item: ItemInstance, block: Tile, _player: number, blockSource: BlockSource) {
+Block.registerPlaceFunction("experience_obelisk", function (coords: Callback.ItemUseCoordinates, item: ItemInstance, block: Tile, _player: number, blockSource: BlockSource) {
   const region = new WorldRegion(blockSource)
   const place = World.canTileBeReplaced(block.id, block.data) ? coords : coords.relative
   const rotation = TileRenderer.getBlockRotation(_player, false)
@@ -22,7 +22,7 @@ Block.registerPlaceFunction("experience_obelisk", function(coords: Callback.Item
     let name_fluid = item.extra.getString("fluid")
     let amount_fluid = item.extra.getInt("amount")
     if (amount_fluid > 0) {
-      tile.liquidTank.addLiquid(name_fluid, amount_fluid)
+      tile.liquidStorage.addLiquid(name_fluid, amount_fluid)
     }
   }
 })
@@ -72,7 +72,7 @@ function ExpObeliskUICreate() {
     bitmap2: "RS_empty_button_pressed",
     scale: ExperienceObeliskButtonSettings.scale,
     clicker: {
-      onClick: function(itemContainerUiHandler, container, element) {
+      onClick: function (itemContainerUiHandler, container, element) {
         container.sendEvent("xpall", {})
       }
     }
@@ -85,7 +85,7 @@ function ExpObeliskUICreate() {
     bitmap2: "RS_empty_button_pressed",
     scale: ExperienceObeliskButtonSettings.scale,
     clicker: {
-      onClick: function(itemContainerUiHandler, container, element) {
+      onClick: function (itemContainerUiHandler, container, element) {
         container.sendEvent("xp-all", {})
       }
     }
@@ -98,7 +98,7 @@ function ExpObeliskUICreate() {
     bitmap2: "RS_empty_button_pressed",
     scale: ExperienceObeliskButtonSettings.scale,
     clicker: {
-      onClick: function(itemContainerUiHandler, container, element) {
+      onClick: function (itemContainerUiHandler, container, element) {
         container.sendEvent("xp10", {})
       }
     }
@@ -111,7 +111,7 @@ function ExpObeliskUICreate() {
     bitmap2: "RS_empty_button_pressed",
     scale: ExperienceObeliskButtonSettings.scale,
     clicker: {
-      onClick: function(itemContainerUiHandler, container, element) {
+      onClick: function (itemContainerUiHandler, container, element) {
         container.sendEvent("xp-10", {})
       }
     }
@@ -124,7 +124,7 @@ function ExpObeliskUICreate() {
     bitmap2: "RS_empty_button_pressed",
     scale: ExperienceObeliskButtonSettings.scale,
     clicker: {
-      onClick: function(itemContainerUiHandler, container, element) {
+      onClick: function (itemContainerUiHandler, container, element) {
         container.sendEvent("xp1", {})
       }
     }
@@ -137,7 +137,7 @@ function ExpObeliskUICreate() {
     bitmap2: "RS_empty_button_pressed",
     scale: ExperienceObeliskButtonSettings.scale,
     clicker: {
-      onClick: function(itemContainerUiHandler, container, element) {
+      onClick: function (itemContainerUiHandler, container, element) {
         container.sendEvent("xp-1", {})
       }
     }
@@ -166,7 +166,7 @@ function ExpObeliskUICreate() {
 }
 ExpObeliskUICreate()
 
-let guiEObelisk = new UI.StandartWindow({
+let guiEObelisk = new UI.StandardWindow({
   standard: {
     header: {
       text: {
@@ -208,7 +208,7 @@ namespace Machine {
       this.anim = new Animation.Item(this.x + 0.5, this.y + 1, this.z + 0.5)
       this.anim.setSkylightMode()
       this.anim.describeItem({ id: Network.serverToLocalId(ItemID.itemXpTransfer), count: 1, data: 0 })
-      this.anim.loadCustom(function() {
+      this.anim.loadCustom(function () {
         let transform = this.transform()
         transform && transform.rotate(0, Math.PI / 60, 0)
       })
@@ -244,8 +244,8 @@ namespace Machine {
       }
     }
 
-    destroyBlock(coords, player): void {
-      let extra
+    destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
+      let extra: ItemExtraData
       let region = BlockSource.getDefaultForActor(player)
       let liquid = this.liquidTank.getLiquidStored()
       if (liquid == "xpjuice") {
@@ -257,7 +257,7 @@ namespace Machine {
     }
 
     containerEvents = {
-      "xp-1": function(eventData, connectedClient) {
+      "xp-1": function (eventData, connectedClient) {
         if (!this.liquidTank.getAmount("xpjuice")) return
         let player = new PlayerActor(connectedClient.getPlayerUid())
         let player_lvl = player.getLevel();
@@ -267,7 +267,7 @@ namespace Machine {
         this.liquidTank.getLiquid("xpjuice", ObeliskCore.XPtoLiquid(xp))
       },
 
-      "xp1": function(eventData, connectedClient) {
+      "xp1": function (eventData, connectedClient) {
         let player = new PlayerActor(connectedClient.getPlayerUid())
         let player_lvl = player.getLevel()
         if (player_lvl == 0) return
@@ -276,7 +276,7 @@ namespace Machine {
         ObeliskCore.setPlayerXp(player, player_xp - xp)
         this.liquidTank.addLiquid("xpjuice", ObeliskCore.XPtoLiquid(xp))
       },
-      "xp-10": function(eventData, connectedClient) {
+      "xp-10": function (eventData, connectedClient) {
         if (!this.liquidTank.getAmount("xpjuice")) return
         let player = new PlayerActor(connectedClient.getPlayerUid())
         let player_lvl = player.getLevel();
@@ -285,7 +285,7 @@ namespace Machine {
         ObeliskCore.setPlayerXp(player, player_xp + xp);
         this.liquidTank.getLiquid("xpjuice", ObeliskCore.XPtoLiquid(xp))
       },
-      "xp10": function(eventData, connectedClient) {
+      "xp10": function (eventData, connectedClient) {
         let player = new PlayerActor(connectedClient.getPlayerUid())
         let player_lvl = player.getLevel()
         if (player_lvl == 0) return
@@ -294,13 +294,13 @@ namespace Machine {
         ObeliskCore.setPlayerXp(player, player_xp - xp)
         this.liquidTank.addLiquid("xpjuice", ObeliskCore.XPtoLiquid(xp))
       },
-      "xpall": function(eventData, connectedClient) {
+      "xpall": function (eventData, connectedClient) {
         let player = new PlayerActor(connectedClient.getPlayerUid())
         this.liquidTank.addLiquid("xpjuice", ObeliskCore.XPtoLiquid(player.getExperience()))
         player.setLevel(0)
         player.setExperience(0)
       },
-      "xp-all": function(eventData, connectedClient) {
+      "xp-all": function (eventData, connectedClient) {
         let player = new PlayerActor(connectedClient.getPlayerUid())
         player.addExperience(ObeliskCore.LiquidtoXP(this.liquidTank.getAmount("xpjuice")))
         this.liquidTank.getLiquid("xpjuice", this.liquidTank.getAmount("xpjuice"))
@@ -310,6 +310,7 @@ namespace Machine {
   }
   MachineRegistry.registerPrototype(BlockID.experience_obelisk, new XP_Obelisk())
 
+  MachineRegistry.setTankPlaceFunction("experience_obelisk");
   StorageInterface.createInterface(BlockID.experience_obelisk, {
     canReceiveLiquid: () => true,
     canTransportLiquid: () => true,

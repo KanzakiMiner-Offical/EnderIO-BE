@@ -19,16 +19,16 @@ namespace MachineRegistry {
       Prototype.id = id;
       Prototype.getDefaultDrop ??= BasePrototype.getDefaultDrop;
       Prototype.adjustDrop ??= BasePrototype.adjustDrop;
-      Prototype.setActive ??= function(isActive: boolean) {
+      Prototype.setActive ??= function (isActive: boolean) {
         if (this.data.isActive != isActive) {
           this.data.isActive = isActive;
           TileRenderer.mapAtCoords(this.x, this.y, this.z, this.blockID, this.data.meta + (isActive ? 4 : 0));
         }
       }
-      Prototype.activate ??= function() {
+      Prototype.activate ??= function () {
         this.setActive(true);
       }
-      Prototype.deactivate ??= function() {
+      Prototype.deactivate ??= function () {
         this.setActive(false);
       }
     }
@@ -47,59 +47,27 @@ namespace MachineRegistry {
       EnergyTileRegistry.addEnergyTypeForId(id, RF_type2);
     }
   }
-
-  // for reverse compatibility
-  export function registerElectricMachine(id: number, Prototype: TileEntity.TileEntityPrototype) {
-    // wire connection
-    ICRender.getGroup("rf-wire").add(id, -1);
-
-    // setup energy values
-    if (Prototype.defaultValues) {
-      Prototype.defaultValues.energy = 0;
-    }
-    else {
-      Prototype.defaultValues = {
-        energy: 0
-      };
-    }
-
-    const BasePrototype = Machine.ProgressingMachine.prototype;
-    Prototype.getTier ??= BasePrototype.getTier;
-    Prototype.getMaxIntake ??= BasePrototype.getMaxIntake;
-    Prototype.energyReceive ??= BasePrototype.energyReceive;
-
-    this.registerPrototype(id, Prototype);
-    // register for energy net
-    EnergyTileRegistry.addEnergyTypeForId(id, RF);
-    EnergyTileRegistry.addEnergyTypeForId(id, EU);
-    EnergyTileRegistry.addEnergyTypeForId(id, RF_type2);
-  }
-
-  export function registerGenerator(id: number, Prototype: TileEntity.TileEntityPrototype) {
-    const BasePrototype = Machine.Generator.prototype;
-    Prototype.energyTick ??= BasePrototype.energyTick;
-    Prototype.canReceiveEnergy ??= BasePrototype.canReceiveEnergy;
-    Prototype.canExtractEnergy ??= BasePrototype.canExtractEnergy;
-    this.registerElectricMachine(id, Prototype);
-  }
-
+  
   export function createStorageInterface(blockID: number, descriptor: StorageDescriptor) {
     descriptor.liquidUnitRatio = 0.001;
-    descriptor.getInputTank ??= function() {
+    descriptor.getInputTank ??= function () {
       return this.tileEntity.liquidTank;
     }
-    descriptor.getOutputTank ??= function() {
+    descriptor.getOutputTank ??= function () {
       return this.tileEntity.liquidTank;
     }
-    descriptor.canReceiveLiquid ??= function(liquid: string) {
+    descriptor.canReceiveLiquid ??= function (liquid: string) {
       return this.getInputTank().isValidLiquid(liquid);
     }
     descriptor.canTransportLiquid ??= () => true;
     StorageInterface.createInterface(blockID, descriptor);
   }
 
-  export function setStoragePlaceFunction(blockID: string | number, hasVerticalRotation ? : boolean) {
-    Block.registerPlaceFunction(blockID, function(coords, item, block, player, blockSource) {
+  /**
+   * For Energy Storage
+   */
+  export function setStoragePlaceFunction(blockID: string | number, hasVerticalRotation?: boolean) {
+    Block.registerPlaceFunction(blockID, function (coords, item, block, player, blockSource) {
       const region = new WorldRegion(blockSource);
       const place = World.canTileBeReplaced(block.id, block.data) ? coords : coords.relative;
       const rotation = TileRenderer.getBlockRotation(player, hasVerticalRotation);
@@ -107,6 +75,36 @@ namespace MachineRegistry {
       const tile = region.addTileEntity(place);
       if (item.extra) {
         tile.data.energy = item.extra.getInt("energy");
+      }
+    });
+  }
+
+  /**
+   * For Liquid Storage
+   */
+  export function setTankPlaceFunction(blockID: string | number, hasVerticalRotation?: boolean) {
+    Block.registerPlaceFunction(blockID, function (coords, item, block, player, blockSource) {
+      const region = new WorldRegion(blockSource);
+      const place = World.canTileBeReplaced(block.id, block.data) ? coords : coords.relative;
+      const rotation = TileRenderer.getBlockRotation(player, hasVerticalRotation);
+      region.setBlock(place, item.id, rotation);
+      const tile = region.addTileEntity(place);
+      if (item.extra) {
+        let name_fluid = item.extra.getString("fluid")
+        let amount_fluid = item.extra.getInt("amount")
+        if (amount_fluid > 0) {
+          tile.liquidStorage.addLiquid(name_fluid, amount_fluid / 1000);
+        }
+      }
+    });
+  }
+
+  export function addTankTooltip(id: string | number) {
+    Item.registerNameOverrideFunction(id, (item: ItemInstance, name: string): string => {
+      if (item.extra) {
+        let name_fluid = item.extra.getString("fluid")
+        let amount_fluid = item.extra.getInt("amount")
+        return name + "\n§7" + Translation.translate("Liquid: ") + name_fluid + "\n§7" + Translation.translate("Amount: ") + "§a" + amount_fluid + " mB";
       }
     });
   }
@@ -121,9 +119,9 @@ namespace MachineRegistry {
     return drop;
   }
 
-  export function setMachineDrop(blockID: string | number, dropID ? : number) {
+  export function setMachineDrop(blockID: string | number, dropID?: number) {
     dropID ??= Block.getNumericId(blockID);
-    BlockRegistry.registerDrop(blockID, function(coords, blockID, blockData, level) {
+    BlockRegistry.registerDrop(blockID, function (coords, blockID, blockData, level) {
       const drop = [];
       if (level >= ToolAPI.getBlockDestroyLevel(blockID)) {
         drop.push([dropID, 1, 0]);
@@ -174,8 +172,8 @@ namespace MachineRegistry {
     header.contentProvider.drawing[2].text = Translation.translate(text);
   }
 
-  export function createInventoryWindow(header: string, uiDescriptor: { drawing ? : UI.DrawingSet, elements: UI.ElementSet }) {
-    const gui = new UI.StandartWindow({
+  export function createInventoryWindow(header: string, uiDescriptor: { drawing?: UI.DrawingSet, elements: UI.ElementSet }) {
+    const gui = new UI.StandardWindow({
       standard: {
         header: { text: { text: Translation.translate(header) } },
         inventory: { standard: true },
@@ -186,7 +184,7 @@ namespace MachineRegistry {
       elements: uiDescriptor.elements
     });
 
-    Callback.addCallback("LevelLoaded", function() {
+    Callback.addCallback("LevelLoaded", function () {
       MachineRegistry.updateGuiHeader(gui, header);
     });
 

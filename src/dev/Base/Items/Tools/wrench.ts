@@ -13,7 +13,7 @@ implements IWrech {
   }
 
   useItem(item: ItemStack, damage: number, player: number): void {
-    item.applyDamage(damage);
+    //item.applyDamage(damage);
     Entity.setCarriedItem(player, item.id, 1, item.data, item.extra);
     if (item.id == 0) {
       const region = WorldRegion.getForActor(player);

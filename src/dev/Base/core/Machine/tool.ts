@@ -106,7 +106,6 @@ namespace EnderTool {
         region.setBlock(data, 0, 0);
         region.dropAtBlock(data.x, data.y, data.z, drop);
         EnderTool.useWrench(item, 10, player);
-        //SoundManager.playSoundAtBlock(tileEntity, "Wrench.ogg", 1);
       }
     }
   });

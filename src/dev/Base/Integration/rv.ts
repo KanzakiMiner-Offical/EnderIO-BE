@@ -2,15 +2,13 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
   RV = api;
   const RecipeType = api.RecipeType
   const Bitmap = android.graphics.Bitmap;
-
   class AlloySmelterRecipe extends RecipeType {
-
     constructor() {
       super("Alloy Smelter", BlockID.alloySmelter, {
         drawing: [
           { type: "bitmap", x: 527, y: 235, bitmap: "fire_scale0", scale: 3.2 },
           { type: "bitmap", x: 687, y: 235, bitmap: "fire_scale0", scale: 3.2 },
-            ],
+        ],
         elements: {
           input0: { type: "slot", x: 520, y: 170 },
           input1: { type: "slot", x: 600, y: 140 },
@@ -19,7 +17,6 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
           textTime: { type: "text", x: 750, y: 200 }
         }
       });
-      this.setGridView(2, 2, true);
       this.setDescription("Alloy")
     }
 
@@ -35,7 +32,7 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
       }
       return list;
     }
-    onOpen(elements: java.util.HashMap < string, UI.Element > , recipe: RecipePattern): void {
+    onOpen(elements: java.util.HashMap<string, UI.Element>, recipe: RecipePattern): void {
       elements.get("textTime").setBinding("text", Translation.translate("Energy: ") + recipe.energy + " RF");
     }
   }
@@ -48,7 +45,7 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
       super("SAG Mill", BlockID.sagmill, {
         drawing: [
           { type: "bitmap", x: 595, y: 250, bitmap: "bar_progress_down0", scale: 4.2 }
-	     		],
+        ],
         elements: {
           input0: { type: "slot", x: 602, y: 170, size: 65 },
           output0: { type: "slot", x: 505, y: 340, size: 65 },
@@ -57,7 +54,6 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
           output3: { type: "slot", x: 700, y: 340, size: 65 }
         }
       });
-      this.setGridView(2, 2, true);
       this.setDescription("Crusher")
     }
 
@@ -77,7 +73,7 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
             { id: result1.id || 0, count: 1, data: result1.data || 0, tips: { chance: result1.chance * 100 } },
             { id: result2.id || 0, count: 1, data: result2.data || 0, tips: { chance: result2.chance * 100 } },
             { id: result3.id || 0, count: 1, data: result3.data || 0, tips: { chance: result3.chance * 100 } },
-					]
+          ]
         })
       }
       return list;
@@ -97,15 +93,15 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
     constructor() {
       super("The Vat", BlockID.theVat, {
         drawing: [
-          { type: "bitmap", x: 281, y: -190, bitmap: "backgroundVatRV", scale: 3.3 },
-          { type: "bitmap", x: 679, y: 304, bitmap: "fire_scale1", scale: 3.3 },
-   			],
+          { type: "bitmap", x: 350, y: -80, bitmap: "backgroundVat", scale: 3.4 },
+          { type: "bitmap", x: 646, y: 317, bitmap: "fire_scale1", scale: 3.4 },
+        ],
         elements: {
-          input0: { type: "slot", x: 590, y: 130, size: 65 },
-          input1: { type: "slot", x: 753, y: 130, size: 65 },
+          input0: { type: "slot", x: 560, y: 140, size: 60 },
+          input1: { type: "slot", x: 728, y: 140, size: 60 },
           inputLiq0: { x: 502, y: 130, width: 50, height: 200 },
-          outputLiq0: { x: 842, y: 130, width: 50, height: 200 },
-          textTime: { type: "text", x: 750, y: 200 }
+          outputLiq0: { x: 824, y: 132, width: 50, height: 200 },
+          textTime: { type: "text", x: 325, y: 50, width: 100, height: 30 }
         },
       })
       this.setTankLimit(5000);
@@ -126,17 +122,17 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
                 input: [
                   { id: +input1[0], data: +input1[1] || 0, count: 1, tips: { multi: input1Multiplier } },
                   { id: +input2[0], data: +input2[1] || 0, count: 1, tips: { multi: input2Multiplier } }
-                      ],
+                ],
                 inputLiq: [{
                   liquid: recipe.inputLiquid,
                   amount: ingredientMultiplier * 1000,
                   tips: { amount: ingredientMultiplier * 1000 }
-                      }],
+                }],
                 outputLiq: [{
                   liquid: recipe.outputLiquid,
                   amount: recipe.inputMutilplier * ingredientMultiplier * 1000,
                   tips: { amount: recipe.inputMutilplier * ingredientMultiplier * 1000 }
-                      }],
+                }],
                 energy: recipe.energy
               })
             }
@@ -149,17 +145,17 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
               input: [
                 { id: +input1[0], data: +input1[1] || 0, count: 1, tips: { multi: input1Multiplier } },
                 { id: 0, data: 0, count: 0 }
-                      ],
+              ],
               inputLiq: [{
                 liquid: recipe.inputLiquid,
                 amount: input1Multiplier * 1000,
                 tips: { amount: input1Multiplier * 1000 }
-                    }],
+              }],
               outputLiq: [{
                 liquid: recipe.outputLiquid,
                 amount: recipe.inputMutilplier * input1Multiplier * 1000,
                 tips: { amount: recipe.inputMutilplier * input1Multiplier * 1000 }
-                    }],
+              }],
               energy: recipe.energy
             })
           }
@@ -208,26 +204,124 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
         let r_result = recipe.result0
         let r_energy = recipe.energy
         list.push({
-          input: [{ id: ItemID.soulVessel, count: 1, data: 0, tips: { soul: r_soul } },
-            { id: r_ingredient.id, data: r_ingredient.data || 1, count: r_ingredient.count || 1, tips: { energy: r_energy } }],
+          input: [{ id: ItemID.soulVessel, count: 1, data: 0, tips: { soul: r_soul, lvl: r_lvl } },
+          { id: r_ingredient.id, data: r_ingredient.data || 1, count: r_ingredient.count || 1, tips: { energy: r_energy } }],
           output: [
             { id: r_result.id || 0, count: r_result.count || 1, data: r_result.data || 0 },
             { id: ItemID.soulVesselEmpty, count: 1, data: 0 }
-					]
+          ]
         })
       }
       return list
     }
     slotTooltip(name: string, item: ItemInstance, tips: {
-          [key: string]: any
+      [key: string]: any
     }): string {
       if (tips)
         if (tips.soul)
           return name + "\n Soul: " + tips.soul;
-          else if (tips.energy)
+        else if (tips.energy)
           return name + "\n Energy Use: " + tips.energy
+        else if (tips.lvl)
+          return name + "\n Level Require: " + tips.lvl + ".Experience Need: " + ObeliskCore.LVLtoXP(tips.lvl)
     }
   }
 
   api.RecipeTypeRegistry.register("ender_soulbinder", new SoulBinderRecipe());
+
+  class SliceNSpliceRecipe extends RecipeType {
+    constructor() {
+      super("Slice 'n' splice", BlockID.sliceAndSplice, {
+        drawing: [
+          { type: "bitmap", x: 600, y: 205, bitmap: "bar_progress1", scale: 3.2 }
+        ],
+        elements: {
+          input0: { type: "slot", x: 400, y: 200 },
+          input1: { type: "slot", x: 460, y: 200 },
+          input2: { type: "slot", x: 520, y: 200 },
+          input3: { type: "slot", x: 400, y: 260 },
+          input4: { type: "slot", x: 460, y: 260 },
+          input5: { type: "slot", x: 520, y: 260 },
+          output: { type: "slot", x: 720, y: 230 },
+        },
+      })
+    }
+    getAllList(): RecipePattern[] {
+      const list: RecipePattern[] = [];
+      for (let i in SliceAndSpliceRecipe.recipes) {
+        let recipe = SliceAndSpliceRecipe.recipes[i]
+        let r_input0 = recipe["input0"];
+        let r_input1 = recipe["input1"];
+        let r_input2 = recipe["input2"];
+        let r_input3 = recipe["input3"];
+        let r_input4 = recipe["input4"];
+        let r_input5 = recipe["input5"];
+        let r_result = recipe.result
+        let r_energy = recipe.energy
+        list.push({
+          input: [{ id: r_input0.id, count: r_input0.count, data: r_input0.data },
+          { id: r_input1.id, count: r_input1.count, data: r_input1.data },
+          { id: r_input2.id, count: r_input2.count, data: r_input2.data },
+          { id: r_input3.id, count: r_input3.count, data: r_input3.data },
+          { id: r_input4.id, count: r_input4.count, data: r_input4.data },
+          { id: r_input5.id, count: r_input5.count, data: r_input5.data }],
+          output: [
+            { id: r_result.id || 0, count: r_result.count || 1, data: r_result.data || 0 }
+          ]
+        })
+      }
+      return list
+    }
+  }
+  api.RecipeTypeRegistry.register("ender_snads", new SliceNSpliceRecipe());
+
+  // class CombustionProduct extends RecipeType {
+  //   constructor() {
+  //     super("Combustion Fuel", VanillaItemID.bucket, {
+  //       drawing: [{ type: "bitmap", x: 120, y: 230, bitmap: "fire_scale1", scale: 3.2 }],
+  //       elements: {
+  //         inputLiq0: { type: "scale", x: 200, y: 120, width: 60, height: 200 },
+  //         inputLiq1: { type: "scale", x: 30, y: 120, width: 60, height: 200 },
+  //         textRF: { type: "text", x: 350, y: 200 },
+  //         text1: { type: "text", x: 350, y: 260 },
+  //         text2: { type: "text", x: 350, y: 320 }
+  //       }
+  //     });
+  //     this.setTankLimit(1000);
+  //   }
+
+  //   getAllList(): RecipePattern[] {
+  //     const list: RecipePattern[] = [];
+  //     const coolants = CombustionFuel.getCoolArray();
+  //     const heats = CombustionFuel.getHeatArray();
+  //     for (let i in coolants) {
+  //       for (let e in heats) {
+  //         let coolant_fluid: string = coolants[i];
+  //         let heat_fluid: string = heats[e];
+  //         if (coolant_fluid && heat_fluid) {
+  //           let heat_impl = new CombustionFuel.FuelImpl(heat_fluid);
+  //           let coolant_impl = new CombustionFuel.CoolantImpl(coolant_fluid);
+  //           let math = new CombustionMath(coolant_impl, heat_impl, 1, 2);
+  //           list.push({
+  //             inputLiq: [{ liquid: coolant_fluid, amount: 100 }, { liquid: heat_fluid, amount: 100 }],
+  //             power: math.getEnergyPerTick(),
+  //             burn_time: {
+  //               coolant: math.getTicksPerCoolant(100),
+  //               heat: math.getTicksPerFuel(100)
+  //             }
+  //           })
+  //         }
+
+  //       }
+  //     }
+  //     return list;
+  //   }
+  //   onOpen(elements: java.util.HashMap<string, UI.Element>, recipe: RecipePattern): void {
+  //     elements.get("textRF")?.setBinding("text", "Product: " + recipe.power + " RF/t")
+  //     elements.get("text1")?.setBinding("Coolant burn time: " + recipe.burn_time.coolant + "s per 100mb")
+  //     elements.get("text2")?.setBinding("Fuel burn time: " + recipe.burn_time.heat + "s per 100mb")
+  //   }
+  // }
+
+  // api.RecipeTypeRegistry.register("ender_combustion", new CombustionProduct());
 });

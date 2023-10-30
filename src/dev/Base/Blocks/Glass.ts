@@ -1,6 +1,6 @@
 var GLASS_TYPE_ANTI_EXPLO = Block.createSpecialType({
   destroytime: 1,
-  explosionres: 3600000 * 3,
+  explosionres: 3600000.8,
   sound: "glass"
 });
 

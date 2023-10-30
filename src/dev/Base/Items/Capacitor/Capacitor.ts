@@ -11,7 +11,7 @@ implements ICapacitor {
   constructor(stringID: string, name: string, type ? : string) {
     let texture = name.toLowerCase();
     while (texture.indexOf("_") > 0) {
-      texture = texture.replace("_", "")
+      texture = texture.split("_").join("")
     }
     super(stringID, "".concat(name, " Capacitor"), "".concat(texture, "Capacitor"));
     if (type) this.type = type;
@@ -36,7 +36,7 @@ implements ItemBehavior {
     this.range = value.range
   }
   /*
- 
+
   */
   getBonusGenerator(item ? : ItemInstance): number {
     return this.bonus

@@ -23,7 +23,6 @@ Callback.addCallback("PreLoaded", function() {
   SmelterRecipe.addRecipe({
     ingredient1: { id: VanillaItemID.ender_pearl, data: 0, count: 1 },
     ingredient2: { id: ItemID.energeticSilver, data: 0, count: 1 },
-    //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.vividAlloy, count: 1, data: 0 },
     energy: 10000
   });

@@ -11,12 +11,12 @@ function randomInt(min: number, max: number): number {
 }
 
 let Color = android.graphics.Color;
-let PotionEffect = Native.PotionEffect;
-let ParticleType = Native.ParticleType;
-let BlockSide = Native.BlockSide;
-let EntityType = Native.EntityType;
+let PotionEffect = EPotionEffect;
+let ParticleType = EParticleType;
+let BlockSide = EBlockSide;
+let EntityType = EEntityType;
 // RECIPE VIEWER SUPPORT
-let RV;
+let RV: RecipeViewerAPI;
 let startTime = Debug.sysTime();
 let GUI_SCALE = 3.2;
 let GUI_SCALE_NEW = 3;

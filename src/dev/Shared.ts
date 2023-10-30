@@ -1,16 +1,17 @@
 const EnderAPI = {
-  Machine: MachineRegistry,
+  MachineRegistry: MachineRegistry,
   Recipe: RecipeRegistry,
   Conduit: ConduitRegistry,
-  Upgrade: CapacitorAPI,
+  CapacitorAPI: CapacitorAPI,
+  Machine: Machine,
   //Capacitor: regUpgrade,
-  requireGlobal: function(command) {
+  requireGlobal: function (command: any) {
     return eval(command);
   }
 }
 
 Logger.Log(`EnderIO loading finished in ${(Debug.sysTime() - startTime)} ms`, "INFO");
 
-ModAPI.registerAPI("EnderCore", EnderAPI);
+ModAPI.registerAPI("EnderAPI", EnderAPI);
 
-Logger.Log("EnderIO API was shared with name: EnderCore", "API");
+Logger.Log("EnderIO API was shared with name: EnderAPI", "API");

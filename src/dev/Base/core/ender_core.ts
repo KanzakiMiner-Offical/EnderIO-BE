@@ -4,10 +4,10 @@ namespace EnderCore {
   export let ender_io_ingot = []
   export let ender_io_nugget = []
 
-  export function registerDust(types) {
+  export function registerDust(types: string[]) {
     for (let i in types) {
       let name_types = types[i]
-      let name = "item.item_material.powder_" + name_types.charAt(0).toLowerCase() + name_types.substr(1) + ".name";
+      let name = "item.item_material.powder_" + name_types.charAt(0).toLowerCase() + name_types.slice(1) + ".name";
       ItemRegistry.createItem("dust" + types[i], { name: name, icon: "dust" + types[i], stack: 64 });
     }
   }
@@ -69,8 +69,3 @@ namespace EnderCore {
   }
 
 }
-//tile.block_alloy.name=Alloy Block
-/*
-Item.addCreativeGroup("blockAlloy", "tile.block_alloy.name", [
-    
-]);*/

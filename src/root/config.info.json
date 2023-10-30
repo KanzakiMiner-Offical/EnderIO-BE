@@ -1,0 +1,30 @@
+{
+    "properties": {
+      "enabled": {
+        "name": {
+          "en": "Enable mod",
+          "ru": "Включить мод"
+        }
+      },
+      "debug_mode": {
+        "name": {
+          "en": "Debug mode enable",
+          "ru": "Включить режим отладки"
+        },
+        "description": {
+          "en": " ",
+          "ru": " "
+        }
+      },
+      "old_mode": {
+        "name": {
+          "en": "Old recipes",
+          "ru": "Старые рецепты"
+        },
+        "description": {
+          "en": "If enabled, all recipe of machine(Except Simple Machine) will switch to recipe of Ender IO 1.10.2.(Note: Developing)",
+          "ru": " "
+        }
+      }
+    }
+  }

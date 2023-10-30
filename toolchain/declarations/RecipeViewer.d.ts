@@ -144,7 +144,7 @@ declare interface RecipeViewerAPI {
   Core: RecipeViewerOld;
   ItemList: ItemList;
   RecipeType: typeof RecipeType;
-  RecipeTypeRegistry: RecipeTypeRegistry;
+  RecipeTypeRegistry: typeof RecipeTypeRegistry;
 }
 declare namespace ModAPI {
   function addAPICallback(apiName: "RecipeViewer", func: (api: RecipeViewerAPI) => void): void;

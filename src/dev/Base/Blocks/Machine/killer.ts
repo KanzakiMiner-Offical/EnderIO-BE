@@ -35,7 +35,7 @@ Block.setBlockShape(BlockID.killerJoe, { "x": 0, "y": 0, "z": 0 }, { "x": 1, "y"
 let guiKillerJoe = MachineRegistry.createInventoryWindow("Killer Joe", {
   drawing: [
     { type: "bitmap", x: 470, y: 66, bitmap: "fluid_scale", scale: 3.2 },
-	],
+  ],
 
   elements: {
     "liquidScale": { type: "scale", x: 470, y: 66, direction: 1, bitmap: "fluid_scale", scale: 3.2 },
@@ -45,7 +45,7 @@ let guiKillerJoe = MachineRegistry.createInventoryWindow("Killer Joe", {
   }
 })
 
-let MOBS = [Native.EntityType.BAT, Native.EntityType.CHICKEN, Native.EntityType.COW, Native.EntityType.MUSHROOM_COW, Native.EntityType.OCELOT, Native.EntityType.PIG, Native.EntityType.RABBIT, Native.EntityType.SHEEP, Native.EntityType.SNOW_GOLEM, Native.EntityType.SQUID, Native.EntityType.VILLAGER, Native.EntityType.WOLF, 23, 24, 25, 26, 27, Native.EntityType.BLAZE, Native.EntityType.CAVE_SPIDER, Native.EntityType.CREEPER, Native.EntityType.ENDERMAN, Native.EntityType.GHAST, Native.EntityType.IRON_GOLEM, Native.EntityType.LAVA_SLIME, Native.EntityType.PIG_ZOMBIE, Native.EntityType.SILVERFISH, Native.EntityType.SKELETON, Native.EntityType.SLIME, Native.EntityType.SPIDER, Native.EntityType.ZOMBIE, Native.EntityType.ZOMBIE_VILLAGER, 45, 46, 47, 48, 49, 52, 55]
+let MOBS: number[] = [EEntityType.BAT, EEntityType.CHICKEN, EEntityType.COW, EEntityType.MUSHROOM_COW, EEntityType.OCELOT, EEntityType.PIG, EEntityType.RABBIT, EEntityType.SHEEP, EEntityType.SNOW_GOLEM, EEntityType.SQUID, EEntityType.VILLAGER, EEntityType.WOLF, 23, 24, 25, 26, 27, EEntityType.BLAZE, EEntityType.CAVE_SPIDER, EEntityType.CREEPER, EEntityType.ENDERMAN, EEntityType.GHAST, EEntityType.IRON_GOLEM, EEntityType.LAVA_SLIME, EEntityType.PIG_ZOMBIE, EEntityType.SILVERFISH, EEntityType.SKELETON, EEntityType.SLIME, EEntityType.SPIDER, EEntityType.ZOMBIE, EEntityType.ZOMBIE_VILLAGER, 45, 46, 47, 48, 49, 52, 55]
 
 namespace Machine {
   export class KillerJoe extends MachineBase {
@@ -62,7 +62,7 @@ namespace Machine {
       if (Entity.getSneaking(player)) {
         MachineRegistry.fillTankOnClick(this.liquidTank, item, player)
       } else if (Entity.getSneaking(player) && item.id == ItemID.itemYetaWrench) {
-        let extra;
+        let extra: ItemExtraData;
         let liquid = this.liquidTank.getLiquidStored()
         if (liquid == "nutrientDistillation") {
           extra = new ItemExtraData();
@@ -83,7 +83,7 @@ namespace Machine {
       } else if (ChargeItemRegistry.isValidItem(slot.id, "Eu", 5)) {
         ChargeItemRegistry.getEnergyFrom(slot.id, "Eu", 500, 5)
       } else if (slot.extra && (!ChargeItemRegistry.isValidItem(slot.id, "Rf", 5) && !ChargeItemRegistry.isValidItem(slot.id, "Eu", 5))) {
-        let unbreakingLevel = slot.extra.getEnchantLevel(Native.Enchantment.UNBREAKING);
+        let unbreakingLevel = slot.extra.getEnchantLevel(EEnchantment.UNBREAKING);
         if (Math.random() < (1 / (unbreakingLevel + 1))) {
           slot.data += damage;
         }
@@ -124,7 +124,7 @@ namespace Machine {
       this.container.sendChanges();
     }
 
-    destroyBlock(coords, player): void {
+    destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
       let extra;
       let _region = BlockSource.getDefaultForActor(player)
       let liquid = this.liquidTank.getLiquidStored()
@@ -143,63 +143,14 @@ namespace Machine {
 
   }
   MachineRegistry.registerPrototype(BlockID.killerJoe, new KillerJoe());
-
+  MachineRegistry.setTankPlaceFunction("killerJoe");
+  MachineRegistry.addTankTooltip(BlockID.eioTank);
 }
 
-MachineRegistry.setStoragePlaceFunction("killerJoe");
-
-/*
-TileEntity.registerPrototype(BlockID.killerJoe, {
-  getScreenByName: function() {
-    return guiKillerJoe;
-  },
-  init: function() {
-    this.liquidTank.setLimit("nutrientDistillation", 16);
-  },
-  onTick: function() {
-    this.liquidTank.updateUiScale("liquidScale", this.liquidTank.getLiquidStored());
-    let storage = this.liquidTank;
-    let liquid = storage.getLiquidStored();
-    let slot0 = this.container.getSlot("slotLiquid0");
-    let slot1 = this.container.getSlot("slotLiquid1");
-    
-
-    if (slot0.id == ItemID.bucketNutrient_distillation && storage.getAmount("nutrientDistillation") < 16 && (slot1.id == 325 && slot1.count < 16 || slot1.id == 0)) {
-      slot1.id = 325
-      slot1.count++
-      slot0.count--;
-      this.container.validateAll();
-      storage.addLiquid("nutrientDistillation", 1);
-    }
-let slotSword = this.container.getSlot("slotSword");
-    if (slotSword.data >= Item.getMaxDamage(slotSword.id)) {
-      slotSword.id = 0;
-    }
-
-    if (slotSword.id > 0) {
-      let dataTool = ToolAPI.getToolData(slotSword.id);
-      if (dataTool) {
-        let damageTool = dataTool.damage + dataTool.toolMaterial.damage;
-        if (damageTool > 0) {
-          for (i in MOBS) {
-            let ent = Entity.findNearest({ x: this.x, y: this.y, z: this.z }, MOBS[i], 7);
-            if (ent && storage.getAmount("nutrientDistillation") >= 0.02 && World.getThreadTime() % 10 == 0) {
-              Entity.damageEntity(ent, damageTool);
-              slotSword.data++;
-              storage.getLiquid("nutrientDistillation", 0.025);
-            }
-          }
-        }
-      }
-    }
-  }
-});
-*/
-
-Callback.addCallback("PreLoaded", function() {
+Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped({ id: BlockID.killerJoe, count: 1, data: 0 }, [
-    	"sss",
-    	"qzq",
-	   "qqq"
+    "sss",
+    "qzq",
+    "qqq"
   ], ['s', ItemID.darkSteel, 0, 'q', 20, 0, "z", ItemID.skullZombieController, 0]);
 });

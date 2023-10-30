@@ -1,6 +1,6 @@
 namespace CombustionFuel {
-  export let fuel = {};
-  export let coolant = {};
+  export let fuel: { [key: string]: fuel_type } = {};
+  export let coolant: { [key: string]: coolant_type } = {};
   export type fuel_type = {
     perTick: number,
     ticks: number
@@ -10,8 +10,7 @@ namespace CombustionFuel {
     temperature: number
   };
 
-  export function addFuel(liquid: string, perTick: number,
-    ticks: number): void {
+  export function addFuel(liquid: string, perTick: number, ticks: number): void {
     fuel[liquid] = {
       "perTick": perTick,
       "ticks": ticks
@@ -34,7 +33,7 @@ namespace CombustionFuel {
   }
 
   export function getHeatArray() {
-    let heat = [];
+    let heat: string[] = [];
     for (let key in fuel) {
       let input = key.split(":");
       heat.push(input[0]);
@@ -43,7 +42,7 @@ namespace CombustionFuel {
   }
 
   export function getCoolArray() {
-    let cool = [];
+    let cool: string[] = [];
     for (let key in coolant) {
       let input = key.split(":");
       cool.push(input[0]);
@@ -56,11 +55,11 @@ namespace CombustionFuel {
   }
 */
   export class CoolantImpl {
-    private fluid;
-    private degreesCoolingPerMB;
-    private temperature;
+    private fluid: string;
+    private degreesCoolingPerMB: number;
+    private temperature: number
 
-    constructor(fluid: string, degreesCoolingPerMB ? : number) {
+    constructor(fluid: string, degreesCoolingPerMB?: number) {
       if (fluid == null) {
         this.fluid = null;
         this.degreesCoolingPerMB = this.temperature = 0
@@ -99,7 +98,7 @@ namespace CombustionFuel {
     private powerPerCycle: number;
     private totalBurningTime: number;
 
-    constructor(fluid: string, powerPerCycle ? : number, totalBurningTime ? : number) {
+    constructor(fluid: string, powerPerCycle?: number, totalBurningTime?: number) {
       if (fluid == null) {
         this.fluid = null;
         this.powerPerCycle = this.totalBurningTime = 0
@@ -134,8 +133,8 @@ CombustionFuel.addFuel("fireWater", 80, 15000)
 CombustionFuel.addFuel("rocketFuel", 160, 7000)
 
 CombustionFuel.addCoolant("water", 0.0023, 300)
-//CombustionFuel.addCoolant("enderDistillation", 0.0023, 175)
 CombustionFuel.addCoolant("vaporOfLevity", 0.0314, 5)
+//CombustionFuel.addCoolant("enderDistillation", 0.0023, 175)
 
 let HEAT_PER_RF = 0.00023 / 2;
 class CombustionMath {
@@ -143,7 +142,7 @@ class CombustionMath {
   private ticksPerFuel: number
   private energyPerTick: number
 
-  constructor(coolant, fuel, capQuality: number, machineQuality: number) {
+  constructor(coolant: CombustionFuel.CoolantImpl, fuel: CombustionFuel.FuelImpl, capQuality: number, machineQuality: number) {
     if (coolant == null || fuel == null || capQuality == 0 || machineQuality == 0) {
       this.ticksPerCoolant = this.ticksPerFuel = this.energyPerTick = 0;
     } else {
@@ -156,14 +155,14 @@ class CombustionMath {
     }
   }
 
-  getTicksPerCoolant(amount ? : number) {
+  getTicksPerCoolant(amount?: number) {
     if (amount)
       return this.ticksPerCoolant * amount;
     else
       return this.ticksPerCoolant;
   }
 
-  getTicksPerFuel(amount ? : number) {
+  getTicksPerFuel(amount?: number) {
     if (amount)
       return this.ticksPerFuel * amount;
     else
@@ -173,22 +172,4 @@ class CombustionMath {
   getEnergyPerTick() {
     return this.energyPerTick;
   }
-  /*
-
-    static toFuel(fuelTank) {
-      return toFuel(fuelTank.getFluid());
-    }
-
-    static toFuel(fuelFluid) {
-      return fuelFluid != null ? FluidFuelRegister.instance.getFuel(fuelFluid) : null;
-    }
-
-    static toCoolant(coolantTank: LiquidTank) {
-      return toCoolant(coolantTank.getFluid());
-    }
-
-    static toCoolant(coolantFluid) {
-      return coolantFluid != null ? FluidFuelRegister.instance.getCoolant(coolantFluid) : null;
-    }
-  */
 }

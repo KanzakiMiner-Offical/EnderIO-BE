@@ -33,65 +33,65 @@ ItemRegistry.createItem("creeperSkull", { name: "Creeper Skull", icon: "creeperS
 ItemRegistry.createItem("skeletonSkull", { name: "Skeleton Skull", icon: "skeletonSkull", stack: 64 });
 
 
-Callback.addCallback("PreLoaded", function() {
+Callback.addCallback("PreLoaded", function () {
 
-  Recipes.addShapeless({ id: 397, count: 1, data: 0 }, [{ id: ItemID.skeletonSkull, data: 0 }]);
-  Recipes.addShapeless({ id: 397, count: 1, data: 2 }, [{ id: ItemID.zombieSkull, data: 0 }]);
-  Recipes.addShapeless({ id: 397, count: 1, data: 4 }, [{ id: ItemID.creeperSkull, data: 0 }]);
+  Recipes.addShapeless({ id: VanillaBlockID.skull, count: 1, data: 0 }, [{ id: ItemID.skeletonSkull, data: 0 }]);
+  Recipes.addShapeless({ id: VanillaBlockID.skull, count: 1, data: 2 }, [{ id: ItemID.zombieSkull, data: 0 }]);
+  Recipes.addShapeless({ id: VanillaBlockID.skull, count: 1, data: 4 }, [{ id: ItemID.creeperSkull, data: 0 }]);
 
-  Recipes.addShapeless({ id: ItemID.skeletonSkull, count: 1, data: 0 }, [{ id: 397, data: 0 }]);
-  Recipes.addShapeless({ id: ItemID.zombieSkull, count: 1, data: 0 }, [{ id: 397, data: 2 }]);
-  Recipes.addShapeless({ id: ItemID.creeperSkull, count: 1, data: 0 }, [{ id: 397, data: 4 }]);
+  Recipes.addShapeless({ id: ItemID.skeletonSkull, count: 1, data: 0 }, [{ id: VanillaBlockID.skull, data: 0 }]);
+  Recipes.addShapeless({ id: ItemID.zombieSkull, count: 1, data: 0 }, [{ id: VanillaBlockID.skull, data: 2 }]);
+  Recipes.addShapeless({ id: ItemID.creeperSkull, count: 1, data: 0 }, [{ id: VanillaBlockID.skull, data: 4 }]);
 
   Recipes.addShaped({ id: ItemID.itemYetaWrench, count: 1, data: 0 }, [
-  	"e e",
-  	" a ",
-	 " e "
-], ['a', ItemID.stoneGear, 0, 'e', ItemID.electricalSteel, 0]);
+    "e e",
+    " a ",
+    " e "
+  ], ['a', ItemID.stoneGear, 0, 'e', ItemID.electricalSteel, 0]);
 
   Recipes.addShaped({ id: ItemID.weatherCrystal, count: 1, data: 0 }, [
-  	" a ",
-  	"beb",
-	 " a "
-], ['a', ItemID.pulsatingCrystal, 0, 'e', ItemID.enderCrystal, 0, 'b', ItemID.vibrantCrystal, 0]);
+    " a ",
+    "beb",
+    " a "
+  ], ['a', ItemID.pulsatingCrystal, 0, 'e', ItemID.enderCrystal, 0, 'b', ItemID.vibrantCrystal, 0]);
 
 
   Recipes.addShaped({ id: ItemID.vibrantCrystal, count: 1, data: 0 }, [
-  	"aaa",
-  	"aea",
-	 "aaa"
-], ['a', ItemID.vibrantAlloyNugget, 0, 'e', 388, 0]);
+    "aaa",
+    "aea",
+    "aaa"
+  ], ['a', ItemID.vibrantAlloyNugget, 0, 'e', 388, 0]);
 
   Recipes.addShaped({ id: ItemID.pulsatingCrystal, count: 1, data: 0 }, [
-  	"aaa",
-  	"aea",
-	 "aaa"
-], ['a', ItemID.pulsatingIronNugget, 0, 'e', VanillaItemID.diamond, 0]);
+    "aaa",
+    "aea",
+    "aaa"
+  ], ['a', ItemID.pulsatingIronNugget, 0, 'e', VanillaItemID.diamond, 0]);
 
   Recipes.addShaped({ id: ItemID.basicCapacitor, count: 1, data: 0 }, [
-  	" rn",
-  	"rir",
-	 "nr "
-], ['r', VanillaItemID.gold_nugget, 0, 'n', ItemID.dustInfinity, 0, 'i', VanillaItemID.redstone, 0]);
+    " rn",
+    "rir",
+    "nr "
+  ], ['r', VanillaItemID.gold_nugget, 0, 'n', ItemID.dustInfinity, 0, 'i', VanillaItemID.redstone, 0]);
 
 
   Recipes.addShaped({ id: ItemID.doublelayerCapacitor, count: 1, data: 0 }, [
-  	" a ",
-  	"cpc",
-	 " a "
-], ['a', ItemID.energeticAlloy, 0, 'c', ItemID.basicCapacitor, 0, 'p', ItemID.dustCoal, 0]);
+    " a ",
+    "cpc",
+    " a "
+  ], ['a', ItemID.energeticAlloy, 0, 'c', ItemID.basicCapacitor, 0, 'p', ItemID.dustCoal, 0]);
 
   Recipes.addShaped({ id: ItemID.octadicCapacitor, count: 1, data: 0 }, [
-  	" a ",
-  	"cpc",
-	 " a "
-], ['a', ItemID.vibrantAlloy, 0, 'c', ItemID.doublelayerCapacitor, 0, 'p', 89, 0]);
+    " a ",
+    "cpc",
+    " a "
+  ], ['a', ItemID.vibrantAlloy, 0, 'c', ItemID.doublelayerCapacitor, 0, 'p', 89, 0]);
 
   Recipes.addShaped({ id: ItemID.binderComposite, count: 8, data: 0 }, [
-  	"csc",
-  	"scs",
-	 "csc"
-], ['c', 337, 0, 's', 12, 0]);
+    "csc",
+    "scs",
+    "csc"
+  ], ['c', 337, 0, 's', 12, 0]);
   Recipes.addFurnace(ItemID.binderComposite, ItemID.conduitBinder, 0);
 
   EnderCore.addIngotRecipe(ItemID.dustCopper, "ingotCopper");
@@ -105,12 +105,11 @@ ItemRegistry.createItem("skullZombieController", { name: "item.item_material.sku
 ItemRegistry.createItem("skullZombieElectrode", { name: "item.item_material.skull_zombie_electrode.name", icon: "skullZombieElectrode", stack: 64 });
 ItemRegistry.createItem("itemXpTransfer", { name: "item.item_xp_transfer.name", icon: "item_xp_transfer", stack: 64 });
 
-Callback.addCallback("ItemUse", function(coords: Callback.ItemUseCoordinates, item: ItemInstance, block: Tile, isExternal: boolean, player: number): void {
+Callback.addCallback("ItemUse", function (coords: Callback.ItemUseCoordinates, item: ItemInstance, block: Tile, isExternal: boolean, player: number): void {
   let region = BlockSource.getDefaultForActor(player)
-  if (region.getBlockId(coords.x, coords.y, coords.z) == VanillaBlockID.bedrock && item.id == VanillaItemID.flint_and_steel) {
-    if (Math.random() <= 0.25) {
-      region.spawnDroppedItem(coords.x + .5, coords.y + 1, coords.z, ItemID.dustInfinity, 1, 0);
-      //World.setBlock(coords.x, coords.y, coords.z, 0, 0);
+  if (region.getBlockId(coords.x, coords.y, coords.z) == VanillaBlockID.bedrock && item.id == VanillaItemID.flint_and_steel && coords.side == EBlockSide.UP) {
+    if (Math.random() <= 0.5) {
+      region.spawnDroppedItem(coords.x, coords.y + 1, coords.z, ItemID.dustInfinity, 1, 0);
     }
   }
 });

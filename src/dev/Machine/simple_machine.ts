@@ -25,7 +25,7 @@ namespace Machine {
 
     lossEnergy(value: number = 0.1): void {
       if (this.data.energy >= value)
-        this.data.energy -= value
+        this.data.energy -= value;
     }
 
     canRotate(side: number): boolean {

@@ -16,10 +16,10 @@ let weatherObeliskGUI = MachineRegistry.createInventoryWindow("Weather Obelisk",
   drawing: [
     { type: "bitmap", x: 360, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
     { type: "bitmap", x: 630, y: 230, bitmap: "bar_progress_down0", scale: 3.2 }
-      ],
+  ],
   elements: {
     "energyScale": { type: "scale", x: 360, y: 140, direction: 1, bitmap: "redflux_bar1", scale: 3.2 },
-    "progressScale": { type: "scale", x: 630, y: 230, bitmap: "bar_progress_down1",direction: 3, scale: 3.2 },
+    "progressScale": { type: "scale", x: 630, y: 230, bitmap: "bar_progress_down1", direction: 3, scale: 3.2 },
     "slot0": { type: "slot", x: 510, y: 140 },
     "slot1": { type: "slot", x: 510, y: 290 },
     "slotInput1": { type: "slot", x: 630, y: 140 },
@@ -31,7 +31,7 @@ let weatherObeliskGUI = MachineRegistry.createInventoryWindow("Weather Obelisk",
       bitmap: "RS_empty_button",
       bitmap2: "RS_empty_button_pressed",
       clicker: {
-        onClick: function(_, container: ItemContainer) {
+        onClick: function (_, container: ItemContainer) {
           container.sendEvent("activeObelisk", {})
         }
       }
@@ -78,7 +78,7 @@ namespace Machine {
       this.anim = new Animation.Item(this.x + 0.5, this.y + 1, this.z + 0.5)
       this.anim.setSkylightMode()
       this.anim.describeItem({ id: Network.serverToLocalId(VanillaItemID.firework_rocket), count: 1, data: 0 })
-      this.anim.loadCustom(function() {
+      this.anim.loadCustom(function () {
         let transform = this.transform()
         transform && transform.rotate(0, Math.PI / 60, 0)
       })
@@ -132,6 +132,18 @@ namespace Machine {
       return this.data.energy / this.getEnergyStorage();
     }
 
+    destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
+      let extra: ItemExtraData
+      let region = BlockSource.getDefaultForActor(player)
+      let liquid = this.liquidTank.getLiquidStored()
+      if (liquid) {
+        extra = new ItemExtraData()
+        extra.putString("fluid", liquid)
+        extra.putInt("amount", this.liquidTank.getAmount(liquid))
+      }
+      region.spawnDroppedItem(coords.x + .5, coords.y + .5, coords.z + .5, BlockID.experience_obelisk, 1, 0, extra)
+    }
+
     @ContainerEvent(Side.Server)
     activeObelisk(): void {
       this.data.activeObelisk = this.data.activeObelisk ? false : true;
@@ -139,6 +151,7 @@ namespace Machine {
   }
   MachineRegistry.registerPrototype(BlockID.weather_obelisk, new WeatherObelisk())
 
+  MachineRegistry.setTankPlaceFunction("weather_obelisk");
   StorageInterface.createInterface(BlockID.weather_obelisk, {
     canReceiveLiquid: () => true,
     canTransportLiquid: () => true,
