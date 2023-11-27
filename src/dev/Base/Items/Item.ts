@@ -103,7 +103,6 @@ Callback.addCallback("PreLoaded", function () {
 
 ItemRegistry.createItem("skullZombieController", { name: "item.item_material.skull_zombie_controller.name", icon: "skullZombieController", stack: 64 });
 ItemRegistry.createItem("skullZombieElectrode", { name: "item.item_material.skull_zombie_electrode.name", icon: "skullZombieElectrode", stack: 64 });
-ItemRegistry.createItem("itemXpTransfer", { name: "item.item_xp_transfer.name", icon: "item_xp_transfer", stack: 64 });
 
 Callback.addCallback("ItemUse", function (coords: Callback.ItemUseCoordinates, item: ItemInstance, block: Tile, isExternal: boolean, player: number): void {
   let region = BlockSource.getDefaultForActor(player)
@@ -113,3 +112,49 @@ Callback.addCallback("ItemUse", function (coords: Callback.ItemUseCoordinates, i
     }
   }
 });
+
+class XpTransfer extends ItemCommon {
+  max_store: number = 10000 // xp
+  constructor() {
+    super("itemXpTransfer", "item.item_xp_transfer.name", "item_xp_transfer");
+    this.setMaxStack(1)
+  }
+
+  onNameOverride(item: ItemInstance, name: string): string {
+    let extra = item.extra;
+    if (extra) {
+      name += `\n§7Xp stored: ${extra.getInt("xp_stored")}`;
+    }
+    return name;
+  }
+  onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number): void {
+    let xp_stored: number = 0
+    let extra = item.extra || null;
+    if (!extra) {
+      extra = new ItemExtraData();
+    }
+
+    const tileEntity = WorldRegion.getForActor(player).getTileEntity(coords.x, coords.y, coords.z)
+    if (tileEntity) return;
+
+    if (!Entity.getSneaking(player)) {// add xp
+      let playerActor = new PlayerActor(player)
+      let player_xp = playerActor.getExperience()
+      let old_xp = extra.getInt("xp_stored");
+      let need_xp = this.max_store - old_xp
+      let xp = Math.min(Math.min(player_xp, this.max_store), need_xp)
+      ObeliskCore.setPlayerXp(playerActor, player_xp - xp)
+      extra.putInt("xp_stored", xp)
+    } else {// take xp
+      let playerActor = new PlayerActor(player)
+      let player_xp = playerActor.getExperience()
+      let xp = extra.getInt("xp_stored");
+      if (!xp) return;
+      ObeliskCore.setPlayerXp(playerActor, player_xp + xp);
+      extra.putInt("xp_stored", 0)
+    }
+
+    Entity.setCarriedItem(player, item.id, item.count, item.data, extra)
+  }
+}
+ItemRegistry.registerItem(new XpTransfer());

@@ -4,9 +4,9 @@ TileRenderer.setStandardModel(BlockID.bankBasic, 0, [["capacitorBank", 0], ["cap
 TileRenderer.setStandardModelWithRotation(BlockID.bankBasic, 2, ["capacitorBank", 0], ["capacitorBank", 0], ["capacitorBank", 0], ["capacitorBankFront", 0], ["capacitorBank", 0], ["capacitorBank", 0]);
 */
 BlockRegistry.createBlock("bankBasic", [
-  { name: "Basic Capacitor Bank", texture: [["capacitorBank", 0], ["capacitorBank", 0], ["capacitorBank", 0], ["capacitorBankFront", 0], ["capacitorBank", 0], ["capacitorBank", 0]], inCreative: true }
+  { name: "tile.block_cap_bank.simple.name", texture: [["capacitorBank", 0], ["capacitorBank", 0], ["capacitorBank", 0], ["capacitorBankFront", 0], ["capacitorBank", 0], ["capacitorBank", 0]], inCreative: true }
 ], "machine");
-BlockRegistry.setBlockMaterial(BlockID.storageBatBox, "stone");
+BlockRegistry.setBlockMaterial(BlockID.bankBasic, "stone");
 
 
 Callback.addCallback("PreLoaded", function() {
@@ -17,7 +17,7 @@ Callback.addCallback("PreLoaded", function() {
   ], ['i', 265, 0, 'c', ItemID.basicCapacitor, 0, "r", BlockID.machineChassi, 0]);
 });
 
-const guiBasicCapacitor = CapacitorBlockWindow("Basic Capacitor Bank");
+const guiBasicCapacitor = CapacitorBlockWindow(Translation.translate("tile.block_cap_bank.simple.name"));
 
 namespace Machine {
   class BasicCapcitor extends CapacitorBlock {

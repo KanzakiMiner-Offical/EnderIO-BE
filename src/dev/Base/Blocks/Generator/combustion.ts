@@ -1,6 +1,6 @@
 BlockRegistry.createBlock("combustionGenerator", [
   {
-    name: "Combustion Generator",
+    name: "tile.block_combustion_generator.name",
     texture: [
 	["machineBottom", 0], ["machineTop", 0], ["machineSide", 0],
 	["combustion_gen_front", 0], ["machineSide", 0], ["machineSide", 0]],
@@ -28,7 +28,7 @@ Callback.addCallback("PreLoaded", function() {
      ]);
 });
 
-let combustionGenUI = MachineRegistry.createInventoryWindow("Combustion Generator", {
+let combustionGenUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_combustion_generator.name"), {
   drawing: [
     { type: "bitmap", x: 520, y: 230, bitmap: "fire_scale0", scale: 3.2 },
     { type: "bitmap", x: 330, y: 110, bitmap: "redflux_bar0", scale: 3.2 },

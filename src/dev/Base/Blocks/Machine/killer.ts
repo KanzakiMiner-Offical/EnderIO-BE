@@ -1,10 +1,10 @@
 BlockRegistry.createBlock("killerJoe", [
   {
-    name: "Killer Joe",
+    name: "tile.block_killer_joe.name",
     texture: [["machineBottom", 0]],
     inCreative: true
   }
-], "machine");
+], "other-machine");
 
 function setKillerJoeRender(): void {
   let killerJoeRender = new ICRender.Model();
@@ -32,7 +32,7 @@ setKillerJoeRender()
 /*
 Block.setBlockShape(BlockID.killerJoe, { "x": 0, "y": 0, "z": 0 }, { "x": 1, "y": 1, "z": 1 });
 */
-let guiKillerJoe = MachineRegistry.createInventoryWindow("Killer Joe", {
+let guiKillerJoe = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_killer_joe.name"), {
   drawing: [
     { type: "bitmap", x: 470, y: 66, bitmap: "fluid_scale", scale: 3.2 },
   ],

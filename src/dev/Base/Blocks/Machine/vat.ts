@@ -1,5 +1,5 @@
 IDRegistry.genBlockID("theVat");
-Block.createBlock("theVat", [{ "name": "The Vat", "texture": [["machineBottom", 0]], "inCreative": true }]);
+Block.createBlock("theVat", [{ "name": "tile.block_vat.name", "texture": [["machineBottom", 0]], "inCreative": true }]);
 ICRender.getGroup("liquid_pipe").add(BlockID.theVat, -1);
 
 function setVatRender() {
@@ -21,7 +21,7 @@ Block.setBlockShape(BlockID.theVat, { "x": 0, "y": 0, "z": 0 }, { "x": 1, "y": 1
 
 setVatRender();
 
-var VatGUI = MachineRegistry.createInventoryWindow("The Vat", {
+var VatGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_vat.name"), {
   drawing: [
     { type: "bitmap", x: 350, y: -80, bitmap: "backgroundVat", scale: 3.4 },
   ],
@@ -55,7 +55,7 @@ var VatGUI = MachineRegistry.createInventoryWindow("The Vat", {
       bitmap: "fire_scale1",
       scale: 3.3,
       clicker: {
-        onClick: function() {
+        onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("ender_vat");
         }
       }
@@ -188,13 +188,13 @@ VatRecipe.add({
   energy: 10000
 });
 
-Callback.addCallback("PreLoaded", function() {
+Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped({ id: BlockID.theVat, count: 1, data: 0 }, [
-         	"ici",
-         	"rmr",
-   	     "gfg"
-       ], ['i', ItemID.electricalSteel, 0, 'c', 380, 0, "r", BlockID.eioTank, 0, 'f', VanillaBlockID.furnace, 0, "m", BlockID.machineChassi, 0, "g", ItemID.darkSteel, 0
-     ]);
+    "ici",
+    "rmr",
+    "gfg"
+  ], ['i', ItemID.electricalSteel, 0, 'c', 380, 0, "r", BlockID.eioTank, 0, 'f', VanillaBlockID.furnace, 0, "m", BlockID.machineChassi, 0, "g", ItemID.darkSteel, 0
+  ]);
 });
 
 namespace Machine {
@@ -238,7 +238,7 @@ namespace Machine {
         let outputAmount = result.amount;
         this.processTime = time;
         if ((this.outputTank.getLiquidStored() == outputID &&
-            this.outputTank.getAmount(outputID) <= (this.outputTank.getLimit() - outputAmount)) ||
+          this.outputTank.getAmount(outputID) <= (this.outputTank.getLimit() - outputAmount)) ||
           !this.outputTank.getLiquidStored()) {
           if (this.data.energy >= this.energyConsume) {
             this.data.progress += this.energyConsume;
@@ -276,7 +276,7 @@ namespace Machine {
 
       this.inputTank.updateUiScale("liquidScale1");
       this.outputTank.updateUiScale("liquidScale2");
-      
+
       this.container.setScale("progressScale", this.data.progress / this.processTime || 0);
       this.container.setScale("energyScale", this.getRelativeEnergy());
       this.container.sendChanges();
@@ -313,10 +313,10 @@ namespace Machine {
     },
     canReceiveLiquid: () => true,
     canTransportLiquid: () => true,
-    getInputTank: function() {
+    getInputTank: function () {
       return this.tileEntity.inputTank;
     },
-    getOutputTank: function() {
+    getOutputTank: function () {
       return this.tileEntity.outputTank;
     }
   });

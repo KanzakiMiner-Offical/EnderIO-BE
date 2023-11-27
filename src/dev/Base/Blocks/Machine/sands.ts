@@ -12,7 +12,7 @@ TileRenderer.registerModelWithRotation(BlockID.sliceAndSplice, 2, [["blockSoulMa
 
 TileRenderer.setRotationFunction(BlockID.sliceAndSplice);
 
-var SliceAndSpliceGUI = MachineRegistry.createInventoryWindow("Slice 'n' splice", {
+var SliceAndSpliceGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_slice.name"), {
   drawing: [
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
     { type: "bitmap", x: 630, y: 235, bitmap: "bar_progress0", scale: 3.2 },

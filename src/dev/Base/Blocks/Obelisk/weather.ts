@@ -4,7 +4,7 @@ BlockRegistry.createBlock("weather_obelisk", [
     texture: [["weather_obelisk", 0]],
     inCreative: true
   }
-], "machine")
+], "other-machine")
 
 Block.setShape(BlockID.weather_obelisk, 1 / 16, 0, 1 / 16, 15 / 16, 0.5, 15 / 16)
 Block.setDestroyTime(BlockID.weather_obelisk, 5)
@@ -12,7 +12,7 @@ ToolAPI.registerBlockMaterial(BlockID.weather_obelisk, "stone")
 
 ObeliskCore.registerModel("weather_obelisk", "experience_obelisk");
 
-let weatherObeliskGUI = MachineRegistry.createInventoryWindow("Weather Obelisk", {
+let weatherObeliskGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_weather_obelisk.name"), {
   drawing: [
     { type: "bitmap", x: 360, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
     { type: "bitmap", x: 630, y: 230, bitmap: "bar_progress_down0", scale: 3.2 }

@@ -20,7 +20,7 @@ ICRender.getGroup("bc-container").add(BlockID.sagmill, -1);
 ICRender.getGroup("item-pipe").add(BlockID.sagmill, -1);
 
 */
-let SAGGui = MachineRegistry.createInventoryWindow("SAG Mill", {
+let SAGGui = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_sag_mill.name"), {
   drawing: [
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
     { type: "bitmap", x: 595, y: 250, bitmap: "bar_progress_down0", scale: 4.2 },

@@ -1,5 +1,5 @@
 BlockRegistry.createBlock("bankVibrant", [
-  { name: "Vibrant Capacitor Bank", texture: [["capacitorBankVibrant", 0], ["capacitorBankVibrant", 0], ["capacitorBankVibrant", 0], ["capacitorBankVibrantFront", 0], ["capacitorBankVibrant", 0], ["capacitorBankVibrant", 0]], inCreative: true }
+  { name: "tile.block_cap_bank.vibrant.name", texture: [["capacitorBankVibrant", 0], ["capacitorBankVibrant", 0], ["capacitorBankVibrant", 0], ["capacitorBankVibrantFront", 0], ["capacitorBankVibrant", 0], ["capacitorBankVibrant", 0]], inCreative: true }
 ], "machine");
 BlockRegistry.setBlockMaterial(BlockID.bankVibrant, "ston3");
 
@@ -11,7 +11,7 @@ Callback.addCallback("PreLoaded", function() {
   ], ['s', ItemID.electricalSteel, 0, 'c', ItemID.octadicCapacitor, 0, "r", 152, 0]);
 });
 
-const guiVibrantCapacitor = CapacitorBlockWindow("Vibrant Capacitor Bank");
+const guiVibrantCapacitor = CapacitorBlockWindow(Translation.translate("tile.block_cap_bank.vibrant.name"));
 
 namespace Machine {
   class VibrantCapcitor extends CapacitorBlock {

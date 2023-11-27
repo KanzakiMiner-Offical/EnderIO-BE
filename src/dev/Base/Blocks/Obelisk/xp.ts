@@ -4,7 +4,7 @@ BlockRegistry.createBlock("experience_obelisk", [
     texture: [["experience_obelisk", 0]],
     inCreative: true
   }
-], "machine")
+], "other-machine")
 
 Block.setShape(BlockID.experience_obelisk, 1 / 16, 0, 1 / 16, 15 / 16, 0.5, 15 / 16)
 Block.setDestroyTime(BlockID.experience_obelisk, 5)
@@ -26,6 +26,28 @@ Block.registerPlaceFunction("experience_obelisk", function (coords: Callback.Ite
     }
   }
 })
+
+
+Callback.addCallback("PreLoaded", function () {
+  Recipes.addShaped({ id: BlockID.experience_obelisk, count: 1, data: 0 }, [
+    " e ",
+    " a ",
+    "aba"
+  ], ['a', ItemID.soularium, 0, 'e', ItemID.itemXpTransfer, 0, 'b', BlockID.machineChassiSoul, 0]// function (api: Recipes.WorkbenchFieldAPI, field: com.zhekasmirnov.innercore.api.mod.ui.container.Slot[], result: ItemInstance) {
+    //   let xp = new ItemExtraData();
+    //   for (let i = 0; i < field.length; i++) {
+    //     if (field[i].id == ItemID.itemXpTransfer && field[i].extra) {
+    //       if (field[i].extra.getInt("xp_stored") > 0) {
+    //         xp.putString("fluid", "xpjuice")
+    //         xp.putInt("amount", this.liquidTank.getAmount(field[i].extra.getInt("xp_stored")))
+    //       }
+    //       api.decreaseFieldSlot(i);
+    //     }
+    //   }
+    //   result.extra = xp;
+    //}
+  );
+});
 
 let ExperienceObelisk_elements = {}
 
@@ -170,7 +192,7 @@ let guiEObelisk = new UI.StandardWindow({
   standard: {
     header: {
       text: {
-        text: "Experience Obelisk"
+        text: Translation.translate("tile.block_experience_obelisk.name")
       }
     },
     background: {
@@ -218,6 +240,24 @@ namespace Machine {
       this.anim && this.anim.destroy()
     }
 
+    onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean {
+      if (item.id == ItemID.itemXpTransfer) {
+        this.preventClick();
+        let playerActor = new PlayerActor(player)
+        playerActor.addExperience(ObeliskCore.LiquidtoXP(this.liquidTank.getAmount("xpjuice")))
+        this.liquidTank.getLiquid("xpjuice", this.liquidTank.getAmount("xpjuice"))
+        return true;
+      } else if (item.id == ItemID.itemXpTransfer && Entity.getSneaking(player)) {
+        this.preventClick();
+        let playerActor = new PlayerActor(player)
+        this.liquidTank.addLiquid("xpjuice", ObeliskCore.XPtoLiquid(playerActor.getExperience()))
+        playerActor.setLevel(0)
+        playerActor.setExperience(0)
+        return true;
+      }
+      return super.onItemUse(coords, item, player);
+    }
+
     onTick(): void {
       let xp_data = ObeliskCore.XPtoLVL(ObeliskCore.LiquidtoXP(this.liquidTank.getAmount("xpjuice")))
       this.container.setText("text", "" + xp_data.lvl)
@@ -245,7 +285,7 @@ namespace Machine {
     }
 
     destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
-      let extra: ItemExtraData
+      let extra: ItemExtraData = null
       let region = BlockSource.getDefaultForActor(player)
       let liquid = this.liquidTank.getLiquidStored()
       if (liquid == "xpjuice") {

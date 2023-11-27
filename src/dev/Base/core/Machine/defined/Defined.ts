@@ -47,7 +47,7 @@ namespace MachineRegistry {
       EnergyTileRegistry.addEnergyTypeForId(id, RF_type2);
     }
   }
-  
+
   export function createStorageInterface(blockID: number, descriptor: StorageDescriptor) {
     descriptor.liquidUnitRatio = 0.001;
     descriptor.getInputTank ??= function () {
@@ -195,4 +195,9 @@ namespace MachineRegistry {
 BlockRegistry.createBlockType("machine", {
   extends: "stone",
   destroyTime: 3
+});
+
+BlockRegistry.createBlockType("other-machine", {
+  extends: "machine",
+  solid: false
 });

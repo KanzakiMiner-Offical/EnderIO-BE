@@ -7,7 +7,7 @@ BlockRegistry.createBlock(
       inCreative: true,
     },
   ],
-  "machine"
+  "other-machine"
 );
 
 Callback.addCallback("PreLoaded", function () {
@@ -127,7 +127,7 @@ Block.setBlockShape(
   { x: 1, y: 1, z: 1 }
 );
 
-var guiZombieGen = MachineRegistry.createInventoryWindow("Zombie Generator", {
+var guiZombieGen = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_zombie_generator.name"), {
   drawing: [
     { type: "bitmap", x: 470, y: 66, bitmap: "fluid_scale", scale: 3.2 },
     { type: "bitmap", x: 66, y: 135, bitmap: "fire_scale0", scale: 3.2 },

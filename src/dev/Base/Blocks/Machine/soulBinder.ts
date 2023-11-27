@@ -15,7 +15,7 @@ TileRenderer.registerModelWithRotation(BlockID.soulBinder, 2, [
 
 TileRenderer.setRotationFunction(BlockID.soulBinder)
 
-let soulBinderGUI = MachineRegistry.createInventoryWindow("Soul Binder", {
+let soulBinderGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_soul_binder.name"), {
   drawing: [
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
     { type: "bitmap", x: 600, y: 205, bitmap: "bar_progress0", scale: 3.2 },

@@ -16,6 +16,7 @@ Base/core/Machine/ad_defined/craftHelper.ts
 Base/core/Machine/tool.ts
 Base/core/Machine/config.ts
 Base/core/Machine/item_name.ts
+Base/Blocks/Obelisk/core.ts
 
 Base/core/Conduit/api.ts
 Base/core/ender_core.ts
@@ -38,7 +39,6 @@ Base/Blocks/anvil.ts
 Base/Blocks/Conduit/Energy.ts
 Base/Blocks/Conduit/Liquid.ts
 
-Base/Blocks/Obelisk/core.ts
 Base/Blocks/Obelisk/xp.ts
 Base/Blocks/Obelisk/weather.ts
 

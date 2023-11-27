@@ -14,7 +14,7 @@ TileRenderer.registerModelWithRotation(BlockID.alloySmelter, 2, [["machineBottom
 
 TileRenderer.setRotationFunction(BlockID.alloySmelter)
 
-let smelterGUI = MachineRegistry.createInventoryWindow("Alloy Smelter", {
+let smelterGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_alloy_smelter.name"), {
   drawing: [
     { type: "bitmap", x: 527, y: 235, bitmap: "fire_scale0", scale: 3.2 },
     { type: "bitmap", x: 687, y: 235, bitmap: "fire_scale0", scale: 3.2 },

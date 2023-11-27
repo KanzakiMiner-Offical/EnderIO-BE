@@ -11,7 +11,7 @@ ItemRegistry.createItem("dustPhotovoltaic", {
 class BlockPhotovoltaic extends BlockBase {
   constructor(id: string, name: string, texture: [string, number][], miningLevel ? : number) {
     miningLevel = miningLevel || 1
-    super(id, "stone")
+    super(id, "other-machine")
     this.addVariation(name, texture, true)
     this.setBlockMaterial("stone", miningLevel)
     this.setDestroyTime(3)

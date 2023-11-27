@@ -1,5 +1,11 @@
 /// <reference path="ProgressingMachine.ts" />
 
+const TransferMode = {
+  IN: 0,
+  OUT: 1,
+  NONE: 2
+}
+
 namespace Machine {
   export class CapacitorBlock extends ProgressingMachine {
 
@@ -16,6 +22,39 @@ namespace Machine {
       this.guiScreen = guiScreen;
     }
 
+    defaultValues = {
+      energy: 0,
+      config: 0
+    };
+
+    onInit(): void {
+      this.networkData.putInt("config", this.data.config);
+      super.onInit();
+    }
+
+    onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, playerUid: number): boolean {
+      const client = Network.getClientForPlayer(playerUid);
+      if (Entity.getSneaking(playerUid)) {
+        const config = this.getMode();
+        config[coords.side]++;
+        config[coords.side] %= 3;
+        this.setMode(config);
+        this.renderModel();
+        BlockEngine.sendMessage(client, `${["Input", "Output", "None"][config[coords.side]]} RF`)
+      } return true;
+    }
+
+    setMode(config: number[]): void {
+      const code = parseInt(config.join(""), 3);
+      this.data.config = code;
+      this.networkData.putInt("config", code);
+    }
+
+    getMode(): number[] {
+      const config = ("000000" + this.data.config.toString(3)).slice(-6);
+      return [+config[0], +config[1], +config[2], +config[3], +config[4], +config[5]];
+    }
+
     getScreenByName(): UI.StandardWindow {
       return this.guiScreen;
     }
@@ -23,16 +62,7 @@ namespace Machine {
     getTier(): number {
       return this.tier;
     }
-    /*
-        setupContainer(): void {
-          StorageInterface.setSlotValidatePolicy(this.container, "slot1", (name, id) => {
-            return ChargeItemRegistry.isValidItem(id, "RF", this.getTier());
-          });
-          StorageInterface.setSlotValidatePolicy(this.container, "slot2", (name, id) => {
-            return ChargeItemRegistry.isValidStorage(id, "RF", this.getTier());
-          });
-        }
-    */
+
     canRotate(): boolean {
       return true;
     }
@@ -71,11 +101,11 @@ namespace Machine {
     }
 
     canReceiveEnergy(side: number): boolean {
-      return side != this.getFacing();
+      return this.getMode()[side] === TransferMode.IN;
     }
 
     canExtractEnergy(side: number): boolean {
-      return side == this.getFacing();
+      return this.getMode()[side] === TransferMode.OUT;
     }
 
     adjustDrop(item: ItemInstance): ItemInstance {
@@ -92,7 +122,7 @@ function CapacitorBlockWindow(header: string) {
   return MachineRegistry.createInventoryWindow(header, {
     drawing: [
       { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
-      ],
+    ],
     elements: {
       "energyScale": { type: "scale", x: 335, y: 140, direction: 1, bitmap: "redflux_bar1", scale: 3.2 },
       "textInfo": { type: "text", x: 500, y: 140, width: 350, height: 30, text: "0/0 RF" },
@@ -105,22 +135,22 @@ function CapacitorBlockWindow(header: string) {
 }
 /*
 const CapacitorBlockInterface = {
-	slots: {
-		"slot1": {input: true, output: true,
-			isValid: function(item: ItemStack, side: number, tileEntity: Machine.CapacitorBlock) {
-				return side == 1 && ChargeItemRegistry.isValidItem(item.id, "Rf", tileEntity.getTier());
-			},
-			canOutput: function(item: ItemStack) {
-				return ChargeItemRegistry.getEnergyStored(item) >= ChargeItemRegistry.getMaxCharge(item.id);
-			}
-		},
-		"slot2": {input: true, output: true,
-			isValid: function(item: ItemStack, side: number, tileEntity: Machine.CapacitorBlock) {
-				return side > 1 && ChargeItemRegistry.isValidStorage(item.id, "Rf", tileEntity.getTier());
-			},
-			canOutput: function(item: ItemStack) {
-				return ChargeItemRegistry.getEnergyStored(item) <= 0;
-			}
-		}
-	}
+  slots: {
+    "slot1": {input: true, output: true,
+      isValid: function(item: ItemStack, side: number, tileEntity: Machine.CapacitorBlock) {
+        return side == 1 && ChargeItemRegistry.isValidItem(item.id, "Rf", tileEntity.getTier());
+      },
+      canOutput: function(item: ItemStack) {
+        return ChargeItemRegistry.getEnergyStored(item) >= ChargeItemRegistry.getMaxCharge(item.id);
+      }
+    },
+    "slot2": {input: true, output: true,
+      isValid: function(item: ItemStack, side: number, tileEntity: Machine.CapacitorBlock) {
+        return side > 1 && ChargeItemRegistry.isValidStorage(item.id, "Rf", tileEntity.getTier());
+      },
+      canOutput: function(item: ItemStack) {
+        return ChargeItemRegistry.getEnergyStored(item) <= 0;
+      }
+    }
+  }
 }*/

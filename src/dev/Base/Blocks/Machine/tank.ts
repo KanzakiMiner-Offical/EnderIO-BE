@@ -5,7 +5,7 @@ BlockRegistry.createBlock("eioTank", [
       ["basic_tank", 0]],
     inCreative: true
   }
-], "machine");
+], "other-machine");
 
 
 ICRender.getGroup("liquid_pipe").add(BlockID.eioTank, -1);
@@ -21,7 +21,7 @@ Callback.addCallback("PreLoaded", function () {
 
 let guiTank = MachineRegistry.createInventoryWindow(Translation.translate("enderio.gui.tank.tank"), {
   drawing: [
-    { type: "bitmap", x: 611, y: 88, bitmap: "liquid_bar", scale: GUI_SCALE },
+    { type: "bitmap", x: 100 + 70 * GUI_SCALE, y: 50 + 16 * GUI_SCALE, bitmap: "liquid_bar", scale: GUI_SCALE },
   ],
 
   elements: {

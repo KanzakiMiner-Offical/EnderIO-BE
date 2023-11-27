@@ -22,7 +22,7 @@ Callback.addCallback("PreLoaded", function() {
 
 })
 
-let stirlingGenGUI = MachineRegistry.createInventoryWindow("tile.block_stirling_generator.name", {
+let stirlingGenGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_stirling_generator.name"), {
   drawing: [
     { type: "bitmap", x: 450, y: 135, bitmap: "fire_scale0", scale: 3.2 },
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },

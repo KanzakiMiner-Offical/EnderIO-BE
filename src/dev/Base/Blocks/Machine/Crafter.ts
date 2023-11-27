@@ -17,7 +17,7 @@ Callback.addCallback("PreLoaded", function() {
   ], ['i', VanillaItemID.iron_ingot, 0, "m", BlockID.machineChassi, 0, "c", ItemID.skullZombieController, 0, "a", VanillaBlockID.crafting_table, 0]);
 });
 
-let craftUI = MachineRegistry.createInventoryWindow("Crafter", {
+let craftUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_crafter.name"), {
   drawing: [
     { type: "bitmap", x: 370, y: 60, bitmap: "redflux_bar0", scale: 3.2 },
 	  ],
