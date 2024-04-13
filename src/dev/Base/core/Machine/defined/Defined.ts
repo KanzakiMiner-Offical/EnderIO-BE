@@ -198,6 +198,11 @@ BlockRegistry.createBlockType("machine", {
 });
 
 BlockRegistry.createBlockType("other-machine", {
-  extends: "machine",
-  solid: false
+  baseBlock: 1,
+  solid: false,
+  lightOpacity: 15,
+  explosionResistance: 4,
+  renderLayer: 2,
+  translucency: 0,
+  sound: "stone"
 });

@@ -2,13 +2,13 @@ BlockRegistry.createBlock("alloySmelter", [
   {
     name: "tile.block_alloy_smelter.name",
     texture: [
-	["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["alloySmelterFront", 0], ["machineSide", 0], ["machineSide", 0]],
+      ["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["alloySmelterFront", 0], ["machineSide", 0], ["machineSide", 0]],
     inCreative: true
   }
 ], "machine")
 
 TileRenderer.setHandAndUiModel(BlockID.alloySmelter, 0, [
-	["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["alloySmelterFront", 0], ["machineSide", 0], ["machineSide", 0]])
+  ["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["alloySmelterFront", 0], ["machineSide", 0], ["machineSide", 0]])
 TileRenderer.setStandardModelWithRotation(BlockID.alloySmelter, 2, [["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["alloySmelterFront", 0], ["machineSide", 0], ["machineSide", 0]])
 TileRenderer.registerModelWithRotation(BlockID.alloySmelter, 2, [["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["alloySmelterFrontOn", 0], ["machineSide", 0], ["machineSide", 0]])
 
@@ -21,7 +21,7 @@ let smelterGUI = MachineRegistry.createInventoryWindow(Translation.translate("ti
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
     //{ type: "bitmap", x: 527, y: 235, bitmap: "fire_scale0", scale: 3.2 },
     //{ type: "bitmap", x: 600, y: 170, bitmap: "bar_alloy", scale: 4.5 },
-    ],
+  ],
   elements: {
     "progressScale0": {
       type: "scale",
@@ -31,7 +31,7 @@ let smelterGUI = MachineRegistry.createInventoryWindow(Translation.translate("ti
       bitmap: "fire_scale1",
       scale: 3.2,
       clicker: {
-        onClick: function() {
+        onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("enderio_alloy")
         }
       }
@@ -44,7 +44,7 @@ let smelterGUI = MachineRegistry.createInventoryWindow(Translation.translate("ti
       bitmap: "fire_scale1",
       scale: 3.2,
       clicker: {
-        onClick: function() {
+        onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("enderio_alloy")
         }
       }
@@ -83,7 +83,7 @@ let smelterGUI = MachineRegistry.createInventoryWindow(Translation.translate("ti
       bitmap: "alloy0",
       scale: 2.2,
       clicker: {
-        onClick: function(_, container: ItemContainer) {
+        onClick: function (_, container: ItemContainer) {
           container.sendEvent("switchMode", {})
         }
       }
@@ -91,7 +91,7 @@ let smelterGUI = MachineRegistry.createInventoryWindow(Translation.translate("ti
   }
 })
 
-Callback.addCallback("PreLoaded", function() {
+Callback.addCallback("PreLoaded", function () {
   Recipes.addFurnace(ItemID.dustLapis, VanillaItemID.lapis_lazuli, 0)
   Recipes.addFurnace(ItemID.dustQuarzt, VanillaItemID.quartz, 0)
   SmelterRecipe.addRecipe({
@@ -152,16 +152,16 @@ Callback.addCallback("PreLoaded", function() {
   })
   /*
   Recipes.addShaped({ id: BlockID.alloySmelter, count: 1, data: 0 }, [
-      	"ifi",
-      	"fmf",
-  	   "ici"
+        "ifi",
+        "fmf",
+       "ici"
     ], ['i', 265, 0, 'f', 61, 0, "m", BlockID.machineChassi, 0, "c", 380, 0])
    */
   // Machine Addon :>
   Recipes.addShaped({ id: BlockID.alloySmelter, count: 1, data: 0 }, [
-    	"i i",
-    	"amf",
-	   "c c"
+    "i i",
+    "amf",
+    "c c"
   ], ['i', ItemID.darkSteel, 0, 'f', BlockID.simpleAlloySmelter, 0, "m", BlockID.machineChassi, 0, "c", ItemID.darkSteelGear, 0, "a", BlockID.simplePoweredFurnace, 0])
 })
 
@@ -232,10 +232,10 @@ namespace Machine {
         };
         if (this.data.progress >= 3000) {
           let inputSlot = this.container.getSlot(recipe.ingredient);
-          inputSlot.count--;
+          inputSlot.count -= Math.min(inputSlot.count, 3);
           inputSlot.validate();
           inputSlot.markDirty();
-          resultSlot.setSlot(recipe.result.id, resultSlot.count + recipe.result.count, recipe.result.data || 0)
+          resultSlot.setSlot(recipe.result.id, resultSlot.count + Math.min(inputSlot.count * recipe.result.count, 3 * recipe.result.count), recipe.result.data || 0)
           this.container.validateAll()
           this.data.progress = 0
         }
@@ -292,4 +292,12 @@ namespace Machine {
   }
 
   MachineRegistry.registerPrototype(BlockID.alloySmelter, new AlloySmelter_Basic())
+  StorageInterface.createInterface(BlockID.alloySmelter, {
+    slots: {
+      "ingredient1": { input: true },
+      "ingredient2": { input: true },
+      "ingredient3": { input: true },
+      "slotResult": { output: true }
+    }
+  });
 }

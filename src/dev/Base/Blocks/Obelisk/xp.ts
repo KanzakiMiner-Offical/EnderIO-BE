@@ -207,10 +207,7 @@ let guiEObelisk = new UI.StandardWindow({
 
 namespace Machine {
   export class XP_Obelisk extends MachineBase {
-    /*
-        defaultValues = {
-          XP: 0
-        }*/
+    defaultValues = {}
 
     x: number
     y: number

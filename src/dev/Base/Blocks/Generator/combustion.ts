@@ -2,37 +2,106 @@ BlockRegistry.createBlock("combustionGenerator", [
   {
     name: "tile.block_combustion_generator.name",
     texture: [
-	["machineBottom", 0], ["machineTop", 0], ["machineSide", 0],
-	["combustion_gen_front", 0], ["machineSide", 0], ["machineSide", 0]],
+      ["machineBottom", 0], ["machineTop", 0], ["machineSide", 0],
+      ["combustion_gen_front", 0], ["machineSide", 0], ["machineSide", 0]],
     inCreative: true
   }
 ], "machine");
 
 Block.setBlockShape(BlockID.combustionGenerator, { x: 0.1, y: 0, z: 0 }, { x: 0.95, y: 0.95, z: 0.95 });
+/*
+ * ```js 
+ * texture: [
+ *   ["название1", индекс1], // bottom (Y: -1)
+ *   ["название2", индекс2], // top (Y: +1)
+ *   ["название3", индекс3], // back (X: -1) West
+ *   ["название4", индекс4], // front (X: +1) East
+ *   ["название5", индекс5], // left (Z: -1) North
+ *   ["название6", индекс6]  // right (Z: +1) South
+ * ]
+ * ```
+ */
 
-BlockRenderer.addRenderCallback(BlockID.combustionGenerator, function(api, coords, block) {
-  api.renderBoxId(coords.x, coords.y, coords.z, 0, 0, 0, 0.4, 1, 1, BlockID.combustionGenerator, 0);
-  api.renderBoxId(coords.x, coords.y, coords.z, 0.4, 0.125, 0, 0.6, 0.875, 1, BlockID.combustionGenerator, 0);
-  api.renderBoxId(coords.x, coords.y, coords.z, 0.6, 0, 0, 1, 1, 1, BlockID.combustionGenerator, 0);
-});
-BlockRenderer.enableCustomRender(BlockID.combustionGenerator, -1);
+function setCombustionRender() {
+  let combustionRender = new ICRender.Model();
+  BlockRenderer.setStaticICRender(BlockID.combustionGenerator, 0, combustionRender);
+  var model = BlockRenderer.createModel();
 
+  model.addBox(5.75 / 16, 13.75 / 16, 2 / 16, 10.25 / 16, 15 / 16, 6 / 16, "combustion_gen_front", 0); //undefined
+  model.addBox(5.75 / 16, 13.75 / 16, 10 / 16, 10.25 / 16, 15 / 16, 14 / 16, "combustion_gen_front", 0); //undefined
+  model.addBox(0 / 16, 0 / 16, 15 / 16, 1 / 16, 16 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
+  model.addBox(1 / 16, 15 / 16, 15 / 16, 6 / 16, 16 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
+  model.addBox(1 / 16, 0 / 16, 15 / 16, 6 / 16, 1 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
+  model.addBox(5 / 16, 13 / 16, 15 / 16, 6 / 16, 15 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
+  model.addBox(5 / 16, 1 / 16, 15 / 16, 6 / 16, 3 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
+  model.addBox(6 / 16, 13 / 16, 15 / 16, 11 / 16, 14 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
+  model.addBox(6 / 16, 2 / 16, 15 / 16, 11 / 16, 3 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
+  model.addBox(10 / 16, 14 / 16, 15 / 16, 11 / 16, 16 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
+  model.addBox(10 / 16, 0 / 16, 15 / 16, 11 / 16, 2 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
+  model.addBox(11 / 16, 15 / 16, 15 / 16, 16 / 16, 16 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
+  model.addBox(11 / 16, 0 / 16, 15 / 16, 16 / 16, 1 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
+  model.addBox(15 / 16, 1 / 16, 15 / 16, 16 / 16, 15 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
+  model.addBox(0 / 16, 0 / 16, 0 / 16, 1 / 16, 16 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
+  model.addBox(1 / 16, 15 / 16, 0 / 16, 6 / 16, 16 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
+  model.addBox(1 / 16, 0 / 16, 0 / 16, 6 / 16, 1 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
+  model.addBox(5 / 16, 13 / 16, 0 / 16, 6 / 16, 15 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
+  model.addBox(5 / 16, 1 / 16, 0 / 16, 6 / 16, 3 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
+  model.addBox(6 / 16, 13 / 16, 0 / 16, 11 / 16, 14 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
+  model.addBox(6 / 16, 2 / 16, 0 / 16, 11 / 16, 3 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
+  model.addBox(10 / 16, 14 / 16, 0 / 16, 11 / 16, 16 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
+  model.addBox(10 / 16, 0 / 16, 0 / 16, 11 / 16, 2 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
+  model.addBox(11 / 16, 15 / 16, 0 / 16, 16 / 16, 16 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
+  model.addBox(11 / 16, 0 / 16, 0 / 16, 16 / 16, 1 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
+  model.addBox(15 / 16, 1 / 16, 0 / 16, 16 / 16, 15 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
+  model.addBox(0 / 16, 0 / 16, 1 / 16, 1 / 16, 1 / 16, 15 / 16, "machineSide", 0); //undefined
+  model.addBox(15 / 16, 15 / 16, 1 / 16, 16 / 16, 16 / 16, 15 / 16, "machineSide", 0); //undefined
+  model.addBox(0 / 16, 15 / 16, 1 / 16, 1 / 16, 16 / 16, 15 / 16, "machineSide", 0); //undefined
+  model.addBox(15 / 16, 0 / 16, 1 / 16, 16 / 16, 1 / 16, 15 / 16, "machineSide", 0); //undefined
+  model.addBox(0.25 / 16, 0.25 / 16, 0.25 / 16, 5.75 / 16, 15.75 / 16, 15.75 / 16, [["machineBottom", 0], ["combustion_gen_front", 0], ["machineBack", 0], ["machineSide", 0]]); //undefined
+  model.addBox(10.25 / 16, 0.25 / 16, 0.25 / 16, 15.75 / 16, 15.75 / 16, 15.75 / 16, [["machineBottom", 0], ["combustion_gen_front", 0], ["machineBack", 0], ["machineSide", 0]]); //undefined
+  model.addBox(5.75 / 16, 2.25 / 16, 0.25 / 16, 10.25 / 16, 13.75 / 16, 15.75 / 16, [["machineBottom", 0], ["machineSide", 0], ["machineBack", 0]]); //undefined
+  model.addBox(1 / 16, 1 / 16, 14.75 / 16, 3 / 16, 15 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(3 / 16, 12 / 16, 14.75 / 16, 5 / 16, 15 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(3 / 16, 7 / 16, 14.75 / 16, 15 / 16, 9 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(3 / 16, 1 / 16, 14.75 / 16, 5 / 16, 4 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(5 / 16, 9 / 16, 14.75 / 16, 6 / 16, 13 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(5 / 16, 3 / 16, 14.75 / 16, 15 / 16, 4 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(6 / 16, 12 / 16, 14.75 / 16, 15 / 16, 13 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(7.5 / 16, 9 / 16, 14.75 / 16, 8.5 / 16, 12 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(10 / 16, 9 / 16, 14.75 / 16, 11 / 16, 12 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(11 / 16, 13 / 16, 14.75 / 16, 15 / 16, 15 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(11 / 16, 1 / 16, 14.75 / 16, 15 / 16, 3 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(13 / 16, 9 / 16, 14.75 / 16, 15 / 16, 12 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(13 / 16, 4 / 16, 14.75 / 16, 15 / 16, 7 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
+  model.addBox(1 / 16, 4 / 16, 13.75 / 16, 15 / 16, 12.5 / 16, 14.75 / 16, "combustion_gen_front", 0); //undefined
+  model.addBox(10.25 / 16, 0.25 / 16, 0.25 / 16, 11.25 / 16, 2.75 / 16, 15.75 / 16, "machineBottom", 0); //undefined
+  model.addBox(4.75 / 16, 0.25 / 16, 0.25 / 16, 5.75 / 16, 2.75 / 16, 15.75 / 16, "machineBottom", 0); //undefined
+  model.addBox(10.25 / 16, 13.25 / 16, 0.25 / 16, 11.25 / 16, 15.75 / 16, 15.75 / 16, "machineSide", 0); //undefined
+  model.addBox(4.75 / 16, 13.25 / 16, 0.25 / 16, 5.75 / 16, 15.75 / 16, 15.75 / 16, "machineSide", 0); //undefined
+  model.addBox(10 / 16, 15 / 16, 1 / 16, 11 / 16, 16 / 16, 15 / 16, "machineSide", 0); //undefined
+  model.addBox(5 / 16, 15 / 16, 1 / 16, 6 / 16, 16 / 16, 15 / 16, "machineSide", 0); //undefined
+  model.addBox(10 / 16, 0 / 16, 1 / 16, 11 / 16, 1 / 16, 15 / 16, "machineSide", 0); //undefined
+  model.addBox(5 / 16, 0 / 16, 1 / 16, 6 / 16, 1 / 16, 15 / 16, "machineSide", 0); //undefined
 
+  combustionRender.addEntry(model);
+}
 
-Callback.addCallback("PreLoaded", function() {
+setCombustionRender();
+
+Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped({ id: BlockID.combustionGenerator, count: 1, data: 0 }, [
-         	"ici",
-         	"rmr",
-   	     "gfg"
-       ], ['i', ItemID.electricalSteel, 0, 'c', ItemID.darkSteel, 0, "r", BlockID.eioTank, 0, 'm', BlockID.machineChassi, 0, "f", VanillaBlockID.piston, 0, "g", ItemID.darkSteelGear, 0
-     ]);
+    "ici",
+    "rmr",
+    "gfg"
+  ], ['i', ItemID.electricalSteel, 0, 'c', ItemID.darkSteel, 0, "r", BlockID.eioTank, 0, 'm', BlockID.machineChassi, 0, "f", VanillaBlockID.piston, 0, "g", ItemID.darkSteelGear, 0
+  ]);
 });
 
 let combustionGenUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_combustion_generator.name"), {
   drawing: [
     { type: "bitmap", x: 520, y: 230, bitmap: "fire_scale0", scale: 3.2 },
     { type: "bitmap", x: 330, y: 110, bitmap: "redflux_bar0", scale: 3.2 },
-	],
+  ],
   elements: {
     "textInstall": { type: "text", font: { size: 20, color: Color.YELLOW }, x: 325, y: 50, width: 100, height: 30, text: "" },
     "text": { type: "text", x: 400, y: 100, width: 100, height: 30, text: "RF" },
@@ -180,13 +249,13 @@ namespace Machine {
       this.useCapacitor()
       StorageInterface.checkHoppers(this);
       let capacitor = this.container.getSlot("slotCapacitor");
-        if (CapacitorAPI.isValidCapacitor(capacitor.id, this)) {
-          this.container.setText("textInstall", "Installed");
-          this.run();
-        } else {
-          this.container.setText("textInstall", "Please put Capacitor in slot capacitor to install function for machine");
-        }
-      
+      if (CapacitorAPI.isValidCapacitor(capacitor.id, this)) {
+        this.container.setText("textInstall", "Installed");
+        this.run();
+      } else {
+        this.container.setText("textInstall", "Please put Capacitor in slot capacitor to install function for machine");
+      }
+
 
       let slot1 = this.container.getSlot("slot1");
       let slot2 = this.container.getSlot("slot2");
@@ -209,7 +278,7 @@ namespace Machine {
   };
 
   MachineRegistry.registerPrototype(BlockID.combustionGenerator, new CombustionGenerator());
-MachineRegistry.createStorageInterface(BlockID.combustionGenerator, {
+  MachineRegistry.createStorageInterface(BlockID.combustionGenerator, {
     slots: {
       "slot1": {
         input: true,
@@ -232,8 +301,10 @@ MachineRegistry.createStorageInterface(BlockID.combustionGenerator, {
     },
     canReceiveLiquid: () => true,
     canTransportLiquid: () => true,
-    getInputTank: function() {
-      return this.tileEntity.coolTank;
+    getInputTank: function (side: number) {
+      if (side == EBlockSide.WEST) return this.tileEntity.coolTank;
+      else if (side == EBlockSide.EAST) return this.tileEntity.heatTank;
+      return;
     }
   });
 };

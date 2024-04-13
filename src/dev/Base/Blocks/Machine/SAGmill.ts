@@ -2,13 +2,13 @@ BlockRegistry.createBlock("sagmill", [
   {
     name: "tile.block_sag_mill.name",
     texture: [
-	["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["crusherFront", 0], ["machineSide", 0], ["machineSide", 0]],
+      ["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["crusherFront", 0], ["machineSide", 0], ["machineSide", 0]],
     inCreative: true
   }
 ], "machine");
 
 TileRenderer.setHandAndUiModel(BlockID.sagmill, 0, [
-	["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["crusherFront", 0], ["machineSide", 0], ["machineSide", 0]]);
+  ["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["crusherFront", 0], ["machineSide", 0], ["machineSide", 0]]);
 TileRenderer.setStandardModelWithRotation(BlockID.sagmill, 2, [["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["crusherFront", 0], ["machineSide", 0], ["machineSide", 0]]);
 TileRenderer.registerModelWithRotation(BlockID.sagmill, 2, [["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["crusherFrontOn", 0], ["machineSide", 0], ["machineSide", 0]]);
 
@@ -25,7 +25,7 @@ let SAGGui = MachineRegistry.createInventoryWindow(Translation.translate("tile.b
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
     { type: "bitmap", x: 595, y: 250, bitmap: "bar_progress_down0", scale: 4.2 },
     { type: "bitmap", x: 765, y: 165, bitmap: "bar_silicon0", scale: 6.8 },
-    ],
+  ],
   elements: {
     "progressScale": {
       type: "scale",
@@ -35,7 +35,7 @@ let SAGGui = MachineRegistry.createInventoryWindow(Translation.translate("tile.b
       bitmap: "bar_progress_down1",
       scale: 4.2,
       clicker: {
-        onClick: function() {
+        onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("enderio_sag");
         }
       }
@@ -73,20 +73,25 @@ let SAGGui = MachineRegistry.createInventoryWindow(Translation.translate("tile.b
   }
 });
 
-Callback.addCallback("PreLoaded", function() {
+Callback.addCallback("PreLoaded", function () {
   // Ifn't have Machine Addon
   /*
 Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
-    	"fff",
-    	"imi",
-	     " p "
+      "fff",
+      "imi",
+       " p "
   ], ['i', ItemID.darkSteel, 0, 'f', VanillaItemID.flint 0, "m", BlockID.machineChassi, 0, "p", VanillaItemID.piston, 0]);
   */
   Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
-    	"fff",
-    	"ipi",
-	     " m "
-  ], ['i', ItemID.darkSteel, 0, 'f', VanillaItemID.flint, 0, "m", BlockID.simplesagmill, 0, "p", BlockID.machineChassi, 0]);
+    "fff",
+    "ipi",
+    "ama"
+  ], ['i', ItemID.darkSteel, 0, 'f', VanillaItemID.flint, 0, "m", BlockID.simplesagmill, 0, "p", BlockID.machineChassi, 0, 'a', ItemID.darkSteelGear, 0]);
+  Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
+    "fff",
+    "ipi",
+    "ama"
+  ], ['i', ItemID.darkSteel, 0, 'f', VanillaItemID.flint, 0, "m", VanillaBlockID.piston, 0, "p", BlockID.machineChassi, 0, 'a', ItemID.darkSteelGear, 0]);
 
   RecipeRegistry.addCrusher({
     isGrinding: false,

@@ -20,7 +20,6 @@ let RV: RecipeViewerAPI;
 let startTime = Debug.sysTime();
 let GUI_SCALE = 3.2;
 let GUI_SCALE_NEW = 3;
-declare var KEX: KEXAPI;
 
 function isPlayer(entity: number): boolean {
   let type = Entity.getType(entity);

@@ -144,6 +144,15 @@ namespace Machine {
       region.spawnDroppedItem(coords.x + .5, coords.y + .5, coords.z + .5, BlockID.experience_obelisk, 1, 0, extra)
     }
 
+    energyReceive(type: string, amount: number, voltage: number): number {
+      if (voltage > 55) {
+        amount = Math.min(amount, 55);
+      }
+      let add = Math.min(amount, this.getEnergyStorage() - this.data.energy);
+      this.data.energy += add;
+      return add;
+    }
+
     @ContainerEvent(Side.Server)
     activeObelisk(): void {
       this.data.activeObelisk = this.data.activeObelisk ? false : true;

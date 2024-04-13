@@ -40,8 +40,10 @@ namespace Machine {
         config[coords.side] %= 3;
         this.setMode(config);
         this.renderModel();
-        BlockEngine.sendMessage(client, `${["Input", "Output", "None"][config[coords.side]]} RF`)
-      } return true;
+        BlockEngine.sendMessage(client, `${["Input", "Output", "None"][config[coords.side]]} RF`);
+        return true;
+      }
+      return super.onItemUse(coords, item, playerUid);
     }
 
     setMode(config: number[]): void {
@@ -98,6 +100,17 @@ namespace Machine {
 
     getEnergyStorage(): number {
       return this.capacity;
+    }
+
+
+    energyReceive(type: string, amount: number, voltage: number): number {
+      let maxVoltage = this.maxOutputPower * 1.5;
+      if (voltage > maxVoltage) {
+        amount = Math.min(amount, maxVoltage);
+      }
+      let add = Math.min(amount, this.getEnergyStorage() - this.data.energy);
+      this.data.energy += add;
+      return add;
     }
 
     canReceiveEnergy(side: number): boolean {

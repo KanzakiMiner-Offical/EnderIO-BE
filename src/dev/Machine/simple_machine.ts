@@ -1,6 +1,6 @@
 namespace Machine {
   export abstract class SimpleMachine
-  extends ProgressingMachine {
+    extends ProgressingMachine {
     defaultValues = {
       energy: 0,
       progress: 0
@@ -31,5 +31,16 @@ namespace Machine {
     canRotate(side: number): boolean {
       return side > 1;
     }
+
+    energyReceive(type: string, amount: number, voltage: number): number {
+      let maxVoltage = 15 * 1.2
+      if (voltage > maxVoltage) {
+        amount = Math.min(amount, maxVoltage);
+      }
+      let add = Math.min(amount, this.getEnergyStorage() - this.data.energy);
+      this.data.energy += add;
+      return add;
+    }
+
   }
 }

@@ -7,6 +7,7 @@ namespace Machine {
   implements IWrench {
     capacitor ? : string[];
     defaultDrop ? : number;
+    data: this["defaultValues"];
 
     onInit(): void {
       this.networkData.putInt("blockId", this.blockID);
@@ -40,18 +41,7 @@ namespace Machine {
       if (this.canRotate(side) && EnderTool.isUseableWrench(item, 1)) {
         EnderTool.rotateMachine(this, side, item, player);
         return true;
-      }/*
-      if (Entity.getSneaking(player) && item.id == ItemID.itemYetaWrench) {
-        let extra;
-        let liquid = this.liquidTank.getLiquidStored()
-        if (liquid) {
-          extra = new ItemExtraData();
-          extra.putString("fluid", liquid);
-          extra.putInt("amount", this.liquidTank.getAmount(liquid));
-        }
-        this.blockSource.spawnDroppedItem(this.x + .5, this.y + .5, this.z + .5, BlockID.eioTank, 1, 0);
-        this.blockSource.destroyBlock(this.x, this.y, this.z, false);
-      }*/
+      }
       return false;
     }
 

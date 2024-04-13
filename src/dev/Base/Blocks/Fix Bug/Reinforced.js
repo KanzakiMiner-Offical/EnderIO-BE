@@ -1,11 +1,28 @@
 BlockRegistry.createBlockType("BLOCK_TYPE_ANTI_EXPLO", {
   extends: "opaque",
   destroytime: 100,
-  explosionResistance: 3600000*3,
+  explosionResistance: 10800000,
   renderlayer: 3,
   translucency: 0,
   sound: "anvil"
 });
+
+IDRegistry.genBlockID("reinforcedObsidian");
+Block.createBlock("reinforcedObsidian", [
+  { name: "Reinforced Obsidian", texture: [["reinforcedObsidian", 0]], inCreative: true }
+], "BLOCK_TYPE_ANTI_EXPLO")
+ToolAPI.registerBlockMaterial(BlockID.reinforcedObsidian, "stone")/*
+Recipes.addShaped({ id: BlockID.reinforcedObsidian, count: 1, data: 0 }, [
+	"bab",
+	"aca",
+	"bab"
+], ['a', ItemID.darkSteel, 0, 'b', BlockID.darkSteelBars, 0, 'c', 49, 0]);*/
+Block.registerDropFunction("reinforcedObsidian", function (coords, blockID, blockData, level) {
+  if (level > 3) {
+    return [[BlockID.reinforcedObsidian, 1, 0]]
+  }
+  return [];
+}, 2);
 /*
 IDRegistry.genBlockID("darkSteelBars");
 Block.createBlock("darkSteelBars", [
@@ -14,9 +31,9 @@ Block.createBlock("darkSteelBars", [
 
 Callback.addCallback("PreLoaded", function() {
   Recipes.addShaped({ id: BlockID.darkSteelBars, count: 1, data: 0 }, [
-	"",
-	"aaa",
-	"aaa"
+  "",
+  "aaa",
+  "aaa"
 ], ['a', ItemID.darkSteel, 0]);
 });
 
@@ -77,26 +94,10 @@ setBarsRender(BlockID.darkSteelBars, "ender-bars", 0.54, 0.46);*/
 /*
 Callback.addCallback("PreLoaded", function() {
   for(let i in BlockID){
-		var tile = TileEntity.getPrototype(BlockID[i]);
-		if(!tile) {
-			ICRender.getGroup("ender-bars").add(BlockID[i], -1);
-		}
-	}
+    var tile = TileEntity.getPrototype(BlockID[i]);
+    if(!tile) {
+      ICRender.getGroup("ender-bars").add(BlockID[i], -1);
+    }
+  }
 });*/
 
-IDRegistry.genBlockID("reinforcedObsidian");
-Block.createBlock("reinforcedObsidian", [
-  { name: "Reinforced Obsidian", texture: [["reinforcedObsidian", 0]], inCreative: true }
-], "BLOCK_TYPE_ANTI_EXPLO")
-ToolAPI.registerBlockMaterial(BlockID.reinforcedObsidian, "stone")/*
-Recipes.addShaped({ id: BlockID.reinforcedObsidian, count: 1, data: 0 }, [
-	"bab",
-	"aca",
-	"bab"
-], ['a', ItemID.darkSteel, 0, 'b', BlockID.darkSteelBars, 0, 'c', 49, 0]);*/
-Block.registerDropFunction("reinforcedObsidian", function(coords, blockID, blockData, level) {
-  if (level > 3) {
-    return [[BlockID.reinforcedObsidian, 1, 0]]
-  }
-  return [];
-}, 2);

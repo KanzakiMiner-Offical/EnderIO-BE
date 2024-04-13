@@ -2,24 +2,33 @@ BlockRegistry.createBlock("simplesagmill", [
   {
     name: "tile.block_simple_sag_mill.name",
     texture: [["simple_machine_bottom", 0], ["simple_machine_top", 0], ["simple_machine_side", 0], ["block_simple_sagmill_front", 0], ["simple_machine_side", 0], ["simple_machine_side", 0]
-	 ],
+    ],
     inCreative: true
   }
 ], "machine");
 
 TileRenderer.setHandAndUiModel(BlockID.simplesagmill, 0, [["simple_machine_bottom", 0], ["simple_machine_top", 0], ["simple_machine_side", 0], ["block_simple_sagmill_front", 0], ["simple_machine_side", 0], ["simple_machine_side", 0]
-	 ]);
+]);
 TileRenderer.setStandardModelWithRotation(BlockID.simplesagmill, 2, [["simple_machine_bottom", 0], ["simple_machine_top", 0], ["simple_machine_side", 0], ["block_simple_sagmill_front", 0], ["simple_machine_side", 0], ["simple_machine_side", 0]
-	 ]);
+]);
 TileRenderer.registerModelWithRotation(BlockID.simplesagmill, 2, [["simple_machine_bottom", 0], ["simple_machine_top", 0], ["simple_machine_side", 0], ["block_simple_sagmill_front_on", 0], ["simple_machine_side", 0], ["simple_machine_side", 0]]);
 
 TileRenderer.setRotationFunction(BlockID.simplesagmill);
 
+
+Callback.addCallback("PreLoaded", function () {
+  Recipes.addShaped({ id: BlockID.simplesagmill, count: 1, data: 0 }, [
+    "fff",
+    "ipi",
+    "ama"
+  ], ['i', VanillaItemID.iron_ingot, 0, 'f', VanillaItemID.flint, 0, "m", VanillaBlockID.piston, 0, "p", BlockID.machineChassiSimple, 0, 'a', ItemID.woodGear, 0 ]);
+
+})
 let simpleSAGGui = MachineRegistry.createInventoryWindow("Simple SAG Mill", {
   drawing: [
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
     { type: "bitmap", x: 595, y: 250, bitmap: "bar_progress_down0", scale: 4.2 },
-    ],
+  ],
   elements: {
     "progressScale": {
       type: "scale",
@@ -29,7 +38,7 @@ let simpleSAGGui = MachineRegistry.createInventoryWindow("Simple SAG Mill", {
       bitmap: "bar_progress_down1",
       scale: 4.2,
       clicker: {
-        onClick: function() {
+        onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("enderio_sag");
         }
       }

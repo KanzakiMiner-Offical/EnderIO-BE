@@ -1,6 +1,3 @@
-/// <reference path="./core-engine.d.ts" />
-
-
 declare namespace BlockEngine {
     /**
      * @returns game version as array
@@ -12,10 +9,26 @@ declare namespace BlockEngine {
     function getMainGameVersion(): number;
     /**
      * Sends packet with message which will be translated by the client.
-     * @param client receiver client
-     * @param texts array of strings which will be translated and combined in one message.
+     * @deprecated Use sendMessage instead.
      */
     function sendUnlocalizedMessage(client: NetworkClient, ...texts: string[]): void;
+    /**
+     * Sends packet with message which will be translated by the client,
+     * the message can be parametrized using '%s' symbols as placeholders.
+     * @param client receiver client
+     * @param message unlocalized string
+     * @param params array of unlocalized substrings that will be substituted into the message after translation
+     */
+    function sendMessage(client: NetworkClient, message: string, ...params: string[]): void;
+    /**
+     * Sends packet with message which will be translated by the client,
+     * the message can be parametrized using '%s' symbols as placeholders.
+     * @param client receiver client
+     * @param color chat color code
+     * @param message unlocalized string
+     * @param params array of unlocalized substrings that will be substituted into the message after translation
+     */
+    function sendMessage(client: NetworkClient, color: EColor, message: string, ...params: string[]): void;
 }
 declare namespace BlockEngine {
     namespace Decorators {
@@ -1643,7 +1656,7 @@ declare namespace ItemRegistry {
      * @returns item class instance
      */
     export function createTool(stringID: string, params: ToolDescription, toolData?: ToolParams): ItemTool;
-    export { };
+    export {};
 }
 /**
  * Class representing item stack in the inventory.
@@ -1779,7 +1792,7 @@ declare namespace IDConverter {
      * @returns converted data
      */
     export function getData(stringId: string): number;
-    export { };
+    export {};
 }
 declare abstract class TileEntityBase implements TileEntity {
     constructor();
@@ -1980,7 +1993,7 @@ declare namespace LiquidItemRegistry {
      * @returns object that contains full item and free liquid capacity
      */
     export function getFullItem(id: number, data: number, liquid: string): FullData;
-    export { };
+    export {};
 }
 declare namespace BlockEngine {
     /**

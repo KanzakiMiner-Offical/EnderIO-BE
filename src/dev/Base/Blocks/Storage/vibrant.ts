@@ -1,7 +1,7 @@
 BlockRegistry.createBlock("bankVibrant", [
   { name: "tile.block_cap_bank.vibrant.name", texture: [["capacitorBankVibrant", 0], ["capacitorBankVibrant", 0], ["capacitorBankVibrant", 0], ["capacitorBankVibrantFront", 0], ["capacitorBankVibrant", 0], ["capacitorBankVibrant", 0]], inCreative: true }
 ], "machine");
-BlockRegistry.setBlockMaterial(BlockID.bankVibrant, "ston3");
+BlockRegistry.setBlockMaterial(BlockID.bankVibrant, "stone");
 
 Callback.addCallback("PreLoaded", function() {
    Recipes.addShaped({ id: BlockID.bankVibrant, count: 1, data: 0 }, [

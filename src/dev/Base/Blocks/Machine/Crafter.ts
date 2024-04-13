@@ -1,26 +1,25 @@
 // @ts-nocheck
-
 BlockRegistry.createBlock("crafter", [
   {
-     name: "tile.block_crafter.name",
-     texture: [
+    name: "tile.block_crafter.name",
+    texture: [
       ["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["block_crafter_solid", 0], ["machineSide", 0], ["machineSide", 0]],
-     inCreative: true
- }
+    inCreative: true
+  }
 ], "machine");
 
-Callback.addCallback("PreLoaded", function() {
+Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped({ id: BlockID.crafter, count: 1, data: 0 }, [
-    	"iai",
-    	"imi",
-	   "ici"
+    "iai",
+    "imi",
+    "ici"
   ], ['i', VanillaItemID.iron_ingot, 0, "m", BlockID.machineChassi, 0, "c", ItemID.skullZombieController, 0, "a", VanillaBlockID.crafting_table, 0]);
 });
 
 let craftUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_crafter.name"), {
   drawing: [
     { type: "bitmap", x: 370, y: 60, bitmap: "redflux_bar0", scale: 3.2 },
-	  ],
+  ],
 
   elements: {
 
@@ -49,10 +48,10 @@ let craftUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.
       size: 60,
 
       clicker: {
-        onClick: function(position, container, tileEntity) {
+        onClick: function (position, container, tileEntity) {
           return;
         },
-        onLongClick: function(position, container, tileEntity) {
+        onLongClick: function (position, container, tileEntity) {
           this.onClick(position, container, tileEntity);
         }
       }
@@ -148,7 +147,7 @@ namespace Machine {
         for (let i = 1; i <= 10; i++) {
           let item = this.container.getSlot("slotI" + i);
           let keys__ = keys[a].split(":")
-          if (count <= 0 || (item.id != keys__[0] && item.data != keys__[1]))
+          if (count <= 0 || (item.id != parseInt(keys__[0]) && item.data != parseInt(keys__[1])))
             continue;
           item.count -= count;
           count = 0;
@@ -163,11 +162,11 @@ namespace Machine {
       this.container.setWorkbenchFieldPrefix("slot");
       let res = Recipes.getRecipeResult(this.container);
       if (res) {
-        this.container.setSlot("slotInput", res.id, res.count, res.data);
-        //this.container.sendEvent("setIcon", { item: res })
+        // this.container.setSlot("slotInput", res.id, res.count, res.data);
+        this.container.sendEvent("setIcon", { item: res })
       } else {
-        this.container.setSlot("slotInput", 0, 0, 0);
-        //this.container.sendEvent("setIcon", { item: null })
+        // this.container.setSlot("slotInput", 0, 0, 0);
+        this.container.sendEvent("setIcon", { item: null })
       }
       let resultSlot = this.container.getSlot("slotResult");
       if (this.isProgress(res, resultSlot)) {
@@ -203,7 +202,7 @@ namespace Machine {
       this.container.sendChanges();
     }
 
-    destroyBlock(coords, player): void {
+    destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
       let region = BlockSource.getDefaultForActor(player)
       this.container.clearSlot("slotInput");
       region.spawnDroppedItem(coords.x + .5, coords.y + .5, coords.z + .5, BlockID.crafter, 1, 0);
@@ -212,19 +211,23 @@ namespace Machine {
     @ContainerEvent(Side.Client)
     setIcon(container: ItemContainer, window: any, content: any, data: { item: ItemInstance }): void {
       if (content) {
-        let element = content.elements["iconResult"]
-        let text_e = content.elements["textResult"]
-        if (!!data.item) {
-          let texture = CraterHelper.getIcon(data.item);
-          if (element.bitmap != texture) {
-            element.bitmap = texture
-            element.visual = true
-            text_e.text = `${data.item.count}`
-          }
-        } else {
-          element.bitmap = "empty"
-          text_e.text = "0"
+        let gui = container.getUiAdapter();
+        if (gui) {
+          gui.setBinding("slotInput", "source", data.item ? { id: data.item.id, count: 1, data: data.item.data } : { id: 0, count: 1, data: 0 })
         }
+        // let element = content.elements["iconResult"]
+        // let text_e = content.elements["textResult"]
+        // if (!!data.item) {
+        //   let texture = CraterHelper.getIcon(data.item);
+        //   if (element.bitmap != texture) {
+        //     element.bitmap = texture
+        //     element.visual = true
+        //     text_e.text = `${data.item.count}`
+        //   }
+        // } else {
+        //   element.bitmap = "empty"
+        //   text_e.text = "0"
+        // }
       }
     }
 

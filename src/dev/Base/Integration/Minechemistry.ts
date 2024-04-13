@@ -1,3 +1,4 @@
+// @ts-nocheck
 ModAPI.addAPICallback("ChemCore", function(Chem) {
    var DecomposeRecipe = Chem.Decompose;
    var SynthesisRecipe = Chem.Synthesis;

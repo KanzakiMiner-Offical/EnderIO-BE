@@ -1,6 +1,6 @@
 namespace Machine {
   export abstract class BasicMachine
-  extends ProgressingMachine {
+    extends ProgressingMachine {
     defaultValues = {
       energy: 0,
       progress: 0
@@ -8,11 +8,11 @@ namespace Machine {
 
     defaultTier = 2;
     defaultEnergyStorage = 100000;
-    defaultEnergyConsume ? : number;
+    defaultEnergyConsume?: number;
 
     tier: 2;
     energyStorage: number;
-    energyConsume ? : number;
+    energyConsume?: number;
     processTime: number;
 
     getTier(): number {
@@ -37,13 +37,23 @@ namespace Machine {
       this.energyStorage = upgrades.getEnergyStorage(this.defaultEnergyStorage);
       return upgrades;
     }
-    
+
     getRelativeEnergy(): number {
       return this.data.energy / this.getEnergyStorage();
     }
 
     canRotate(side: number): boolean {
       return side > 1;
+    }
+
+    energyReceive(type: string, amount: number, voltage: number): number {
+      let maxVoltage = this.energyConsume > this.getMaxIntake() ? this.energyConsume : this.getMaxIntake();
+      if (voltage > maxVoltage) {
+        amount = Math.min(amount, maxVoltage);
+      }
+      let add = Math.min(amount, this.getEnergyStorage() - this.data.energy);
+      this.data.energy += add;
+      return add;
     }
   }
 }

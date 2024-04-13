@@ -145,8 +145,6 @@ Item.registerUseFunction("soulVessel", function(coords, item, block, player) {
   }
   var blockSource = BlockSource.getDefaultForActor(player);
   var entityType = item.extra.getInt('type') || item.extra.getString('type');
-  // debug
-  //Debug.big(entityType);
 
   var newEntity = blockSource.spawnEntity(newCoords.x, newCoords.y, newCoords.z, entityType);
   entityTag.putInt64('UniqueID', newEntity);

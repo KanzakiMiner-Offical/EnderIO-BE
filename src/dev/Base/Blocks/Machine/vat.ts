@@ -7,12 +7,35 @@ function setVatRender() {
   BlockRenderer.setStaticICRender(BlockID.theVat, 0, vatRender);
   var model = BlockRenderer.createModel();
 
-  model.addBox(0 / 16, 0 / 16, 0 / 16, 16 / 16, 4 / 16, 16 / 16, "machineBottom", 0);
-  model.addBox(9 / 16, 4 / 16, 0 / 16, 16 / 16, 16 / 16, 16 / 16, "machineBottom", 0);
-  model.addBox(0 / 16, 4 / 16, 0 / 16, 7 / 16, 16 / 16, 16 / 16, "machineBottom", 0);
-  model.addBox(7 / 16, 4 / 16, 4 / 16, 9 / 16, 11 / 16, 12 / 16, "machineBottom", 0);
-  model.addBox(7 / 16, 8 / 16, 4 / 16, 9 / 16, 10 / 16, 18 / 16, "machineBottom", 0);
-  model.addBox(7 / 16, 12 / 16, 4 / 16, 9 / 16, 14 / 16, 12 / 16, "machineBottom", 0);
+  model.addBox(0.25 / 16, 0.25 / 16, 0.25 / 16, 15.75 / 16, 4 / 16, 15.75 / 16, [["machineBottom", 0], ["machineBottom", 0], ["base", 0], ["base", 0], ["base", 0], ["base", 0]]); //base
+  model.addBox(0.25 / 16, 4 / 16, 0.25 / 16, 6.75 / 16, 15.75 / 16, 15.75 / 16, [["machineBottom", 0], ["tank_top_front", 0], ["machineBottom", 0], ["tank_top_front", 1], ["vat_tank_side", 0], ["vat_tank_side", 0]]); //rightTank
+  model.addBox(9.25 / 16, 4 / 16, 0.25 / 16, 15.75 / 16, 15.75 / 16, 15.75 / 16, [["machineBottom", 0], ["tank_top_front", 0], ["machineBottom", 0], ["tank_top_front", 1], ["vat_tank_side", 0], ["vat_tank_side", 0]]); //leftTank
+  model.addBox(6.75 / 16, 5 / 16, 4 / 16, 9.25 / 16, 12 / 16, 12 / 16, "machineBottom", 0); //center
+  model.addBox(6.75 / 16, 13 / 16, 4 / 16, 9.25 / 16, 15 / 16, 12 / 16, "machineBottom", 0); //centerTop
+  model.addBox(7.5 / 16, 12 / 16, 1.5 / 16, 8.5 / 16, 13 / 16, 5.5 / 16, "machineBottom", 0); //spout
+  model.addBox(7.5 / 16, 12 / 16, 0.4 / 16, 8.5 / 16, 13 / 16, 2.4 / 16, "machineBottom", 0); //spoutTip
+  model.addBox(0 / 16, 0 / 16, 0 / 16, 1 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
+  model.addBox(15 / 16, 0 / 16, 0 / 16, 16 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
+  model.addBox(15 / 16, 0 / 16, 15 / 16, 16 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
+  model.addBox(0 / 16, 0 / 16, 15 / 16, 1 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
+  model.addBox(1 / 16, 0 / 16, 0 / 16, 15 / 16, 1 / 16, 1 / 16, "machineBottom", 0); //undefined
+  model.addBox(10 / 16, 15 / 16, 0 / 16, 15 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
+  model.addBox(1 / 16, 0 / 16, 15 / 16, 15 / 16, 1 / 16, 16 / 16, "machineBottom", 0); //undefined
+  model.addBox(10 / 16, 15 / 16, 15 / 16, 15 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
+  model.addBox(0 / 16, 0 / 16, 1 / 16, 1 / 16, 1 / 16, 15 / 16, "machineBottom", 0); //undefined
+  model.addBox(0 / 16, 15 / 16, 1 / 16, 1 / 16, 16 / 16, 15 / 16, "machineBottom", 0); //undefined
+  model.addBox(15 / 16, 0 / 16, 1 / 16, 16 / 16, 1 / 16, 15 / 16, "machineBottom", 0); //undefined
+  model.addBox(15 / 16, 15 / 16, 1 / 16, 16 / 16, 16 / 16, 15 / 16, "machineBottom", 0); //undefined
+  model.addBox(1 / 16, 15 / 16, 15 / 16, 6 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
+  model.addBox(1 / 16, 15 / 16, 0 / 16, 6 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
+  model.addBox(9 / 16, 4.5 / 16, 0 / 16, 10 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
+  model.addBox(6 / 16, 4.5 / 16, 0 / 16, 7 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
+  model.addBox(6 / 16, 4.5 / 16, 15 / 16, 7 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
+  model.addBox(9 / 16, 4.5 / 16, 15 / 16, 10 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
+  model.addBox(6 / 16, 15 / 16, 1 / 16, 7 / 16, 16 / 16, 15 / 16, "machineBottom", 0); //undefined
+  model.addBox(9 / 16, 15 / 16, 1 / 16, 10 / 16, 16 / 16, 15 / 16, "machineBottom", 0); //undefined
+  model.addBox(6 / 16, 3.5 / 16, 0 / 16, 10 / 16, 4.5 / 16, 1 / 16, "machineBottom", 0); //undefined
+  model.addBox(6 / 16, 3.5 / 16, 15 / 16, 10 / 16, 4.5 / 16, 16 / 16, "machineBottom", 0); //undefined
 
   vatRender.addEntry(model);
 }
@@ -313,7 +336,7 @@ namespace Machine {
     },
     canReceiveLiquid: () => true,
     canTransportLiquid: () => true,
-    getInputTank: function () {
+    getInputTank: function (side: number) {
       return this.tileEntity.inputTank;
     },
     getOutputTank: function () {

@@ -1,3 +1,4 @@
+// @ts-nocheck
 ModAPI.addAPICallback("EquivalentAPI", function(api) {
 let System = api.System; Callback.addCallback("PreLoaded", function() {
   //Other

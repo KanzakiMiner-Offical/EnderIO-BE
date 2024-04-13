@@ -12,8 +12,12 @@ EnderCore.createResourceItem("redstoneAlloy", "Redstone Alloy");
 ItemRegistry.createItem("pulsatingCrystal", { name: "item.item_material.pulsating_crystal.name", icon: "pulsatingCrystal", stack: 64 });
 ItemRegistry.createItem("dustPulsating", { name: "item.item_material.pulsating_powder.name", icon: "pulsatingPowder", stack: 64 });
 ItemRegistry.createItem("dustInfinity", { name: "item.item_material.powder_infinity.name", icon: "dustInfinity", stack: 64 });
-KEX.ItemsModule.setFireResistant(ItemID.dustInfinity, true);
 
+// ModAPI.addAPICallback("KernelExtension", function (api: KEXAPI) {
+//   if (typeof api.getKEXVersionCode === "function" && api.getKEXVersionCode() >= 300) {
+//     KEX.ItemsModule.setFireResistant(ItemID.dustInfinity, true);
+//   }
+// });
 ItemRegistry.createItem("binderComposite", { name: "item.item_material.binder_composite.name", icon: "binderComposite", stack: 64 });
 ItemRegistry.createItem("conduitBinder", { name: "item.item_material.conduit_binder.name", icon: "conduitBinder", stack: 64 });
 ItemRegistry.createItem("silicon", { name: "item.item_material.silicon.name", icon: "silicon", stack: 64 });

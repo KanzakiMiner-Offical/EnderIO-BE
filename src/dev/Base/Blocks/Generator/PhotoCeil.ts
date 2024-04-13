@@ -9,7 +9,7 @@ ItemRegistry.createItem("dustPhotovoltaic", {
 
 
 class BlockPhotovoltaic extends BlockBase {
-  constructor(id: string, name: string, texture: [string, number][], miningLevel ? : number) {
+  constructor(id: string, name: string, texture: [string, number][], miningLevel?: number) {
     miningLevel = miningLevel || 1
     super(id, "other-machine")
     this.addVariation(name, texture, true)
@@ -17,7 +17,7 @@ class BlockPhotovoltaic extends BlockBase {
     this.setDestroyTime(3)
     this.setShape(0, 0, 0, 1, 0.2, 1, -1)
 
-    Item.registerNameOverrideFunction(id, function(item, translation, name) {
+    Item.registerNameOverrideFunction(Block.getNumericId(id), function (item, translation, name) {
       return name + "\n" + Translation.translate("tile.block_solar_panel.tooltip.common.line1") + "\n" + Translation.translate("tile.block_solar_panel.tooltip.detailed.line1") + "\n" + Translation.translate("tile.block_solar_panel.tooltip.detailed.line2")
     })
   }
@@ -33,31 +33,31 @@ Item.addCreativeGroup("photovoltaicCeil", Translation.translate("tile.block_sola
   BlockID.vibrantPhotovoltaicCell
 ])
 
-Callback.addCallback("PreLoaded", function() {
+Callback.addCallback("PreLoaded", function () {
   if (!EnderConfig.oldMode) {
     Recipes.addShaped({ id: BlockID.advancedPhotovoltaicCell, count: 1, data: 0 },
-    ["aga",
-     "sbs",
-     "epe"],
-  ['e', ItemID.basicCapacitor, 0, 'a', ItemID.pulsatingIron, 0, 's', ItemID.energeticAlloy, 0, 'p', BlockID.photovoltaicCell, 0, 'g', BlockID.fusedQuartz, 0, 'b', ItemID.dustCoal, 0])
+      ["aga",
+        "sbs",
+        "epe"],
+      ['e', ItemID.basicCapacitor, 0, 'a', ItemID.pulsatingIron, 0, 's', ItemID.energeticAlloy, 0, 'p', BlockID.photovoltaicCell, 0, 'g', BlockID.fusedQuartz, 0, 'b', ItemID.dustCoal, 0])
 
     Recipes.addShaped({ id: BlockID.photovoltaicCell, count: 1, data: 0 },
-    ["aga",
-     "ppp",
-     "ese"],
-  ['e', ItemID.basicCapacitor, 0, 'a', ItemID.energeticAlloy, 0, 's', 151, 0, 'p', ItemID.platePhotovoltaic, 0, 'g', BlockID.fusedQuartz, 0])
+      ["aga",
+        "ppp",
+        "ese"],
+      ['e', ItemID.basicCapacitor, 0, 'a', ItemID.energeticAlloy, 0, 's', 151, 0, 'p', ItemID.platePhotovoltaic, 0, 'g', BlockID.fusedQuartz, 0])
 
     Recipes.addShaped({ id: BlockID.photovoltaicCell, count: 1, data: 0 },
-    ["aga",
-     " p ",
-     "ese"],
-  ['e', ItemID.basicCapacitor, 0, 'a', ItemID.energeticAlloy, 0, 's', 151, 0, 'p', BlockID.simplePhotovoltaicCell, 0, 'g', BlockID.fusedQuartz, 0])
+      ["aga",
+        " p ",
+        "ese"],
+      ['e', ItemID.basicCapacitor, 0, 'a', ItemID.energeticAlloy, 0, 's', 151, 0, 'p', BlockID.simplePhotovoltaicCell, 0, 'g', BlockID.fusedQuartz, 0])
 
     Recipes.addShaped({ id: ItemID.dustPhotovoltaic, count: 1, data: 0 },
-    ["   ",
-     "sgp",
-     "   "],
-  ['s', ItemID.silicon, 0, 'p', ItemID.dustLapis, 0, 'g', ItemID.dustCoal, 0])
+      ["   ",
+        "sgp",
+        "   "],
+      ['s', ItemID.silicon, 0, 'p', ItemID.dustLapis, 0, 'g', ItemID.dustCoal, 0])
     SmelterRecipe.addRecipe({
       ingredient1: { id: ItemID.dustPhotovoltaic, data: 0, count: 2 },
       //ingredient2: { id: 0, data: 0 },
@@ -67,16 +67,16 @@ Callback.addCallback("PreLoaded", function() {
     })
   } else {
     Recipes.addShaped({ id: BlockID.photovoltaicCell, count: 1, data: 0 },
-    ["aga",
-     "pgp",
-     "ese"],
-  ['e', ItemID.electricalSteel, 0, 'a', ItemID.energeticAlloy, 0, 's', 151, 0, 'p', ItemID.silicon, 0, 'g', BlockID.fusedQuartz, 0])
+      ["aga",
+        "pgp",
+        "ese"],
+      ['e', ItemID.electricalSteel, 0, 'a', ItemID.energeticAlloy, 0, 's', 151, 0, 'p', ItemID.silicon, 0, 'g', BlockID.fusedQuartz, 0])
 
     Recipes.addShaped({ id: BlockID.advancedPhotovoltaicCell, count: 1, data: 0 },
-    ["aga",
-     "pgp",
-     "ese"],
-  ['e', ItemID.pulsatingIron, 0, 'a', ItemID.vibrantAlloy, 0, 's', 151, 0, 'p', ItemID.vibrantCrystal, 0, 'g', BlockID.fusedQuartz, 0])
+      ["aga",
+        "pgp",
+        "ese"],
+      ['e', ItemID.pulsatingIron, 0, 'a', ItemID.vibrantAlloy, 0, 's', 151, 0, 'p', ItemID.vibrantCrystal, 0, 'g', BlockID.fusedQuartz, 0])
 
   }
 })

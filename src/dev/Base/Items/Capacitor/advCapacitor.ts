@@ -1,3 +1,7 @@
+namespace LootCapacitorLogic {
+
+}
+
 // IDRegistry.genItemID("advCapacitor");
 // Item.createItem("advCapacitor", "Adv Capacitor", { name: "item_basic_capacitor_special2" }, { stack: 1 });
 
@@ -6,4 +10,3 @@
 //   KEX.LootModule.createLootTableModifier("chests/" + chestName)
 //     .addItem(ItemID.advCapacitor, 1, 0, 0.135, 3);
 // });
- 

@@ -1,9 +1,7 @@
 /// <reference path="Base.ts" /> 
 
 namespace Machine {
-  export abstract class ProgressingMachine
-  extends MachineBase
-  implements EnergyTile {
+  export abstract class ProgressingMachine extends MachineBase implements EnergyTile {
     energyNode: EnergyTileNode;
     energyTypes: object;
 
@@ -11,7 +9,6 @@ namespace Machine {
       energy: 0
     };
 
-    data: this["defaultValues"];
     tier: number;
 
     getTier(): number {
@@ -43,16 +40,10 @@ namespace Machine {
       return super.onItemUse(coords, item, player);
     }
 
-    energyTick(type: string, src: EnergyTileNode): void {}
+    energyTick(type: string, src: EnergyTileNode): void { }
 
     energyReceive(type: string, amount: number, voltage: number): number {
-      let maxVoltage = this.getMaxIntake();
-      if (voltage > maxVoltage) {
-        amount = Math.min(amount, maxVoltage);
-      }
-      let add = Math.min(amount, this.getEnergyStorage() - this.data.energy);
-      this.data.energy += add;
-      return add;
+      return 0;
     }
 
     canReceiveEnergy(side: number, type: string): boolean {
