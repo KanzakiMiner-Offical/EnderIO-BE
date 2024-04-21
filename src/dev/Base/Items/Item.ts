@@ -162,3 +162,12 @@ class XpTransfer extends ItemCommon {
   }
 }
 ItemRegistry.registerItem(new XpTransfer());
+
+Callback.addCallback("PreLoaded", function () {
+  Recipes.addShaped({ id:  ItemID.itemXpTransfer, count: 1, data: 0 }, [
+    "  e",
+    " a ",
+    "e"
+  ], ['a', ItemID.energeticAlloy, 0, 'e', ItemID.soularium]
+  );
+});

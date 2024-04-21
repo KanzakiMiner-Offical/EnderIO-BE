@@ -134,7 +134,7 @@ CombustionFuel.addFuel("rocketFuel", 160, 7000)
 
 CombustionFuel.addCoolant("water", 0.0023, 300)
 CombustionFuel.addCoolant("vaporOfLevity", 0.0314, 5)
-//CombustionFuel.addCoolant("enderDistillation", 0.0023, 175)
+CombustionFuel.addCoolant("enderDistillation", 0.0023, 175)
 
 let HEAT_PER_RF = 0.00023 / 2;
 class CombustionMath {

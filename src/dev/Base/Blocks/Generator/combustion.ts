@@ -6,7 +6,7 @@ BlockRegistry.createBlock("combustionGenerator", [
       ["combustion_gen_front", 0], ["machineSide", 0], ["machineSide", 0]],
     inCreative: true
   }
-], "machine");
+], "other-machine");
 
 Block.setBlockShape(BlockID.combustionGenerator, { x: 0.1, y: 0, z: 0 }, { x: 0.95, y: 0.95, z: 0.95 });
 /*

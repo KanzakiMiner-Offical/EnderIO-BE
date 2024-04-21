@@ -12,6 +12,28 @@ ToolAPI.registerBlockMaterial(BlockID.weather_obelisk, "stone")
 
 ObeliskCore.registerModel("weather_obelisk", "experience_obelisk");
 
+
+Callback.addCallback("PreLoaded", function () {
+  Recipes.addShaped({ id: BlockID.weather_obelisk, count: 1, data: 0 }, [
+    " e ",
+    "cac",
+    "aba"
+  ], ['a', ItemID.soularium, 0, 'e', ItemID.weatherCrystal, 0, 'b', BlockID.bankBasic, 0, 'c', ItemID.energeticAlloy, 0,]// function (api: Recipes.WorkbenchFieldAPI, field: com.zhekasmirnov.innercore.api.mod.ui.container.Slot[], result: ItemInstance) {
+    //   let xp = new ItemExtraData();
+    //   for (let i = 0; i < field.length; i++) {
+    //     if (field[i].id == ItemID.itemXpTransfer && field[i].extra) {
+    //       if (field[i].extra.getInt("xp_stored") > 0) {
+    //         xp.putString("fluid", "xpjuice")
+    //         xp.putInt("amount", this.liquidTank.getAmount(field[i].extra.getInt("xp_stored")))
+    //       }
+    //       api.decreaseFieldSlot(i);
+    //     }
+    //   }
+    //   result.extra = xp;
+    //}
+  );
+});
+
 let weatherObeliskGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_weather_obelisk.name"), {
   drawing: [
     { type: "bitmap", x: 360, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
@@ -133,7 +155,7 @@ namespace Machine {
     }
 
     destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
-      let extra: ItemExtraData
+      let extra: ItemExtraData = null
       let region = BlockSource.getDefaultForActor(player)
       let liquid = this.liquidTank.getLiquidStored()
       if (liquid) {

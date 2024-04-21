@@ -232,10 +232,11 @@ namespace Machine {
         };
         if (this.data.progress >= 3000) {
           let inputSlot = this.container.getSlot(recipe.ingredient);
-          inputSlot.count -= Math.min(inputSlot.count, 3);
+          let count = Math.min(inputSlot.count, 3)
+          inputSlot.count -= count;
           inputSlot.validate();
           inputSlot.markDirty();
-          resultSlot.setSlot(recipe.result.id, resultSlot.count + Math.min(inputSlot.count * recipe.result.count, 3 * recipe.result.count), recipe.result.data || 0)
+          resultSlot.setSlot(recipe.result.id, resultSlot.count + Math.min(count * recipe.result.count, 3 * recipe.result.count), recipe.result.data || 0)
           this.container.validateAll()
           this.data.progress = 0
         }

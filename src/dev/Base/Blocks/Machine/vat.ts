@@ -211,6 +211,25 @@ VatRecipe.add({
   energy: 10000
 });
 
+VatRecipe.add({
+  input1: {
+    "ItemID.dustSilver": 3.5,
+    "ItemID.dustSalt": 2.5,
+    "minecraft:clay_ball": 0.5,
+    "minecraft:clay": 2
+  },
+  input2: {
+    "minecraft:packed_ice": 1.5,
+    "minecraft:ice": 1,
+    "minecraft:snowball": 0.1,
+    "minecraft:snow": 0.5
+  },
+  inputLiquid: "water",
+  inputMutilplier: 1,
+  outputLiquid: "cloudSeed",
+  energy: 10000
+});
+
 Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped({ id: BlockID.theVat, count: 1, data: 0 }, [
     "ici",
