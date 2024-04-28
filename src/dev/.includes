@@ -71,6 +71,8 @@ Endergy/**/*
 
 Base/Integration/thermal.ts
 Base/Integration/ic2.ts
+Base/Integration/bc.ts
+Base/Integration/forestry.ts
 Base/Integration/rv.ts
 Base/Integration/kex.ts
 

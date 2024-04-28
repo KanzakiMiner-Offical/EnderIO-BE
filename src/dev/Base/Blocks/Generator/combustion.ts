@@ -224,7 +224,7 @@ namespace Machine {
       if (this.data.burn_time <= 0 && math.getTicksPerFuel(this.heatTank.getLiquid(this.heatTank.getLiquidStored(), 100)) > 0) {
         this.data.burn_time += math.getTicksPerFuel(this.heatTank.getLiquid(this.heatTank.getLiquidStored(), 100));
       }
-      math = new CombustionMath(new CombustionFuel.CoolantImpl(this.coolTank.getLiquidStored()), new CombustionFuel.FuelImpl(this.heatTank.getLiquidStored()), this.bonus, 2)
+      math = new CombustionMath(new CombustionFuel.CoolantImpl(this.coolTank.getLiquidStored()), new CombustionFuel.FuelImpl(this.heatTank.getLiquidStored()), this.bonus, 1)
       // last sanity check, then generate energy
       if (this.data.cool_time > 0 && this.data.burn_time > 0) {
         this.data.burn_time--;

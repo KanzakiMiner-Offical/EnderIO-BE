@@ -18,20 +18,7 @@ Callback.addCallback("PreLoaded", function () {
     " e ",
     "cac",
     "aba"
-  ], ['a', ItemID.soularium, 0, 'e', ItemID.weatherCrystal, 0, 'b', BlockID.bankBasic, 0, 'c', ItemID.energeticAlloy, 0,]// function (api: Recipes.WorkbenchFieldAPI, field: com.zhekasmirnov.innercore.api.mod.ui.container.Slot[], result: ItemInstance) {
-    //   let xp = new ItemExtraData();
-    //   for (let i = 0; i < field.length; i++) {
-    //     if (field[i].id == ItemID.itemXpTransfer && field[i].extra) {
-    //       if (field[i].extra.getInt("xp_stored") > 0) {
-    //         xp.putString("fluid", "xpjuice")
-    //         xp.putInt("amount", this.liquidTank.getAmount(field[i].extra.getInt("xp_stored")))
-    //       }
-    //       api.decreaseFieldSlot(i);
-    //     }
-    //   }
-    //   result.extra = xp;
-    //}
-  );
+  ], ['a', ItemID.soularium, 0, 'e', ItemID.weatherCrystal, 0, 'b', BlockID.bankBasic, 0, 'c', ItemID.energeticAlloy, 0,]);
 });
 
 let weatherObeliskGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_weather_obelisk.name"), {
@@ -121,7 +108,8 @@ namespace Machine {
       let input1 = this.container.getSlot("slotInput1");
       if (this.data.activeObelisk) {
         let weather_type = ObeliskCore.getTypeWeather(this.liquidTank)
-        if (input1.id == VanillaItemID.firework_rocket && input1.count >= 1 && (input1.data == 0 || input1.data == -1) && !!weather_type && this.liquidTank.getAmount() >= 1000) {
+        let cur_weather = World.getWeather();
+        if (input1.id == VanillaItemID.firework_rocket && input1.count >= 1 && (input1.data == 0 || input1.data == -1) && !!weather_type && this.liquidTank.getAmount() >= 1000 && weather_type == cur_weather) {
           if (this.data.energy >= 50) {
             newActive = true;
             this.data.progress += 50;

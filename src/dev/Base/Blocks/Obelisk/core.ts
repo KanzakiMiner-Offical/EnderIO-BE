@@ -72,7 +72,7 @@ namespace ObeliskCore {
   }
 
   // weather
-  export function getTypeWeather(tank: BlockEngine.LiquidTank) {
+  export function getTypeWeather(tank: BlockEngine.LiquidTank): Weather {
     let liquid = tank.getLiquidStored();
     switch (liquid) {
       case "sunshine":
@@ -96,6 +96,5 @@ namespace ObeliskCore {
       default:
         return null;
     }
-    return null
   }
 }

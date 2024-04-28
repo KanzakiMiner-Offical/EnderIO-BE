@@ -128,7 +128,7 @@ namespace CombustionFuel {
 
 }
 
-CombustionFuel.addFuel("hootch", 60, 6000) // name, mb/t, t
+CombustionFuel.addFuel("hootch", 60, 6000) // name, rf/t, tick burn/ buckets
 CombustionFuel.addFuel("fireWater", 80, 15000)
 CombustionFuel.addFuel("rocketFuel", 160, 7000)
 
@@ -171,5 +171,9 @@ class CombustionMath {
 
   getEnergyPerTick() {
     return this.energyPerTick;
+  }
+  // For RV
+  getEnergyGeneratorPerCycle(amount: number) {
+    return this.getEnergyPerTick() * Math.min(this.getTicksPerCoolant(amount), this.getTicksPerFuel(amount))
   }
 }

@@ -190,7 +190,7 @@ namespace VatRecipe {
     liquidIn: string,
   }
 
-  export function add(obj) {
+  export function add(obj: any) {
     let newData = {};
     let newData2 = {};
     for (let key1 in obj.input1) {
@@ -242,7 +242,7 @@ namespace VatRecipe {
     obj.input2 = newData2
     recipes.push(obj);
   }
-  export function getResult(i1, i2, inputTank): VatResultFormat {
+  export function getResult(i1: ItemInstance, i2: ItemInstance, inputTank: BlockEngine.LiquidTank): VatResultFormat {
     let result: VatResultFormat;
     let liquidStorage = inputTank.getLiquidStored();
     let liquidAmount = inputTank.getAmount(liquidStorage)
@@ -477,7 +477,7 @@ namespace RecipeRegistry {
   }
 
   export function addSBinder(obj: SoulRecipe.SoulBinderRecipeFormat): void {
-    if(obj.soul === -1) obj.soul = "all"
+    if (obj.soul === -1) obj.soul = "all"
     SoulRecipe.add(obj);
   }
 

@@ -1,6 +1,9 @@
-ModAPI.addAPICallback("ICore", function(api) {
-  CombustionFuel.addFuel("biogas", 50, 6000)
-  
+ModAPI.addAPICallback("ICore", function (api) {
+  CombustionFuel.addFuel("biogas", 16, 1000 * 10 * 10)
+  //CombustionFuel.addFuel("ethanol", 16, 1000 * 10 * 10)
+  //CombustionFuel.addFuel("oil", 8, 1000 * 10 * 10)
+  //CombustionFuel.addFuel("biomass", 8, 1000 * 20 * 10)
+
   Callback.addCallback("PreLoaded", function() {
     ICRender.getGroup("liquid_pipe").add(BlockID.semifluidGenerator, -1);
     ICRender.getGroup("liquid_pipe").add(BlockID.icFermenter, -1);

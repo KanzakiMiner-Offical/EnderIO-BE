@@ -168,6 +168,6 @@ Callback.addCallback("PreLoaded", function () {
     "  e",
     " a ",
     "e"
-  ], ['a', ItemID.energeticAlloy, 0, 'e', ItemID.soularium]
+  ], ['a', ItemID.energeticAlloy, 0, 'e', ItemID.soularium, 0]
   );
 });

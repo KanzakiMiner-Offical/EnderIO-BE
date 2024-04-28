@@ -275,53 +275,47 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
   }
   api.RecipeTypeRegistry.register("ender_snads", new SliceNSpliceRecipe());
 
-  // class CombustionProduct extends RecipeType {
-  //   constructor() {
-  //     super("Combustion Fuel", VanillaItemID.bucket, {
-  //       drawing: [{ type: "bitmap", x: 120, y: 230, bitmap: "fire_scale1", scale: 3.2 }],
-  //       elements: {
-  //         inputLiq0: { type: "scale", x: 200, y: 120, width: 60, height: 200 },
-  //         inputLiq1: { type: "scale", x: 30, y: 120, width: 60, height: 200 },
-  //         textRF: { type: "text", x: 350, y: 200 },
-  //         text1: { type: "text", x: 350, y: 260 },
-  //         text2: { type: "text", x: 350, y: 320 }
-  //       }
-  //     });
-  //     this.setTankLimit(1000);
-  //   }
+  class CombustionProduct extends RecipeType {
+    constructor() {
+      super("Combustion Fuel", BlockID.combustionGenerator, {
+        drawing: [{ type: "bitmap", x: 120, y: 230, bitmap: "fire_scale1", scale: 3.2 }],
+        elements: {
+          inputLiq0: { type: "scale", x: 200, y: 120, width: 60, height: 200 },
+          inputLiq1: { type: "scale", x: 30, y: 120, width: 60, height: 200 },
+          textWarn: { type: "text", x: 350, y: 200 },
+        }
+      });
+      this.setTankLimit(1000);
+    }
 
-  //   getAllList(): RecipePattern[] {
-  //     const list: RecipePattern[] = [];
-  //     const coolants = CombustionFuel.getCoolArray();
-  //     const heats = CombustionFuel.getHeatArray();
-  //     for (let i in coolants) {
-  //       for (let e in heats) {
-  //         let coolant_fluid: string = coolants[i];
-  //         let heat_fluid: string = heats[e];
-  //         if (coolant_fluid && heat_fluid) {
-  //           let heat_impl = new CombustionFuel.FuelImpl(heat_fluid);
-  //           let coolant_impl = new CombustionFuel.CoolantImpl(coolant_fluid);
-  //           let math = new CombustionMath(coolant_impl, heat_impl, 1, 2);
-  //           list.push({
-  //             inputLiq: [{ liquid: coolant_fluid, amount: 100 }, { liquid: heat_fluid, amount: 100 }],
-  //             power: math.getEnergyPerTick(),
-  //             burn_time: {
-  //               coolant: math.getTicksPerCoolant(100),
-  //               heat: math.getTicksPerFuel(100)
-  //             }
-  //           })
-  //         }
+    getAllList(): RecipePattern[] {
+      const list: RecipePattern[] = [];
+      const coolants = CombustionFuel.getCoolArray();
+      const heats = CombustionFuel.getHeatArray();
+      for (let coolant_fluid of coolants) {
+        for (let heat_fluid of heats) {
+          let heat_impl = new CombustionFuel.FuelImpl(heat_fluid);
+          let coolant_impl = new CombustionFuel.CoolantImpl(coolant_fluid);
+          let math = new CombustionMath(coolant_impl, heat_impl, 1, 1);
+          list.push({
+            inputLiq: [
+              { liquid: coolant_fluid, amount: 100, tips: { amount: 100, burn_time: math.getTicksPerCoolant(100), power: math.getEnergyGeneratorPerCycle(100), powerTick: math.getEnergyPerTick() } },
+              { liquid: heat_fluid, amount: 100, tips: { amount: 100, burn_time: math.getTicksPerFuel(100), power: math.getEnergyGeneratorPerCycle(100), powerTick: math.getEnergyPerTick() } }]
+          });
+        }
+      }
+      return list;
+    }
 
-  //       }
-  //     }
-  //     return list;
-  //   }
-  //   onOpen(elements: java.util.HashMap<string, UI.Element>, recipe: RecipePattern): void {
-  //     elements.get("textRF")?.setBinding("text", "Product: " + recipe.power + " RF/t")
-  //     elements.get("text1")?.setBinding("Coolant burn time: " + recipe.burn_time.coolant + "s per 100mb")
-  //     elements.get("text2")?.setBinding("Fuel burn time: " + recipe.burn_time.heat + "s per 100mb")
-  //   }
-  // }
+    tankTooltip(name: string, liquid: LiquidInstance, tips: { [key: string]: any; }): string {
+      return name + "100 mB <=> Burn Time: " + tips.burn_time / 20 + "s\n Energy Per Tick: " + tips.powerTick + " RF/tick\n Energy Per Cycle: " + tips.power + " RF";
+    }
 
-  // api.RecipeTypeRegistry.register("ender_combustion", new CombustionProduct());
+    onOpen(elements: java.util.HashMap<string, UI.Element>, recipe: RecipePattern): void {
+      elements.get("textWarn")?.setBinding("text", "Data from normal tier with Basic Capacitor")
+    }
+
+  }
+
+  api.RecipeTypeRegistry.register("ender_combustion", new CombustionProduct());
 });
