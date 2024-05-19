@@ -77,3 +77,9 @@ Base/Integration/rv.ts
 Base/Integration/kex.ts
 
 Shared.ts
+
+Additional/api/miner.ts
+Additional/machine/miner.ts
+Additional/generator/black_hole.ts
+Additional/generator/stabilizer.ts
+Additional/mics.ts

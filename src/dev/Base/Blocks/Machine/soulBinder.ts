@@ -27,7 +27,7 @@ let soulBinderGUI = MachineRegistry.createInventoryWindow(Translation.translate(
       type: "scale",
       x: 600,
       y: 205,
-      bitmap: "bar_progress1",
+      bitmap: "bar_progress2",
       scale: 3.2,
       clicker: {
         onClick: function () {

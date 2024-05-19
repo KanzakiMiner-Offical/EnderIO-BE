@@ -22,71 +22,7 @@ Block.setBlockShape(BlockID.combustionGenerator, { x: 0.1, y: 0, z: 0 }, { x: 0.
  * ```
  */
 
-function setCombustionRender() {
-  let combustionRender = new ICRender.Model();
-  BlockRenderer.setStaticICRender(BlockID.combustionGenerator, 0, combustionRender);
-  var model = BlockRenderer.createModel();
 
-  model.addBox(5.75 / 16, 13.75 / 16, 2 / 16, 10.25 / 16, 15 / 16, 6 / 16, "combustion_gen_front", 0); //undefined
-  model.addBox(5.75 / 16, 13.75 / 16, 10 / 16, 10.25 / 16, 15 / 16, 14 / 16, "combustion_gen_front", 0); //undefined
-  model.addBox(0 / 16, 0 / 16, 15 / 16, 1 / 16, 16 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
-  model.addBox(1 / 16, 15 / 16, 15 / 16, 6 / 16, 16 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
-  model.addBox(1 / 16, 0 / 16, 15 / 16, 6 / 16, 1 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
-  model.addBox(5 / 16, 13 / 16, 15 / 16, 6 / 16, 15 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
-  model.addBox(5 / 16, 1 / 16, 15 / 16, 6 / 16, 3 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
-  model.addBox(6 / 16, 13 / 16, 15 / 16, 11 / 16, 14 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
-  model.addBox(6 / 16, 2 / 16, 15 / 16, 11 / 16, 3 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
-  model.addBox(10 / 16, 14 / 16, 15 / 16, 11 / 16, 16 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
-  model.addBox(10 / 16, 0 / 16, 15 / 16, 11 / 16, 2 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
-  model.addBox(11 / 16, 15 / 16, 15 / 16, 16 / 16, 16 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
-  model.addBox(11 / 16, 0 / 16, 15 / 16, 16 / 16, 1 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
-  model.addBox(15 / 16, 1 / 16, 15 / 16, 16 / 16, 15 / 16, 16 / 16, "combustion_gen_front", 0); //tmp1 x32
-  model.addBox(0 / 16, 0 / 16, 0 / 16, 1 / 16, 16 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
-  model.addBox(1 / 16, 15 / 16, 0 / 16, 6 / 16, 16 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
-  model.addBox(1 / 16, 0 / 16, 0 / 16, 6 / 16, 1 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
-  model.addBox(5 / 16, 13 / 16, 0 / 16, 6 / 16, 15 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
-  model.addBox(5 / 16, 1 / 16, 0 / 16, 6 / 16, 3 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
-  model.addBox(6 / 16, 13 / 16, 0 / 16, 11 / 16, 14 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
-  model.addBox(6 / 16, 2 / 16, 0 / 16, 11 / 16, 3 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
-  model.addBox(10 / 16, 14 / 16, 0 / 16, 11 / 16, 16 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
-  model.addBox(10 / 16, 0 / 16, 0 / 16, 11 / 16, 2 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
-  model.addBox(11 / 16, 15 / 16, 0 / 16, 16 / 16, 16 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
-  model.addBox(11 / 16, 0 / 16, 0 / 16, 16 / 16, 1 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
-  model.addBox(15 / 16, 1 / 16, 0 / 16, 16 / 16, 15 / 16, 1 / 16, "combustion_gen_front", 0); //tmp1 x32*
-  model.addBox(0 / 16, 0 / 16, 1 / 16, 1 / 16, 1 / 16, 15 / 16, "machineSide", 0); //undefined
-  model.addBox(15 / 16, 15 / 16, 1 / 16, 16 / 16, 16 / 16, 15 / 16, "machineSide", 0); //undefined
-  model.addBox(0 / 16, 15 / 16, 1 / 16, 1 / 16, 16 / 16, 15 / 16, "machineSide", 0); //undefined
-  model.addBox(15 / 16, 0 / 16, 1 / 16, 16 / 16, 1 / 16, 15 / 16, "machineSide", 0); //undefined
-  model.addBox(0.25 / 16, 0.25 / 16, 0.25 / 16, 5.75 / 16, 15.75 / 16, 15.75 / 16, [["machineBottom", 0], ["combustion_gen_front", 0], ["machineBack", 0], ["machineSide", 0]]); //undefined
-  model.addBox(10.25 / 16, 0.25 / 16, 0.25 / 16, 15.75 / 16, 15.75 / 16, 15.75 / 16, [["machineBottom", 0], ["combustion_gen_front", 0], ["machineBack", 0], ["machineSide", 0]]); //undefined
-  model.addBox(5.75 / 16, 2.25 / 16, 0.25 / 16, 10.25 / 16, 13.75 / 16, 15.75 / 16, [["machineBottom", 0], ["machineSide", 0], ["machineBack", 0]]); //undefined
-  model.addBox(1 / 16, 1 / 16, 14.75 / 16, 3 / 16, 15 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(3 / 16, 12 / 16, 14.75 / 16, 5 / 16, 15 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(3 / 16, 7 / 16, 14.75 / 16, 15 / 16, 9 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(3 / 16, 1 / 16, 14.75 / 16, 5 / 16, 4 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(5 / 16, 9 / 16, 14.75 / 16, 6 / 16, 13 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(5 / 16, 3 / 16, 14.75 / 16, 15 / 16, 4 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(6 / 16, 12 / 16, 14.75 / 16, 15 / 16, 13 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(7.5 / 16, 9 / 16, 14.75 / 16, 8.5 / 16, 12 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(10 / 16, 9 / 16, 14.75 / 16, 11 / 16, 12 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(11 / 16, 13 / 16, 14.75 / 16, 15 / 16, 15 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(11 / 16, 1 / 16, 14.75 / 16, 15 / 16, 3 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(13 / 16, 9 / 16, 14.75 / 16, 15 / 16, 12 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(13 / 16, 4 / 16, 14.75 / 16, 15 / 16, 7 / 16, 15.75 / 16, "combustion_gen_front", 0); //tmp x32
-  model.addBox(1 / 16, 4 / 16, 13.75 / 16, 15 / 16, 12.5 / 16, 14.75 / 16, "combustion_gen_front", 0); //undefined
-  model.addBox(10.25 / 16, 0.25 / 16, 0.25 / 16, 11.25 / 16, 2.75 / 16, 15.75 / 16, "machineBottom", 0); //undefined
-  model.addBox(4.75 / 16, 0.25 / 16, 0.25 / 16, 5.75 / 16, 2.75 / 16, 15.75 / 16, "machineBottom", 0); //undefined
-  model.addBox(10.25 / 16, 13.25 / 16, 0.25 / 16, 11.25 / 16, 15.75 / 16, 15.75 / 16, "machineSide", 0); //undefined
-  model.addBox(4.75 / 16, 13.25 / 16, 0.25 / 16, 5.75 / 16, 15.75 / 16, 15.75 / 16, "machineSide", 0); //undefined
-  model.addBox(10 / 16, 15 / 16, 1 / 16, 11 / 16, 16 / 16, 15 / 16, "machineSide", 0); //undefined
-  model.addBox(5 / 16, 15 / 16, 1 / 16, 6 / 16, 16 / 16, 15 / 16, "machineSide", 0); //undefined
-  model.addBox(10 / 16, 0 / 16, 1 / 16, 11 / 16, 1 / 16, 15 / 16, "machineSide", 0); //undefined
-  model.addBox(5 / 16, 0 / 16, 1 / 16, 6 / 16, 1 / 16, 15 / 16, "machineSide", 0); //undefined
-
-  combustionRender.addEntry(model);
-}
-
-setCombustionRender();
 
 Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped({ id: BlockID.combustionGenerator, count: 1, data: 0 }, [
@@ -185,6 +121,8 @@ namespace Machine {
     setupContainer(): void {
       this.coolTank = this.addLiquidTank("coolTank", 5000, CombustionFuel.getCoolArray());
       this.heatTank = this.addLiquidTank("heatTank", 5000, CombustionFuel.getHeatArray());
+      // not now
+      let tileInterface = StorageInterface.getInterface(this)
     };
 
     useCapacitor(): CapacitorAPI.CapacitorSet {

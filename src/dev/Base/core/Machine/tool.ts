@@ -35,9 +35,9 @@ namespace EnderTool {
     }
   }
 
-  export function addRecipe(result: ItemInstance, data: { id: number, data: number } [], tool: number): void {
+  export function addRecipe(result: ItemInstance, data: { id: number, data: number }[], tool: number): void {
     data.push({ id: tool, data: -1 });
-    Recipes.addShapeless(result, data, function(api, field, result) {
+    Recipes.addShapeless(result, data, function (api, field, result) {
       for (let i = 0; i < field.length; i++) {
         if (field[i].id == tool) {
           field[i].data++;
@@ -82,7 +82,7 @@ namespace EnderTool {
   }
 
 
-  Callback.addCallback("DestroyBlockStart", function(coords: Callback.ItemUseCoordinates, block: Tile) {
+  Callback.addCallback("DestroyBlockStart", function (coords: Callback.ItemUseCoordinates, block: Tile) {
     if (MachineRegistry.isMachine(block.id)) {
       const item = Player.getCarriedItem();
       if (EnderTool.isUseableWrench(item, 10)) {
@@ -91,7 +91,7 @@ namespace EnderTool {
     }
   });
 
-  Network.addServerPacket("EnderCore.demontageMachine", function(client: NetworkClient, data: Vector) {
+  Network.addServerPacket("EnderCore.demontageMachine", function (client: NetworkClient, data: Vector) {
     const player = client.getPlayerUid();
     const region = WorldRegion.getForActor(player);
     const blockID = region.getBlockId(data);
@@ -109,4 +109,81 @@ namespace EnderTool {
       }
     }
   });
+}
+
+
+
+namespace ModelHelper {
+  export function renderModel(model: string, import_params: com.zhekasmirnov.innercore.api.NativeRenderMesh.ImportParams): RenderMesh {
+    const mesh = new RenderMesh();
+    mesh.importFromFile(
+      __dir__ + "resources/res/model/" + model + ".obj",
+      "obj",
+      import_params || null
+    );
+    return mesh;
+  }
+
+  export function setHandModel(item: ItemStack, model_name: string, texture: string, import_params?: com.zhekasmirnov.innercore.api.NativeRenderMesh.ImportParams) {
+    const model = ItemModel.getForWithFallback(item.id, 0);
+    model.setHandModel(
+      renderModel(model_name, import_params),
+      "models/" + texture
+    );
+  }
+  export function setItemModel(item: ItemStack, model_name: string, texture: string, import_params?: com.zhekasmirnov.innercore.api.NativeRenderMesh.ImportParams) {
+    const model = ItemModel.getForWithFallback(item.id, 0);
+    model.setModel(
+      renderModel(model_name, import_params),
+      "models/" + texture
+    );
+
+  }
+  export function setInventoryModel(item: ItemStack,
+    model_name: string,
+    texture: string,
+    import_params?: com.zhekasmirnov.innercore.api.NativeRenderMesh.ImportParams,
+    rotation: [number, number, number] = [0, 0, 0]
+  ) {
+    const mesh = renderModel(model_name, import_params) as RenderMesh;
+    mesh.rotate(
+      MathHelper.degreeToRadian(rotation[0]),
+      MathHelper.degreeToRadian(rotation[1]),
+      MathHelper.degreeToRadian(rotation[2])
+    );
+    const model = ItemModel.getForWithFallback(item.id, 0);
+    model.setUiModel(mesh, "models/" + texture);
+  }
+
+  export function generateMesh(dir: string, x: number, y: number, z: number, importParams?: com.zhekasmirnov.innercore.api.NativeRenderMesh.ImportParams): RenderMesh {
+    const mesh = new RenderMesh();
+    mesh.importFromFile(
+      __dir__ + dir + ".obj",
+      "obj",
+      {
+        noRebuild: false,
+        invertV: false,
+        scale: importParams.scale || null,
+        translate: importParams.translate || [0, 0, 0],
+      }
+    );
+    mesh.rotate(x, y, z);
+    return mesh;
+  }
+  export let rotate = [
+    [0, 180, 0],
+    [0, 0, 0],
+    [0, 90, 0],
+    [0, 270, 0]
+  ]
+  export function registerModelWithRotation(block: number, dir: string) {
+    let mesh: RenderMesh, model: BlockRenderer.Model, render: ICRender.Model;
+    for (let i = 2; i <= 5; i++) {
+      model = new BlockRenderer.Model(mesh);
+      render = new ICRender.Model();
+      mesh = generateMesh(dir, MathHelper.degreeToRadian(rotate[i - 2][0]), MathHelper.degreeToRadian(rotate[i - 2][1]), MathHelper.degreeToRadian(rotate[i - 2][2]))
+      render.addEntry(model);
+      BlockRenderer.setStaticICRender(block, i, render);
+    }
+  }
 }

@@ -29,9 +29,6 @@ function setKillerJoeRender(): void {
   BlockRenderer.setStaticICRender(BlockID.killerJoe, -1, killerJoeRender);
 }
 setKillerJoeRender()
-/*
-Block.setBlockShape(BlockID.killerJoe, { "x": 0, "y": 0, "z": 0 }, { "x": 1, "y": 1, "z": 1 });
-*/
 let guiKillerJoe = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_killer_joe.name"), {
   drawing: [
     { type: "bitmap", x: 470, y: 66, bitmap: "fluid_scale", scale: 3.2 },

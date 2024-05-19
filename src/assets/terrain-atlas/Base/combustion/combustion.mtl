@@ -1,0 +1,14 @@
+# Made in Blockbench 4.10.1
+newmtl m_db1fb585-b13d-9b80-ae85-68c35915d472
+map_Kd combustion_gen_top_0.png
+newmtl m_161f2a60-4377-8d93-27a8-a10e9d4b08cb
+map_Kd combustion_gen_front_0.png
+newmtl m_59176fe0-b0e0-e949-016f-67a655eeaf31
+map_Kd machineSide.png
+newmtl m_ffea466f-5186-ea1f-5943-f89afd9d8753
+map_Kd machineBack.png
+newmtl m_cd60d290-5c77-0575-991a-7a72b526cb9c
+map_Kd machineBottom.png
+newmtl m_9cdb25b4-d3ab-7072-c26e-061da8b46560
+map_Kd combustion_gen_front_0.png
+newmtl none
