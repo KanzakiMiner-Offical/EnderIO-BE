@@ -9,6 +9,18 @@ BlockRegistry.createBlock("combustionGenerator", [
 ], "other-machine");
 
 Block.setBlockShape(BlockID.combustionGenerator, { x: 0.1, y: 0, z: 0 }, { x: 0.95, y: 0.95, z: 0.95 });
+
+ModelHelper.setInventoryModel(new ItemStack(BlockID["combustionGenerator"], 1, 0), "combustion/combustion", "combustion/combustion", {
+  translate: [0.25, 0, 0], scale: [1, 1, 1], invertV: false, noRebuild: false
+}, [0, 0, 0])
+ModelHelper.setHandModel(new ItemStack(BlockID["combustionGenerator"], 1, 0), "combustion/combustion", "combustion/combustion", {
+  translate: [0.25, 0, 0], scale: [1, 1, 1], invertV: false, noRebuild: false
+})
+
+
+ModelHelper.registerModelWithRotation(BlockID["combustionGenerator"], "resources/res/models/combustion/combustion")
+
+
 /*
  * ```js 
  * texture: [
@@ -78,18 +90,6 @@ let combustionGenUI = MachineRegistry.createInventoryWindow(Translation.translat
   }
 });
 
-/*
-StorageInterface.createInterface(BlockID.combustionGenerator, {
-  slots: {
-    "slot1": { input: true },
-    "slot2": { output: true },
-    "slot3": { input: true },
-    "slot4": { output: true },
-  },
-  canReceiveLiquid: function(liquid, side) { return true; },
-  canTransportLiquid: function(liquid, side) { return true; }
-});
-*/
 
 namespace Machine {
   export class CombustionGenerator extends Generator {
@@ -99,9 +99,6 @@ namespace Machine {
 
     defaultValues = {
       energy: 0,
-      /*
-            mutil_bonus: 1,
-              isActive: false,*/
       burn_time: 0,
       cool_time: 0
     };
@@ -121,8 +118,44 @@ namespace Machine {
     setupContainer(): void {
       this.coolTank = this.addLiquidTank("coolTank", 5000, CombustionFuel.getCoolArray());
       this.heatTank = this.addLiquidTank("heatTank", 5000, CombustionFuel.getHeatArray());
-      // not now
-      let tileInterface = StorageInterface.getInterface(this)
+    };
+
+    @ContainerEvent(Side.Server)
+    rotateInterface(): void {
+      let _interface = StorageInterface.getInterface(this)
+      let facing = this.networkData.getInt("facing")
+      switch (facing) {
+        case 2:
+          _interface.getInputTank = function (side: number) {
+            if (side == EBlockSide.EAST) return this.tileEntity.coolTank;
+            else if (side == EBlockSide.WEST) return this.tileEntity.heatTank;
+            return;
+          }
+          break
+        // case 3:
+        // case 0:
+        case 4:
+          _interface.getInputTank = function (side: number) {
+            if (side == EBlockSide.SOUTH) return this.tileEntity.coolTank;
+            else if (side == EBlockSide.NORTH) return this.tileEntity.heatTank;
+            return;
+          }
+          break
+        case 5:
+          _interface.getInputTank = function (side: number) {
+            if (side == EBlockSide.NORTH) return this.tileEntity.coolTank;
+            else if (side == EBlockSide.SOUTH) return this.tileEntity.heatTank;
+            return;
+          }
+          break
+        default:
+          _interface.getInputTank = function (side: number) {
+            if (side == EBlockSide.WEST) return this.tileEntity.coolTank;
+            else if (side == EBlockSide.EAST) return this.tileEntity.heatTank;
+            return;
+          }
+          break
+      }
     };
 
     useCapacitor(): CapacitorAPI.CapacitorSet {

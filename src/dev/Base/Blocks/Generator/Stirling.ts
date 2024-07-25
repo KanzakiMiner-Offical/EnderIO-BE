@@ -2,8 +2,8 @@ BlockRegistry.createBlock("stirlingGen", [
   {
     name: "tile.block_stirling_generator.name",
     texture: [
-	["machineBottom", 0], ["machineTop", 0], ["machineSide", 0],
-	["stirlingGenFront", 0], ["machineSide", 0], ["machineSide", 0]],
+      ["machineBottom", 0], ["machineTop", 0], ["machineSide", 0],
+      ["stirlingGenFront", 0], ["machineSide", 0], ["machineSide", 0]],
     inCreative: true
   }
 ], "machine")
@@ -13,11 +13,11 @@ TileRenderer.registerModelWithRotation(BlockID.stirlingGen, 2, [["machineBottom"
 
 TileRenderer.setRotationFunction(BlockID.stirlingGen)
 
-Callback.addCallback("PreLoaded", function() {
+Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped({ id: BlockID.stirlingGen, count: 1, data: 0 },
     ["   ",
-     "sfs",
-     "gpg"],
+      "sfs",
+      "gpg"],
     ['s', ItemID.darkSteel, 0, 'f', BlockID.machineChassi, 0, 'g', ItemID.darkSteelGear, 0, "p", BlockID.simpleStirlingGen, 0])
 
 })
@@ -26,7 +26,7 @@ let stirlingGenGUI = MachineRegistry.createInventoryWindow(Translation.translate
   drawing: [
     { type: "bitmap", x: 450, y: 135, bitmap: "fire_scale0", scale: 3.2 },
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
-	],
+  ],
 
   elements: {
     "energyScale": { type: "scale", x: 335, y: 140, direction: 1, value: 0.5, bitmap: "redflux_bar1", scale: 3.2 },
@@ -53,13 +53,22 @@ namespace Machine {
       burnMax: 0
     }
 
-    defaultBonus = 1
-    defaultEnergyStorage = 100000
-
-    upgrades: ["capacitor"]
+    // defaultBonus = 1
+    // defaultEnergyStorage = 100000
+    efficiency = 0
+    generator = 0
+    capacitors = ["capacitor"]
+    acceptType = ["red", "buffer"]
 
     getScreenByName(): UI.IWindow {
       return stirlingGenGUI
+    }
+
+    initCapacitor(): void {
+      let capacitors = CapacitorData.useCapacitor(this);
+      this.efficiency = capacitors.getValue(CapacitorKey.STIRLING_POWER_EFFICIENCY)
+      this.generator = capacitors.getValue(CapacitorKey.STIRLING_POWER_GEN)
+      this.energyStorage = capacitors.getValue(CapacitorKey.STIRLING_POWER_BUFFER)
     }
 
     setupContainer(): void {
@@ -72,27 +81,26 @@ namespace Machine {
       })
     }
 
-    consumeFuel(slotName: string): number {
-      let fuelSlot = this.container.getSlot(slotName)
-      if (fuelSlot.id > 0) {
-        let burn = Recipes.getFuelBurnDuration(fuelSlot.id, fuelSlot.data)
-        if (burn && !LiquidRegistry.getItemLiquid(fuelSlot.id, fuelSlot.data)) {
-          this.decreaseSlot(fuelSlot, 1)
-          return burn
-        }
+    getBurnTime(item: ItemInstance) {
+      let base = (Recipes.getFuelBurnDuration(item.id, item.data) / (this.generator / CapacitorKey.STIRLING_POWER_GEN.getBaseValue())) * this.efficiency
+      if (LiquidRegistry.getItemLiquid(item.id, item.data)) {
+        // Lava and other fluid buckets are nerfed, prefer combustion engine for those
+        base /= 5;
       }
-      return 0
+      // The vanilla burn time results in 24,000FE for a piece of coal at 15FE/t output.
+      // So we hardcode 15 as a baseline to keep that density consistent
+      return Math.round(base /= CapacitorKey.STIRLING_POWER_GEN.getBaseValue() / 15);
     }
-
+    
     run(): void {
       let newActive = false
       let energyStorage = this.getEnergyStorage()
-      if (this.data.energy + 60 <= energyStorage) {
+      if (this.data.energy + this.generator <= energyStorage) {
         if (this.data.burn <= 0) {
-          this.data.burn = this.data.burnMax = this.consumeFuel("slotFuel") / 4
+          this.data.burn = this.data.burnMax = this.getBurnTime(this.container.getSlot("slotFuel"))
         }
         if (this.data.burn > 0) {
-          this.data.energy = Math.min(this.data.energy + 60, energyStorage)
+          this.data.energy = Math.min(this.data.energy + this.generator, energyStorage)
           this.data.burn--
           newActive = true
         }
@@ -101,7 +109,7 @@ namespace Machine {
     }
 
     onTick(): void {
-      this.useCapacitor();
+      this.initCapacitor();
       StorageInterface.checkHoppers(this)
 
       let capacitor = this.container.getSlot("slotCapacitor")
@@ -117,7 +125,7 @@ namespace Machine {
       //this.container.setText("text", "RF: " + this.data.energy + "/" + this.getEnergyStorage() + ". Produce " + this.bonus * 60 + " RF/t")
       this.container.sendChanges()
     }
-    
+
     energyTick(type: string, src: EnergyTileNode): void {
       let output = Math.min(this.data.energy, 60);
       this.data.energy += src.add(output) - output;

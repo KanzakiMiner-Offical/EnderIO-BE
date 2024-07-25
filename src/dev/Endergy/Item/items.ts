@@ -1,5 +1,8 @@
 EnderCore.createResourceItem("crudeSteel", "Crude Steel");
 EnderCore.createResourceItem("crystalline", "Crystalline");
+EnderCore.createResourceItem("melodic", "Melodic")
+EnderCore.createResourceItem("stellar", "Stellar")
+EnderCore.createResourceItem("crystallinePink", "Crystalline Pink Slime");
 EnderCore.createResourceItem("energeticSilver", "Energetic Silver");
 EnderCore.createResourceItem("vividAlloy", "Vivid Alloy");
 /*

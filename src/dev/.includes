@@ -1,14 +1,21 @@
 Header.ts
 Info.ts
 
-Base/core/Machine/defined/ICapacitor.ts
+Base/core/Machine/capacitor/ICapacitor.ts
+
+Base/core/Machine/capacitor/IndexedScaler.ts
+Base/core/Machine/capacitor/ScalerFactory.ts
+Base/core/Machine/capacitor/CapacitorKey.ts
+Base/core/Machine/capacitor/CapacitorData.ts
+Base/core/Machine/capacitor/CapacitorRegister.ts
+
+Base/core/Machine/capacitor/Capacitor.ts
 Base/core/Machine/class/IWrench.ts
 Base/core/Machine/class/Base.ts
 Base/core/Machine/class/ProgressingMachine.ts
 Base/core/Machine/class/Generator.ts
 Base/core/Machine/class/Capacitor.ts
 Base/core/Machine/defined/Defined.ts
-Base/core/Machine/defined/Capacitor.ts
 Base/core/Machine/defined/Recipe.ts
 Base/core/Machine/ad_defined/combustionMath.ts
 Base/core/Machine/ad_defined/SAGCore.ts
@@ -67,7 +74,11 @@ Machine/Machines/alloyMelter.ts
 Machine/Machines/furnace.ts
 Machine/Machines/SAGmill.ts
 
-Endergy/**/*
+Endergy/Item/items.ts
+Endergy/Item/capacitor.ts
+Endergy/Item/ball.ts
+Endergy/Block/Block.ts
+Endergy/Recipe/Alloy.ts
 
 Base/Integration/thermal.ts
 Base/Integration/ic2.ts

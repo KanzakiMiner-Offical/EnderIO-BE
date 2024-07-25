@@ -15,9 +15,13 @@ namespace EnderConfig {
 }
 
 let isLevelDisplayed = false;
-Callback.addCallback("LevelDisplayed", function() {
+Callback.addCallback("LevelDisplayed", function () {
   isLevelDisplayed = true;
 });
-Callback.addCallback("LevelLeft", function() {
+Callback.addCallback("LevelLeft", function () {
   isLevelDisplayed = false;
 });
+
+// namespace EnergyConfig {
+
+// }

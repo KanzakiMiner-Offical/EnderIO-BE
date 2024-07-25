@@ -117,7 +117,7 @@ namespace ModelHelper {
   export function renderModel(model: string, import_params: com.zhekasmirnov.innercore.api.NativeRenderMesh.ImportParams): RenderMesh {
     const mesh = new RenderMesh();
     mesh.importFromFile(
-      __dir__ + "resources/res/model/" + model + ".obj",
+      __dir__ + "resources/res/models/" + model + ".obj",
       "obj",
       import_params || null
     );
@@ -155,7 +155,12 @@ namespace ModelHelper {
     model.setUiModel(mesh, "models/" + texture);
   }
 
-  export function generateMesh(dir: string, x: number, y: number, z: number, importParams?: com.zhekasmirnov.innercore.api.NativeRenderMesh.ImportParams): RenderMesh {
+  export function generateMesh(dir: string, x: number, y: number, z: number, importParams: com.zhekasmirnov.innercore.api.NativeRenderMesh.ImportParams = {
+    scale: [0, 0, 0],
+    translate: [0, 0, 0],
+    noRebuild: false,
+    invertV: false,
+  }): RenderMesh {
     const mesh = new RenderMesh();
     mesh.importFromFile(
       __dir__ + dir + ".obj",
@@ -163,8 +168,8 @@ namespace ModelHelper {
       {
         noRebuild: false,
         invertV: false,
-        scale: importParams.scale || null,
-        translate: importParams.translate || [0, 0, 0],
+        scale: importParams.scale,
+        translate: importParams.translate
       }
     );
     mesh.rotate(x, y, z);
@@ -176,14 +181,20 @@ namespace ModelHelper {
     [0, 90, 0],
     [0, 270, 0]
   ]
-  export function registerModelWithRotation(block: number, dir: string) {
+  export function registerModelWithRotation(block: number, dir: string, importParams?: com.zhekasmirnov.innercore.api.NativeRenderMesh.ImportParams) {
     let mesh: RenderMesh, model: BlockRenderer.Model, render: ICRender.Model;
     for (let i = 2; i <= 5; i++) {
+      mesh = generateMesh(dir, MathHelper.degreeToRadian(rotate[i - 2][0]), MathHelper.degreeToRadian(rotate[i - 2][1]), MathHelper.degreeToRadian(rotate[i - 2][2]), importParams)
       model = new BlockRenderer.Model(mesh);
       render = new ICRender.Model();
-      mesh = generateMesh(dir, MathHelper.degreeToRadian(rotate[i - 2][0]), MathHelper.degreeToRadian(rotate[i - 2][1]), MathHelper.degreeToRadian(rotate[i - 2][2]))
       render.addEntry(model);
       BlockRenderer.setStaticICRender(block, i, render);
     }
+    mesh = generateMesh(dir, MathHelper.degreeToRadian(rotate[1][0]), MathHelper.degreeToRadian(rotate[1][1]), MathHelper.degreeToRadian(rotate[1][2]), importParams)
+    model = new BlockRenderer.Model(mesh);
+    render = new ICRender.Model();
+    render.addEntry(model);
+    BlockRenderer.setStaticICRender(block, 0, render);
+    //ItemModel.getFor(BlockID.electricPump, 0).setModel(render);
   }
 }

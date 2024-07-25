@@ -2,47 +2,57 @@ IDRegistry.genBlockID("theVat");
 Block.createBlock("theVat", [{ "name": "tile.block_vat.name", "texture": [["machineBottom", 0]], "inCreative": true }]);
 ICRender.getGroup("liquid_pipe").add(BlockID.theVat, -1);
 
-function setVatRender() {
-  var vatRender = new ICRender.Model();
-  BlockRenderer.setStaticICRender(BlockID.theVat, 0, vatRender);
-  var model = BlockRenderer.createModel();
+ModelHelper.setInventoryModel(new ItemStack(BlockID["theVat"], 1, 0), "vat/theVat", "vat/theVat", {
+  translate: [0.25, 0, 0], scale: [1, 1, 1], invertV: false, noRebuild: false
+}, [0, 0, -15])
+ModelHelper.setHandModel(new ItemStack(BlockID["theVat"], 1, 0), "vat/theVat", "vat/theVat", {
+  translate: [0.25, 0, 0], scale: [1, 1, 1], invertV: false, noRebuild: false
+})
 
-  model.addBox(0.25 / 16, 0.25 / 16, 0.25 / 16, 15.75 / 16, 4 / 16, 15.75 / 16, [["machineBottom", 0], ["machineBottom", 0], ["base", 0], ["base", 0], ["base", 0], ["base", 0]]); //base
-  model.addBox(0.25 / 16, 4 / 16, 0.25 / 16, 6.75 / 16, 15.75 / 16, 15.75 / 16, [["machineBottom", 0], ["tank_top_front", 0], ["machineBottom", 0], ["tank_top_front", 1], ["vat_tank_side", 0], ["vat_tank_side", 0]]); //rightTank
-  model.addBox(9.25 / 16, 4 / 16, 0.25 / 16, 15.75 / 16, 15.75 / 16, 15.75 / 16, [["machineBottom", 0], ["tank_top_front", 0], ["machineBottom", 0], ["tank_top_front", 1], ["vat_tank_side", 0], ["vat_tank_side", 0]]); //leftTank
-  model.addBox(6.75 / 16, 5 / 16, 4 / 16, 9.25 / 16, 12 / 16, 12 / 16, "machineBottom", 0); //center
-  model.addBox(6.75 / 16, 13 / 16, 4 / 16, 9.25 / 16, 15 / 16, 12 / 16, "machineBottom", 0); //centerTop
-  model.addBox(7.5 / 16, 12 / 16, 1.5 / 16, 8.5 / 16, 13 / 16, 5.5 / 16, "machineBottom", 0); //spout
-  model.addBox(7.5 / 16, 12 / 16, 0.4 / 16, 8.5 / 16, 13 / 16, 2.4 / 16, "machineBottom", 0); //spoutTip
-  model.addBox(0 / 16, 0 / 16, 0 / 16, 1 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
-  model.addBox(15 / 16, 0 / 16, 0 / 16, 16 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
-  model.addBox(15 / 16, 0 / 16, 15 / 16, 16 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
-  model.addBox(0 / 16, 0 / 16, 15 / 16, 1 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
-  model.addBox(1 / 16, 0 / 16, 0 / 16, 15 / 16, 1 / 16, 1 / 16, "machineBottom", 0); //undefined
-  model.addBox(10 / 16, 15 / 16, 0 / 16, 15 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
-  model.addBox(1 / 16, 0 / 16, 15 / 16, 15 / 16, 1 / 16, 16 / 16, "machineBottom", 0); //undefined
-  model.addBox(10 / 16, 15 / 16, 15 / 16, 15 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
-  model.addBox(0 / 16, 0 / 16, 1 / 16, 1 / 16, 1 / 16, 15 / 16, "machineBottom", 0); //undefined
-  model.addBox(0 / 16, 15 / 16, 1 / 16, 1 / 16, 16 / 16, 15 / 16, "machineBottom", 0); //undefined
-  model.addBox(15 / 16, 0 / 16, 1 / 16, 16 / 16, 1 / 16, 15 / 16, "machineBottom", 0); //undefined
-  model.addBox(15 / 16, 15 / 16, 1 / 16, 16 / 16, 16 / 16, 15 / 16, "machineBottom", 0); //undefined
-  model.addBox(1 / 16, 15 / 16, 15 / 16, 6 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
-  model.addBox(1 / 16, 15 / 16, 0 / 16, 6 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
-  model.addBox(9 / 16, 4.5 / 16, 0 / 16, 10 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
-  model.addBox(6 / 16, 4.5 / 16, 0 / 16, 7 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
-  model.addBox(6 / 16, 4.5 / 16, 15 / 16, 7 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
-  model.addBox(9 / 16, 4.5 / 16, 15 / 16, 10 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
-  model.addBox(6 / 16, 15 / 16, 1 / 16, 7 / 16, 16 / 16, 15 / 16, "machineBottom", 0); //undefined
-  model.addBox(9 / 16, 15 / 16, 1 / 16, 10 / 16, 16 / 16, 15 / 16, "machineBottom", 0); //undefined
-  model.addBox(6 / 16, 3.5 / 16, 0 / 16, 10 / 16, 4.5 / 16, 1 / 16, "machineBottom", 0); //undefined
-  model.addBox(6 / 16, 3.5 / 16, 15 / 16, 10 / 16, 4.5 / 16, 16 / 16, "machineBottom", 0); //undefined
 
-  vatRender.addEntry(model);
-}
+ModelHelper.registerModelWithRotation(BlockID["theVat"], "resources/res/models/vat/theVat")
 
-Block.setBlockShape(BlockID.theVat, { "x": 0, "y": 0, "z": 0 }, { "x": 1, "y": 1, "z": 1 });
+// function setVatRender() {
+//   var vatRender = new ICRender.Model();
+//   BlockRenderer.setStaticICRender(BlockID.theVat, 0, vatRender);
+//   var model = BlockRenderer.createModel();
 
-setVatRender();
+//   model.addBox(0.25 / 16, 0.25 / 16, 0.25 / 16, 15.75 / 16, 4 / 16, 15.75 / 16, [["machineBottom", 0], ["machineBottom", 0], ["base", 0], ["base", 0], ["base", 0], ["base", 0]]); //base
+//   model.addBox(0.25 / 16, 4 / 16, 0.25 / 16, 6.75 / 16, 15.75 / 16, 15.75 / 16, [["machineBottom", 0], ["tank_top_front", 0], ["machineBottom", 0], ["tank_top_front", 1], ["vat_tank_side", 0], ["vat_tank_side", 0]]); //rightTank
+//   model.addBox(9.25 / 16, 4 / 16, 0.25 / 16, 15.75 / 16, 15.75 / 16, 15.75 / 16, [["machineBottom", 0], ["tank_top_front", 0], ["machineBottom", 0], ["tank_top_front", 1], ["vat_tank_side", 0], ["vat_tank_side", 0]]); //leftTank
+//   model.addBox(6.75 / 16, 5 / 16, 4 / 16, 9.25 / 16, 12 / 16, 12 / 16, "machineBottom", 0); //center
+//   model.addBox(6.75 / 16, 13 / 16, 4 / 16, 9.25 / 16, 15 / 16, 12 / 16, "machineBottom", 0); //centerTop
+//   model.addBox(7.5 / 16, 12 / 16, 1.5 / 16, 8.5 / 16, 13 / 16, 5.5 / 16, "machineBottom", 0); //spout
+//   model.addBox(7.5 / 16, 12 / 16, 0.4 / 16, 8.5 / 16, 13 / 16, 2.4 / 16, "machineBottom", 0); //spoutTip
+//   model.addBox(0 / 16, 0 / 16, 0 / 16, 1 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
+//   model.addBox(15 / 16, 0 / 16, 0 / 16, 16 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
+//   model.addBox(15 / 16, 0 / 16, 15 / 16, 16 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
+//   model.addBox(0 / 16, 0 / 16, 15 / 16, 1 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
+//   model.addBox(1 / 16, 0 / 16, 0 / 16, 15 / 16, 1 / 16, 1 / 16, "machineBottom", 0); //undefined
+//   model.addBox(10 / 16, 15 / 16, 0 / 16, 15 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
+//   model.addBox(1 / 16, 0 / 16, 15 / 16, 15 / 16, 1 / 16, 16 / 16, "machineBottom", 0); //undefined
+//   model.addBox(10 / 16, 15 / 16, 15 / 16, 15 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
+//   model.addBox(0 / 16, 0 / 16, 1 / 16, 1 / 16, 1 / 16, 15 / 16, "machineBottom", 0); //undefined
+//   model.addBox(0 / 16, 15 / 16, 1 / 16, 1 / 16, 16 / 16, 15 / 16, "machineBottom", 0); //undefined
+//   model.addBox(15 / 16, 0 / 16, 1 / 16, 16 / 16, 1 / 16, 15 / 16, "machineBottom", 0); //undefined
+//   model.addBox(15 / 16, 15 / 16, 1 / 16, 16 / 16, 16 / 16, 15 / 16, "machineBottom", 0); //undefined
+//   model.addBox(1 / 16, 15 / 16, 15 / 16, 6 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
+//   model.addBox(1 / 16, 15 / 16, 0 / 16, 6 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
+//   model.addBox(9 / 16, 4.5 / 16, 0 / 16, 10 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
+//   model.addBox(6 / 16, 4.5 / 16, 0 / 16, 7 / 16, 16 / 16, 1 / 16, "machineBottom", 0); //undefined
+//   model.addBox(6 / 16, 4.5 / 16, 15 / 16, 7 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
+//   model.addBox(9 / 16, 4.5 / 16, 15 / 16, 10 / 16, 16 / 16, 16 / 16, "machineBottom", 0); //undefined
+//   model.addBox(6 / 16, 15 / 16, 1 / 16, 7 / 16, 16 / 16, 15 / 16, "machineBottom", 0); //undefined
+//   model.addBox(9 / 16, 15 / 16, 1 / 16, 10 / 16, 16 / 16, 15 / 16, "machineBottom", 0); //undefined
+//   model.addBox(6 / 16, 3.5 / 16, 0 / 16, 10 / 16, 4.5 / 16, 1 / 16, "machineBottom", 0); //undefined
+//   model.addBox(6 / 16, 3.5 / 16, 15 / 16, 10 / 16, 4.5 / 16, 16 / 16, "machineBottom", 0); //undefined
+
+//   vatRender.addEntry(model);
+// }
+
+// Block.setBlockShape(BlockID.theVat, { "x": 0, "y": 0, "z": 0 }, { "x": 1, "y": 1, "z": 1 });
+
+// setVatRender();
 
 var VatGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_vat.name"), {
   drawing: [
