@@ -1,28 +1,30 @@
 BlockRegistry.createBlockType("BLOCK_TYPE_ANTI_EXPLO", {
   extends: "opaque",
   destroytime: 100,
-  explosionResistance: 10800000,
+  explosionResistance: 9999999999999,
   renderlayer: 3,
   translucency: 0,
-  sound: "anvil"
+  sound: "anvil",
 });
 
 IDRegistry.genBlockID("reinforcedObsidian");
-Block.createBlock("reinforcedObsidian", [
-  { name: "Reinforced Obsidian", texture: [["reinforcedObsidian", 0]], inCreative: true }
-], "BLOCK_TYPE_ANTI_EXPLO")
-ToolAPI.registerBlockMaterial(BlockID.reinforcedObsidian, "stone")/*
+Block.createBlock("reinforcedObsidian", [{ name: "Reinforced Obsidian", texture: [["reinforcedObsidian", 0]], inCreative: true }], "BLOCK_TYPE_ANTI_EXPLO");
+ToolAPI.registerBlockMaterial(BlockID.reinforcedObsidian, "stone"); /*
 Recipes.addShaped({ id: BlockID.reinforcedObsidian, count: 1, data: 0 }, [
 	"bab",
 	"aca",
 	"bab"
 ], ['a', ItemID.darkSteel, 0, 'b', BlockID.darkSteelBars, 0, 'c', 49, 0]);*/
-Block.registerDropFunction("reinforcedObsidian", function (coords, blockID, blockData, level) {
-  if (level > 3) {
-    return [[BlockID.reinforcedObsidian, 1, 0]]
-  }
-  return [];
-}, 2);
+Block.registerDropFunction(
+  "reinforcedObsidian",
+  function (coords, blockID, blockData, level) {
+    if (level > 3) {
+      return [[BlockID.reinforcedObsidian, 1, 0]];
+    }
+    return [];
+  },
+  2,
+);
 /*
 IDRegistry.genBlockID("darkSteelBars");
 Block.createBlock("darkSteelBars", [
@@ -100,4 +102,3 @@ Callback.addCallback("PreLoaded", function() {
     }
   }
 });*/
-

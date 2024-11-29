@@ -1,15 +1,21 @@
-BlockRegistry.registerBlock(new BlockPhotovoltaic("simplePhotovoltaicCell", "tile.block_solar_panel.simple.name", [["solar_panel_simple_side", 0], ["solar_panel_simple_top", 0], ["solar_panel_simple_side", 0]]))
+BlockRegistry.registerBlock(
+  new BlockPhotovoltaic("simplePhotovoltaicCell", "tile.block_solar_panel.simple.name", [
+    ["solar_panel_simple_side", 0],
+    ["solar_panel_simple_top", 0],
+    ["solar_panel_simple_side", 0],
+  ]),
+);
 
 namespace Machine {
   export class SimplePhotovoltaicCell extends Generator {
     defaultValues = {
       energy: 0,
-      canSeeSky: false
-    }
+      canSeeSky: false,
+    };
 
     getScreenByName(): UI.IWindow {
       return;
-    };
+    }
 
     onInit(): void {
       this.data.canSeeSky = this.region.canSeeSky(this.x, this.y + 1, this.z);
@@ -33,10 +39,25 @@ namespace Machine {
 }
 
 Callback.addCallback("PreLoaded", function () {
-  Recipes.addShaped({ id: BlockID.simplePhotovoltaicCell, count: 1, data: 0 },
-    ["aga",
-      "sss",
-      "epe"],
-    ['e', ItemID.dustInfinity, 0, 'a', ItemID.electricalSteel, 0, 's', ItemID.platePhotovoltaic, 0, 'p', ItemID.ironGear, 0, 'g', BlockID.fusedQuartz, 0]);
-
+  Recipes.addShaped(
+    { id: BlockID.simplePhotovoltaicCell, count: 1, data: 0 },
+    ["aga", "sss", "epe"],
+    [
+      "e",
+      ItemID.dustInfinity,
+      0,
+      "a",
+      ItemID.electricalSteel,
+      0,
+      "s",
+      ItemID.platePhotovoltaic,
+      0,
+      "p",
+      ItemID.ironGear,
+      0,
+      "g",
+      BlockID.fusedQuartz,
+      0,
+    ],
+  );
 });

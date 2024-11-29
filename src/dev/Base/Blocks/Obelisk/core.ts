@@ -1,7 +1,6 @@
 namespace ObeliskCore {
-
   export function registerModel(id: string, texture?: string) {
-    texture = texture || id
+    texture = texture || id;
     let mesh = new RenderMesh();
     let model = new BlockRenderer.Model(mesh);
     let render = new ICRender.Model();
@@ -13,7 +12,7 @@ namespace ObeliskCore {
   }
 
   // xp
-  export let LIQUID_RATIO = 20
+  export let LIQUID_RATIO = 20;
 
   export function setPlayerXp(player: PlayerActor, xp: number): void {
     const lv = XPtoLVL(xp).lvl;
@@ -22,18 +21,18 @@ namespace ObeliskCore {
     player.setExperience(cap);
   }
 
-
-  export function XPtoLVL(xp: number) { // https://minecraft.gamepedia.com/Experience
+  export function XPtoLVL(xp: number) {
+    // https://minecraft.gamepedia.com/Experience
     let currentLevel = 0;
     let remainingXP = xp;
     while (true) {
       let requiredForNextLevel: number;
       if (currentLevel <= 15) {
-        requiredForNextLevel = (2 * currentLevel) + 7;
+        requiredForNextLevel = 2 * currentLevel + 7;
       } else if (currentLevel >= 16 && currentLevel <= 30) {
-        requiredForNextLevel = (5 * currentLevel) - 38;
+        requiredForNextLevel = 5 * currentLevel - 38;
       } else {
-        requiredForNextLevel = (9 * currentLevel) - 158;
+        requiredForNextLevel = 9 * currentLevel - 158;
       }
 
       if (remainingXP >= requiredForNextLevel) {
@@ -45,30 +44,28 @@ namespace ObeliskCore {
     return { lvl: currentLevel, rem: remainingXP };
   }
 
-  export function LVLtoXP(lvl: number) { // https://minecraft.gamepedia.com/Experience
+  export function LVLtoXP(lvl: number) {
+    // https://minecraft.gamepedia.com/Experience
     let requiredXP: number;
     if (lvl <= 16) {
       requiredXP = Math.pow(lvl, 2) + 6 * lvl;
     } else if (lvl >= 17 && lvl <= 31) {
-      requiredXP = 2.5 * Math.pow(lvl, 2) - 40.5 * lvl + 360
+      requiredXP = 2.5 * Math.pow(lvl, 2) - 40.5 * lvl + 360;
     } else {
-      requiredXP = 4.5 * Math.pow(lvl, 2) - 162.5 * lvl + 2220
+      requiredXP = 4.5 * Math.pow(lvl, 2) - 162.5 * lvl + 2220;
     }
 
     return requiredXP;
   }
 
   export function XPtoLiquid(xp: number) {
-    if (xp)
-      return xp * LIQUID_RATIO;
-    else return 0
+    if (xp) return xp * LIQUID_RATIO;
+    else return 0;
   }
 
   export function LiquidtoXP(liquid: number) {
-    if (liquid)
-      return liquid / LIQUID_RATIO;
-    else
-      return 0
+    if (liquid) return liquid / LIQUID_RATIO;
+    else return 0;
   }
 
   // weather
@@ -78,20 +75,20 @@ namespace ObeliskCore {
       case "sunshine":
         return {
           rain: 0,
-          thunder: 0
-        }
+          thunder: 0,
+        };
         break;
       case "cloudSeed":
         return {
           rain: 10,
-          thunder: 0
-        }
+          thunder: 0,
+        };
         break;
-      case 'cloudSeedConcentrated':
+      case "cloudSeedConcentrated":
         return {
           rain: 10,
-          thunder: 10
-        }
+          thunder: 10,
+        };
         break;
       default:
         return null;

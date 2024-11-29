@@ -7,7 +7,3 @@ EnderCore.createResourceBlock("redstoneAlloy", "Redstone Alloy");
 EnderCore.createResourceBlock("endSteel", "End Steel");
 EnderCore.createResourceBlock("energeticAlloy", "Energetic Alloy");
 EnderCore.createResourceBlock("pulsatingIron", "Pulsating Iron");
-
-
-
-

@@ -1,19 +1,48 @@
-BlockRegistry.createBlock("sagmill", [
-  {
-    name: "tile.block_sag_mill.name",
-    texture: [
-      ["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["crusherFront", 0], ["machineSide", 0], ["machineSide", 0]],
-    inCreative: true
-  }
-], "machine");
+BlockRegistry.createBlock(
+  "sagmill",
+  [
+    {
+      name: "tile.block_sag_mill.name",
+      texture: [
+        ["machineBottom", 0],
+        ["machineTop", 0],
+        ["machineSide", 0],
+        ["crusherFront", 0],
+        ["machineSide", 0],
+        ["machineSide", 0],
+      ],
+      inCreative: true,
+    },
+  ],
+  "machine",
+);
 
 TileRenderer.setHandAndUiModel(BlockID.sagmill, 0, [
-  ["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["crusherFront", 0], ["machineSide", 0], ["machineSide", 0]]);
-TileRenderer.setStandardModelWithRotation(BlockID.sagmill, 2, [["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["crusherFront", 0], ["machineSide", 0], ["machineSide", 0]]);
-TileRenderer.registerModelWithRotation(BlockID.sagmill, 2, [["machineBottom", 0], ["machineTop", 0], ["machineSide", 0], ["crusherFrontOn", 0], ["machineSide", 0], ["machineSide", 0]]);
+  ["machineBottom", 0],
+  ["machineTop", 0],
+  ["machineSide", 0],
+  ["crusherFront", 0],
+  ["machineSide", 0],
+  ["machineSide", 0],
+]);
+TileRenderer.setStandardModelWithRotation(BlockID.sagmill, 2, [
+  ["machineBottom", 0],
+  ["machineTop", 0],
+  ["machineSide", 0],
+  ["crusherFront", 0],
+  ["machineSide", 0],
+  ["machineSide", 0],
+]);
+TileRenderer.registerModelWithRotation(BlockID.sagmill, 2, [
+  ["machineBottom", 0],
+  ["machineTop", 0],
+  ["machineSide", 0],
+  ["crusherFrontOn", 0],
+  ["machineSide", 0],
+  ["machineSide", 0],
+]);
 
 TileRenderer.setRotationFunction(BlockID.sagmill);
-
 
 /*
 ICRender.getGroup("bc-container").add(BlockID.sagmill, -1);
@@ -23,11 +52,17 @@ ICRender.getGroup("item-pipe").add(BlockID.sagmill, -1);
 let SAGGui = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_sag_mill.name"), {
   drawing: [
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
-    { type: "bitmap", x: 595, y: 250, bitmap: "bar_progress_down0", scale: 4.2 },
+    {
+      type: "bitmap",
+      x: 595,
+      y: 250,
+      bitmap: "bar_progress_down0",
+      scale: 4.2,
+    },
     { type: "bitmap", x: 765, y: 165, bitmap: "bar_silicon0", scale: 6.8 },
   ],
   elements: {
-    "progressScale": {
+    progressScale: {
       type: "scale",
       x: 595,
       y: 250,
@@ -37,10 +72,10 @@ let SAGGui = MachineRegistry.createInventoryWindow(Translation.translate("tile.b
       clicker: {
         onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("enderio_sag");
-        }
-      }
+        },
+      },
     },
-    "energyScale": {
+    energyScale: {
       type: "scale",
       x: 335,
       y: 140,
@@ -49,28 +84,36 @@ let SAGGui = MachineRegistry.createInventoryWindow(Translation.translate("tile.b
       bitmap: "redflux_bar1",
       scale: 3.2,
     },
-    "grindingScale": {
+    grindingScale: {
       type: "scale",
       x: 765,
       y: 165,
       direction: 1,
       value: 0.5,
       bitmap: "bar_silicon1",
-      scale: 6.8
+      scale: 6.8,
     },
-    "ingredient": {
+    ingredient: {
       type: "slot",
       x: 602,
-      y: 170
+      y: 170,
     },
-    "slotGrinding": { type: "slot", x: 700, y: 170 },
-    "slotCapacitor": { type: "slot", x: 325, y: 310 },
-    "textInstall": { type: "text", font: { size: 20, color: Color.YELLOW }, x: 325, y: 50, width: 100, height: 30, text: "" },
-    "result0": { type: "slot", x: 505, y: 340 },
-    "result1": { type: "slot", x: 570, y: 340 },
-    "result2": { type: "slot", x: 635, y: 340 },
-    "result3": { type: "slot", x: 700, y: 340 }
-  }
+    slotGrinding: { type: "slot", x: 700, y: 170 },
+    slotCapacitor: { type: "slot", x: 325, y: 310 },
+    textInstall: {
+      type: "text",
+      font: { size: 20, color: Color.YELLOW },
+      x: 325,
+      y: 50,
+      width: 100,
+      height: 30,
+      text: "",
+    },
+    result0: { type: "slot", x: 505, y: 340 },
+    result1: { type: "slot", x: 570, y: 340 },
+    result2: { type: "slot", x: 635, y: 340 },
+    result3: { type: "slot", x: 700, y: 340 },
+  },
 });
 
 Callback.addCallback("PreLoaded", function () {
@@ -82,23 +125,23 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
        " p "
   ], ['i', ItemID.darkSteel, 0, 'f', VanillaItemID.flint 0, "m", BlockID.machineChassi, 0, "p", VanillaItemID.piston, 0]);
   */
-  Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
-    "fff",
-    "ipi",
-    "ama"
-  ], ['i', ItemID.darkSteel, 0, 'f', VanillaItemID.flint, 0, "m", BlockID.simplesagmill, 0, "p", BlockID.machineChassi, 0, 'a', ItemID.darkSteelGear, 0]);
-  Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
-    "fff",
-    "ipi",
-    "ama"
-  ], ['i', ItemID.darkSteel, 0, 'f', VanillaItemID.flint, 0, "m", VanillaBlockID.piston, 0, "p", BlockID.machineChassi, 0, 'a', ItemID.darkSteelGear, 0]);
+  Recipes.addShaped(
+    { id: BlockID.sagmill, count: 1, data: 0 },
+    ["fff", "ipi", "ama"],
+    ["i", ItemID.darkSteel, 0, "f", VanillaItemID.flint, 0, "m", BlockID.simplesagmill, 0, "p", BlockID.machineChassi, 0, "a", ItemID.darkSteelGear, 0],
+  );
+  Recipes.addShaped(
+    { id: BlockID.sagmill, count: 1, data: 0 },
+    ["fff", "ipi", "ama"],
+    ["i", ItemID.darkSteel, 0, "f", VanillaItemID.flint, 0, "m", VanillaBlockID.piston, 0, "p", BlockID.machineChassi, 0, "a", ItemID.darkSteelGear, 0],
+  );
 
   RecipeRegistry.addCrusher({
     isGrinding: false,
     ingredient: { id: 49, data: 0 },
     result0: { id: ItemID.dustObsidian, data: 0, chance: 1, count: 4 },
     energy: 4020,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -107,9 +150,9 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result0: { id: ItemID.dustGold, data: 0, chance: 1, count: 2 },
     result1: { id: VanillaBlockID.cobblestone, data: 0, chance: 0.15 },
     result2: { id: ItemID.dustCopper, data: 0, chance: 0.2 },
-    //id: ItemID.dustSilver, data: 0, chance: 0.4 
+    //id: ItemID.dustSilver, data: 0, chance: 0.4
     energy: 3600,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -120,7 +163,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result3: { id: ItemID.dustNickel, data: 0, chance: 1 },
     energy: 3600,
     isGrinding: true,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -131,7 +174,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result3: { id: VanillaBlockID.cobblestone, data: 0, chance: 0.15 },
     energy: 3600,
     isGrinding: true,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -142,7 +185,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result3: { id: VanillaBlockID.cobblestone, data: 0, chance: 0.15 },
     energy: 3600,
     isGrinding: true,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -153,7 +196,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result3: { id: VanillaBlockID.cobblestone, data: 0, chance: 0.15 },
     energy: 3600,
     isGrinding: true,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -163,7 +206,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result2: { id: VanillaBlockID.cobblestone, data: 0, chance: 0.15 },
     energy: 3600,
     isGrinding: true,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -174,7 +217,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result3: { id: VanillaItemID.lapis_lazuli, data: 0, chance: 0.2 },
     energy: 3600,
     isGrinding: true,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -185,16 +228,15 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     //result3: { id: VanillaItemID.quartz, data: 0, chance: 0.5 },
     energy: 3600,
     isGrinding: true,
-    by: "EnderIO"
+    by: "EnderIO",
   });
-
 
   RecipeRegistry.addCrusher({
     ingredient: { id: VanillaBlockID.sand, data: 0 },
     result0: { id: ItemID.silicon, data: 0, chance: 0.5 },
     energy: 720,
     isGrinding: true,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -205,7 +247,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result2: { id: VanillaItemID.flint, data: 0, chance: 0.1 },
     result3: { id: 0, data: 0, chance: 0 },
     energy: 3600,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -216,7 +258,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result2: { id: 0, data: 0, chance: 0 },
     result3: { id: 0, data: 0, chance: 0 },
     energy: 3600,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -227,7 +269,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result3: { id: 0, data: 0, chance: 0 },
     energy: 120,
     isGrinding: false,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -238,7 +280,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result3: { id: 0, data: 0, chance: 0 },
     energy: 120,
     isGrinding: false,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -249,7 +291,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result2: { id: ItemID.dustCoal, data: 0, chance: 0.1 },
     result3: { id: 0, data: 0, chance: 0 },
     energy: 3600,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -257,7 +299,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result0: { id: ItemID.dustEnder, data: 0, chance: 1, count: 1 },
     energy: 1800,
     isGrinding: true,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -266,7 +308,7 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result1: { id: VanillaItemID.wheat_seeds, data: 0, chance: 0.45 },
     energy: 1200,
     isGrinding: true,
-    by: "EnderIO"
+    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -274,9 +316,9 @@ Recipes.addShaped({ id: BlockID.sagmill, count: 1, data: 0 }, [
     result0: { id: ItemID.dustPulsating, data: 0, chance: 1, count: 1 },
     energy: 1800,
     isGrinding: false,
-    by: "EnderIO"
+    by: "EnderIO",
   });
-})
+});
 
 namespace Machine {
   export class SagMill_Basic extends BasicMachine {
@@ -289,11 +331,16 @@ namespace Machine {
       sag_bonus: 0,
       main: 0,
       pwUse: 0,
-    }
+    };
 
-    defaultEnergyStorage = 100000;
-    defaultEnergyConsume = 30;
-    upgrades: ["capacitor"];
+    capacitors = ["capacitor"];
+    acceptType = ["crushed", "buffer", "intake"];
+    initCapacitor(): void {
+      const capacitors = CapacitorData.useCapacitor(this);
+      this.energyConsume = capacitors.getValue(CapacitorKey.SAG_MILL_POWER_USE);
+      this.maxIntake = capacitors.getValue(CapacitorKey.SAG_MILL_POWER_INTAKE);
+      this.energyStorage = this.updateEnergyStorage(capacitors.getValue(CapacitorKey.SAG_MILL_POWER_BUFFER));
+    }
 
     getScreenByName(): UI.IWindow {
       return SAGGui;
@@ -301,14 +348,12 @@ namespace Machine {
 
     setupContainer(): void {
       StorageInterface.setGlobalValidatePolicy(this.container, (name, id, amount, data) => {
-        if (name.startsWith("slotCapacitor")) return CapacitorAPI.isValidCapacitor(id, this)
-        if (name == "ingredient")
-          return true // CrusherRecipe.getInput(new ItemStack(id, amount, data));
+        if (name.startsWith("slotCapacitor")) return CapacitorData.isValidCapacitor(id, this);
+        if (name == "ingredient") return true; // CrusherRecipe.getInput(new ItemStack(id, amount, data));
         if (name.startsWith("slotGrinding")) return GrindingBall.isBallID(id);
         return false;
       });
     }
-
 
     executeBall(): void {
       if (this.data.durability <= 0) {
@@ -324,6 +369,7 @@ namespace Machine {
         this.data.sag_bonus = grindingBall.bonus;
         this.data.pwUse = grindingBall.use;
         this.container.validateAll();
+        slot.markDirty();
       }
     }
 
@@ -336,7 +382,7 @@ namespace Machine {
       let newActive = false;
       let grinding = this.container.getSlot("slotGrinding");
       // cơ chế mài bóng
-      this.executeBall()
+      this.executeBall();
       // let recipe = CrusherRecipe.getRecipe(input.id, input.data);
       let recipe = CrusherRecipe.getRecipe(input);
       if (recipe) {
@@ -347,13 +393,15 @@ namespace Machine {
         let result2 = recipe.result2;
         let result3 = recipe.result3;
         let time = recipe.energy;
-        if (((res0.id == result0.id && res0.data == result0.data && res0.count + result0.count <= 64) || (res0.id == 0)) &&
-          ((res1.id == result1.id && res1.data == result1.data && res1.count < 64) || (res1.id == 0)) &&
-          ((res2.id == result2.id && res2.data == result2.data && res2.count < 64) || (res2.id == 0)) &&
-          ((res3.id == result3.id && res3.data == result3.data && res3.count < 64) || (res3.id == 0))) {
+        if (
+          ((res0.id == result0.id && res0.data == result0.data && res0.count + result0.count <= 64) || res0.id == 0) &&
+          ((res1.id == result1.id && res1.data == result1.data && res1.count < 64) || res1.id == 0) &&
+          ((res2.id == result2.id && res2.data == result2.data && res2.count < 64) || res2.id == 0) &&
+          ((res3.id == result3.id && res3.data == result3.data && res3.count < 64) || res3.id == 0)
+        ) {
           this.processTime = time;
           let canUseGrinding = isGrinding && this.data.durability > 0;
-          let pw_consump = canUseGrinding ? Math.floor(this.energyConsume * this.data.pwUse) : this.energyConsume
+          let pw_consump = canUseGrinding ? Math.floor(this.energyConsume * this.data.pwUse) : this.energyConsume;
           if (this.data.energy >= pw_consump) {
             newActive = true;
             this.data.progress += this.energyConsume;
@@ -363,32 +411,34 @@ namespace Machine {
             input.count--;
             input.markDirty();
             let outputRandom = Math.random();
-            let outputBonusRandom = canUseGrinding ? (outputRandom * this.data.sag_bonus) : outputRandom;
+            let outputBonusRandom = canUseGrinding ? outputRandom * this.data.sag_bonus : outputRandom;
             let countOutput = 1;
             let mainCountIuput = result0.count;
-            if (canUseGrinding && (Math.random() <= this.data.main)) {
+            if (canUseGrinding && Math.random() <= this.data.main) {
               countOutput = 2;
               mainCountIuput = result0.count * 2;
             }
             if (outputRandom <= result0.chance) {
+              // Main Output
               res0.id = result0.id;
               res0.data = result0.data;
               res0.count += mainCountIuput;
               res0.markDirty();
             }
-            if (outputBonusRandom <= result1.chance) {
+            if (result1.chance && outputBonusRandom <= result1.chance) {
+              // 3 Bonus
               res1.id = result1.id;
               res1.data = result1.data;
               res1.count += countOutput;
               res1.markDirty();
             }
-            if (outputBonusRandom <= result2.chance) {
+            if (result2.chance && outputBonusRandom <= result2.chance) {
               res2.id = result2.id;
               res2.data = result2.data;
               res2.count += countOutput;
               res2.markDirty();
             }
-            if (outputBonusRandom <= result3.chance) {
+            if (result3.chance && outputBonusRandom <= result3.chance) {
               res3.id = result3.id;
               res3.data = result3.data;
               res3.count += countOutput;
@@ -396,8 +446,7 @@ namespace Machine {
             }
             this.container.validateAll();
             this.data.progress = 0;
-            if (canUseGrinding)
-              this.data.durability--;
+            if (canUseGrinding) this.data.durability--;
           }
         }
       } else {
@@ -407,10 +456,10 @@ namespace Machine {
     }
 
     onTick(): void {
-      this.useCapacitor();
+      this.initCapacitor();
       StorageInterface.checkHoppers(this);
       let capacitor = this.container.getSlot("slotCapacitor");
-      if (CapacitorAPI.isValidCapacitor(capacitor.id, this)) {
+      if (CapacitorData.isValidCapacitor(capacitor.id, this)) {
         this.container.setText("textInstall", "Installed");
         this.run();
       } else {
@@ -428,16 +477,15 @@ namespace Machine {
 
   StorageInterface.createInterface(BlockID.sagmill, {
     slots: {
-      "ingredient": { input: true },
+      ingredient: { input: true },
 
-      "result0": { output: true },
-      "result1": { output: true },
-      "result2": { output: true },
-      "result3": { output: true }
+      result0: { output: true },
+      result1: { output: true },
+      result2: { output: true },
+      result3: { output: true },
     },
     isValidInput: (item: ItemInstance) => {
       return !!CrusherRecipe.getInput(item);
-    }
+    },
   });
-
 }

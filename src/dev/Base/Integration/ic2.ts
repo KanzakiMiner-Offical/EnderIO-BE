@@ -1,10 +1,10 @@
 ModAPI.addAPICallback("ICore", function (api) {
-  CombustionFuel.addFuel("biogas", 16, 1000 * 10 * 10)
+  CombustionFuel.addFuel("biogas", 16, 1000 * 10 * 10);
   //CombustionFuel.addFuel("ethanol", 16, 1000 * 10 * 10)
   //CombustionFuel.addFuel("oil", 8, 1000 * 10 * 10)
   //CombustionFuel.addFuel("biomass", 8, 1000 * 20 * 10)
 
-  Callback.addCallback("PreLoaded", function() {
+  Callback.addCallback("PreLoaded", function () {
     ICRender.getGroup("liquid_pipe").add(BlockID.semifluidGenerator, -1);
     ICRender.getGroup("liquid_pipe").add(BlockID.icFermenter, -1);
     ICRender.getGroup("liquid_pipe").add(BlockID.oreWasher, -1);
@@ -17,14 +17,14 @@ ModAPI.addAPICallback("ICore", function (api) {
       ingredient1: { id: ItemID.ingotCopper, data: 0, count: 3 },
       ingredient2: { id: ItemID.ingotTin, data: 0, count: 1 },
       result: { id: ItemID.ingotBronze, count: 4, data: 0 },
-      energy: 4000
+      energy: 4000,
     });
     SmelterRecipe.addRecipe({
       ingredient1: { id: VanillaItemID.iron_ingot, data: 0, count: 1 },
       ingredient2: { id: VanillaItemID.coal, data: 0, count: 1 },
       ingredient3: { id: ItemID.dustCoal, data: 0, count: 1 },
       result: { id: ItemID.ingotSteel, count: 1, data: 0 },
-      energy: 10000
+      energy: 10000,
     });
 
     RecipeRegistry.addCrusher({
@@ -35,7 +35,7 @@ ModAPI.addAPICallback("ICore", function (api) {
       result2: { id: ItemID.dustGold, data: 0, chance: 0.1 },
       result3: { id: 4, data: 0, chance: 0.15 },
       energy: 3600,
-      by: "IC2"
+      by: "IC2",
     });
     /*
         RecipeRegistry.addCrusher({
@@ -57,7 +57,7 @@ ModAPI.addAPICallback("ICore", function (api) {
       result1: { id: ItemID.dustSilver, data: 0, chance: 0.1 },
       result2: { id: 4, data: 0, chance: 0.15 },
       energy: 3600,
-      by: "IC2"
+      by: "IC2",
     });
 
     RecipeRegistry.addCrusher({
@@ -67,8 +67,7 @@ ModAPI.addAPICallback("ICore", function (api) {
       result1: { id: ItemID.dustSilver, data: 0, chance: 0.1 },
       result2: { id: 4, data: 0, chance: 0.15 },
       energy: 3600,
-      by: "IC2"
+      by: "IC2",
     });
-
   });
 });

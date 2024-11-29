@@ -1,32 +1,48 @@
-BlockRegistry.createBlock("eioTank", [
-  {
-    name: "tile.block_tank.name",
-    texture: [
-      ["basic_tank", 0]],
-    inCreative: true
-  }
-], "other-machine");
-
+BlockRegistry.createBlock(
+  "eioTank",
+  [
+    {
+      name: "tile.block_tank.name",
+      texture: [["basic_tank", 0]],
+      inCreative: true,
+    },
+  ],
+  "other-machine",
+);
 
 ICRender.getGroup("liquid_pipe").add(BlockID.eioTank, -1);
 
 Callback.addCallback("PreLoaded", function () {
-  Recipes.addShaped({ id: BlockID.eioTank, count: 1, data: 0 }, [
-    "iri",
-    "rmr",
-    "iri"
-  ], ['i', VanillaItemID.iron_ingot, 0, "r", VanillaTileID.iron_bars, 0, "m", VanillaBlockID.glass, -1
-  ]);
+  Recipes.addShaped(
+    { id: BlockID.eioTank, count: 1, data: 0 },
+    ["iri", "rmr", "iri"],
+    ["i", VanillaItemID.iron_ingot, 0, "r", VanillaTileID.iron_bars, 0, "m", VanillaBlockID.glass, -1],
+  );
 });
 
 let guiTank = MachineRegistry.createInventoryWindow(Translation.translate("enderio.gui.tank.tank"), {
   drawing: [
-    { type: "bitmap", x: 100 + 70 * GUI_SCALE, y: 50 + 16 * GUI_SCALE, bitmap: "liquid_bar", scale: GUI_SCALE },
+    {
+      type: "bitmap",
+      x: 100 + 70 * GUI_SCALE,
+      y: 50 + 16 * GUI_SCALE,
+      bitmap: "liquid_bar",
+      scale: GUI_SCALE,
+    },
   ],
 
   elements: {
-    "liquidScale": { type: "scale", x: 100 + 70 * GUI_SCALE, y: 50 + 16 * GUI_SCALE, direction: 1, value: 0.5, bitmap: "gui_water_scale", overlay: "gui_liquid_storage_overlay", scale: GUI_SCALE },
-    "slotLiquid1": {
+    liquidScale: {
+      type: "scale",
+      x: 100 + 70 * GUI_SCALE,
+      y: 50 + 16 * GUI_SCALE,
+      direction: 1,
+      value: 0.5,
+      bitmap: "gui_water_scale",
+      overlay: "gui_liquid_storage_overlay",
+      scale: GUI_SCALE,
+    },
+    slotLiquid1: {
       type: "slot",
       x: 100 + 94 * GUI_SCALE,
       y: 50 + 16 * GUI_SCALE,
@@ -34,7 +50,7 @@ let guiTank = MachineRegistry.createInventoryWindow(Translation.translate("ender
          return !!LiquidItemRegistry.getEmptyItem(item.id, item.data);
        }*/
     },
-    "slotLiquid2": {
+    slotLiquid2: {
       type: "slot",
       x: 170 + 94 * GUI_SCALE,
       y: 50 + 16 * GUI_SCALE,
@@ -42,40 +58,38 @@ let guiTank = MachineRegistry.createInventoryWindow(Translation.translate("ender
          return !!LiquidItemRegistry.getFullItem(item.id, item.data, "water");
        }*/
     },
-    "slotOut": {
+    slotOut: {
       type: "slot",
       x: 100 + 94 * GUI_SCALE,
       y: 50 + 40 * GUI_SCALE,
-
     },
-  }
-})
+  },
+});
 
 MachineRegistry.createStorageInterface(BlockID.tank, {
   slots: {
-    "slotLiquid2": {
+    slotLiquid2: {
       input: true,
       isValid: function (item) {
         return !!LiquidItemRegistry.getFullItem(item.id, item.data, "water");
-      }
+      },
     },
-    "slotLiquid1": {
+    slotLiquid1: {
       input: true,
       isValid: function (item) {
         return !!LiquidItemRegistry.getEmptyItem(item.id, item.data);
-      }
+      },
     },
-    "slotOut": {
+    slotOut: {
       output: true,
     },
   },
   canReceiveLiquid: () => true,
-  canTransportLiquid: () => true
+  canTransportLiquid: () => true,
 });
 
 namespace Machine {
   export class Tank extends MachineBase {
-
     liquidTank: BlockEngine.LiquidTank;
 
     getScreenByName(): UI.IWindow {
@@ -85,19 +99,16 @@ namespace Machine {
     setupContainer(): void {
       this.liquidTank = this.addLiquidTank("fluid", 16000);
       StorageInterface.setGlobalValidatePolicy(this.container, function (name, id, amount, data) {
-        if (name == "slotLiquid1")
-          return !!LiquidItemRegistry.getEmptyItem(id, data);
-        if (name == "slotLiquid2")
-          return !!LiquidRegistry.getFullItem(id, data, "water");
-        if (name == "slotOutput")
-          return false;
-        return false
+        if (name == "slotLiquid1") return !!LiquidItemRegistry.getEmptyItem(id, data);
+        if (name == "slotLiquid2") return !!LiquidRegistry.getFullItem(id, data, "water");
+        if (name == "slotOutput") return false;
+        return false;
       });
     }
 
     onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean {
       if (Entity.getSneaking(player)) {
-        MachineRegistry.fillTankOnClick(this.liquidTank, item, player)
+        MachineRegistry.fillTankOnClick(this.liquidTank, item, player);
         this.preventClick();
         return true;
       }
@@ -116,14 +127,14 @@ namespace Machine {
 
     destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
       let extra: ItemExtraData = null;
-      let region = BlockSource.getDefaultForActor(player)
-      let liquid = this.liquidTank.getLiquidStored()
+      let region = BlockSource.getDefaultForActor(player);
+      let liquid = this.liquidTank.getLiquidStored();
       if (liquid) {
         extra = new ItemExtraData();
         extra.putString("fluid", liquid);
         extra.putInt("amount", this.liquidTank.getAmount(liquid));
       }
-      BlockSource.getDefaultForActor(player).spawnDroppedItem(coords.x + .5, coords.y + .5, coords.z + .5, BlockID.eioTank, 1, 0, extra);
+      BlockSource.getDefaultForActor(player).spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.eioTank, 1, 0, extra);
     }
   }
   MachineRegistry.registerPrototype(BlockID.eioTank, new Tank());

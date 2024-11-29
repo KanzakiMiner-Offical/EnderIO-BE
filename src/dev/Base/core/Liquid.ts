@@ -12,10 +12,9 @@ LiquidRegistry.registerLiquid("enderDistillation", "Dew of the Void", ["enderDis
 LiquidRegistry.registerLiquid("sunshine", "Liquid Sunshine", ["sunshine_fluid"]);
 LiquidRegistry.registerLiquid("vaporOfLevity", "Vapor Of Levity", ["vaporOfLevity_fluid"]);
 
-class ItemLiquidBucket extends ItemCommon
-implements ItemBehavior {
+class ItemLiquidBucket extends ItemCommon implements ItemBehavior {
   constructor(stringID: string, liquid: string) {
-    let liquid_name = LiquidRegistry.getLiquidName(liquid)
+    let liquid_name = LiquidRegistry.getLiquidName(liquid);
     super(stringID, `${liquid_name} Bucket`, `bucket_${liquid}`);
     LiquidItemRegistry.registerItem(liquid, 325, this.id, 1000);
   }
@@ -24,7 +23,6 @@ implements ItemBehavior {
     return name + "\n§7" + (1000 - item.data) + " mB";
   }
 }
-
 
 ItemRegistry.registerItem(new ItemLiquidBucket("bucketHootch", "hootch"));
 ItemRegistry.registerItem(new ItemLiquidBucket("bucketNutrientDistillation", "nutrientDistillation"));

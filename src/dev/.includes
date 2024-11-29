@@ -36,9 +36,11 @@ Base/Items/powder.ts
 Base/Items/SoulVessel.js
 Base/Items/Capacitor/Capacitor.ts
 Base/Items/Capacitor/defined.ts
+Base/Items/Capacitor/loot_capacitor.ts
 Base/Items/Tools/ItemElectric.ts
 Base/Items/Tools/wrench.ts
 Base/Items/Tools/darkSteel.ts
+Base/Items/Tools/electric/staffoftraveling.ts
 Base/Blocks/Resources_block.ts
 Base/Blocks/Glass.ts
 Base/Blocks/MachineChassis.ts
@@ -53,6 +55,8 @@ Base/Blocks/Generator/PhotoCeil.ts
 Base/Blocks/Generator/Stirling.ts
 Base/Blocks/Generator/combustion.ts
 Base/Blocks/Generator/zombie.ts
+Base/Blocks/Fix Bug/Reinforced.js
+
 
 Base/Blocks/Machine/basic_machine.ts
 Base/Blocks/Machine/alloyMelter.ts

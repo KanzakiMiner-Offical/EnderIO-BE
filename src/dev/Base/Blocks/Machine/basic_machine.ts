@@ -1,19 +1,21 @@
 namespace Machine {
-  export abstract class BasicMachine
-    extends ProgressingMachine {
+  export abstract class BasicMachine extends ProgressingMachine {
     defaultValues = {
       energy: 0,
-      progress: 0
-    }
+      progress: 0,
+    };
 
-    defaultTier = 2;
+    // defaultTier = 2;
     defaultEnergyStorage = 100000;
     defaultEnergyConsume?: number;
 
     tier: 2;
     energyStorage: number;
     energyConsume?: number;
+    maxIntake: number;
     processTime: number;
+
+    initCapacitor(): void {}
 
     getTier(): number {
       return this.tier;
@@ -23,23 +25,26 @@ namespace Machine {
       return this.energyStorage;
     }
 
-    setupContainer(): void {
-      StorageInterface.setGlobalValidatePolicy(this.container, (name, id, amount, data) => {
-        if (name.startsWith("slotCapacitor")) return CapacitorAPI.isValidCapacitor(id, this);
-        return false;
-      });
+    getMaxIntake(): number {
+      return this.maxIntake || 0;
     }
 
+    // setupContainer(): void {
+    // StorageInterface.setGlobalValidatePolicy(this.container, (name, id, amount, data) => {
+    //   // if (name.startsWith("slotCapacitor")) return CapacitorData.isValidCapacitor(id, this);
+    //   return false;
+    // });
+    // }
 
-    useCapacitor(): CapacitorAPI.CapacitorSet {
-      let upgrades = CapacitorAPI.useCapacitor(this);
-      this.energyConsume = upgrades.getEnergyConsume(this.defaultEnergyConsume);
-      this.energyStorage = upgrades.getEnergyStorage(this.defaultEnergyStorage);
-      return upgrades;
-    }
+    // useCapacitor(): CapacitorData.CapacitorSet {
+    //   let upgrades = CapacitorData.useCapacitor(this);
+    // this.energyConsume = upgrades.getEnergyConsume(this.defaultEnergyConsume);
+    // this.energyStorage = upgrades.getEnergyStorage(this.defaultEnergyStorage);
+    //   return upgrades;
+    // }
 
     getRelativeEnergy(): number {
-      return this.data.energy / this.getEnergyStorage();
+      return this.data.energy / this.getEnergyStorage() || 0;
     }
 
     canRotate(side: number): boolean {

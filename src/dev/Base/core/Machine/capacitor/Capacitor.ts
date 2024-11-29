@@ -1,3 +1,6 @@
+// old
+
+/** @deprecated */
 namespace CapacitorAPI {
   let data = {};
 
@@ -11,7 +14,7 @@ namespace CapacitorAPI {
 
   export function isValidCapacitor(id: number, machine: TileEntity): boolean {
     const capacitor = getCapacitor(id);
-    const validCapacitor = machine["upgrades"];
+    const validCapacitor = machine["capacitors"];
     if (capacitor && (!validCapacitor || validCapacitor.indexOf(capacitor.type) != -1)) {
       return true;
     }
@@ -58,17 +61,16 @@ namespace CapacitorAPI {
     }
 
     isValidCapacitor(capacitor: ICapacitor): boolean {
-      const validCapacitor = this.tileEntity["upgrades"];
-      return (!validCapacitor || validCapacitor.indexOf(capacitor.type) != -1);
+      const validCapacitor = this.tileEntity["capacitors"];
+      return !validCapacitor || validCapacitor.indexOf(capacitor.type) != -1;
     }
 
     executeUprade(capacitor: ICapacitor, stack: ItemInstance) {
       if (capacitor.type == "capacitor") {
-        this.bonusGeneratorMultiplier *= capacitor.getBonusGenerator(stack, this.tileEntity)
+        this.bonusGeneratorMultiplier *= capacitor.getBonusGenerator(stack, this.tileEntity);
         this.energyConsumeMultiplier += capacitor.getEnergyConsumeMultiplier(stack, this.tileEntity);
-        this.extraEnergyStorage *= capacitor.getExtraEnergyStorage(stack, this.tileEntity)
+        this.extraEnergyStorage *= capacitor.getExtraEnergyStorage(stack, this.tileEntity);
         this.maxRangeMultiplier += capacitor.getRange(stack, this.tileEntity);
-
       }
       if ("onTick" in capacitor) {
         capacitor.onTick(stack, this.tileEntity);
@@ -76,11 +78,11 @@ namespace CapacitorAPI {
     }
     // get data from Tile Entity
     getBonusGenerator(defaultBonus: number): number {
-      return defaultBonus * this.bonusGeneratorMultiplier
+      return defaultBonus * this.bonusGeneratorMultiplier;
     }
 
     getEnergyConsume(defaultEnergy: number): number {
-      return defaultEnergy * this.energyConsumeMultiplier
+      return defaultEnergy * this.energyConsumeMultiplier;
     }
 
     getEnergyStorage(defaultEnergyStorage: number): number {
@@ -93,6 +95,5 @@ namespace CapacitorAPI {
     getRange(defaultRange: number): number {
       return defaultRange + this.maxRangeMultiplier;
     }
-
   }
 }

@@ -3,16 +3,15 @@
 const TransferMode = {
   IN: 0,
   OUT: 1,
-  NONE: 2
-}
+  NONE: 2,
+};
 
 namespace Machine {
   export class CapacitorBlock extends ProgressingMachine {
-
     readonly tier: number;
     readonly capacity: number;
     readonly guiScreen: UI.StandardWindow;
-    readonly maxOutputPower: number
+    readonly maxOutputPower: number;
 
     constructor(tier: number, maxOutputPower: number, capacity: number, guiScreen: UI.StandardWindow) {
       super();
@@ -24,7 +23,7 @@ namespace Machine {
 
     defaultValues = {
       energy: 0,
-      config: 0
+      config: 0,
     };
 
     onInit(): void {
@@ -86,8 +85,7 @@ namespace Machine {
       this.chargeSlot("slot4");
 
       this.container.setScale("energyScale", this.getRelativeEnergy());
-      this.container.setText("textInfo1", Math.floor(this.data.energy) + "/");
-      this.container.setText("textInfo2", this.getEnergyStorage());
+      this.container.setText("textInfo", Math.floor(this.data.energy) + "/" + this.getEnergyStorage());
       this.container.sendChanges();
     }
 
@@ -101,7 +99,6 @@ namespace Machine {
     getEnergyStorage(): number {
       return this.capacity;
     }
-
 
     energyReceive(type: string, amount: number, voltage: number): number {
       let maxVoltage = this.maxOutputPower * 1.5;
@@ -133,17 +130,29 @@ namespace Machine {
 
 function CapacitorBlockWindow(header: string) {
   return MachineRegistry.createInventoryWindow(header, {
-    drawing: [
-      { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
-    ],
+    drawing: [{ type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 }],
     elements: {
-      "energyScale": { type: "scale", x: 335, y: 140, direction: 1, bitmap: "redflux_bar1", scale: 3.2 },
-      "textInfo": { type: "text", x: 500, y: 140, width: 350, height: 30, text: "0/0 RF" },
-      "slot1": { type: "slot", x: 480, y: 300, bitmap: "chargeSlot" },
-      "slot2": { type: "slot", x: 580, y: 300, bitmap: "chargeSlot" },
-      "slot3": { type: "slot", x: 680, y: 300, bitmap: "chargeSlot" },
-      "slot4": { type: "slot", x: 780, y: 300, bitmap: "chargeSlot" },
-    }
+      energyScale: {
+        type: "scale",
+        x: 335,
+        y: 140,
+        direction: 1,
+        bitmap: "redflux_bar1",
+        scale: 3.2,
+      },
+      textInfo: {
+        type: "text",
+        x: 500,
+        y: 140,
+        width: 350,
+        height: 30,
+        text: "0/0 RF",
+      },
+      slot1: { type: "slot", x: 480, y: 300, bitmap: "chargeSlot" },
+      slot2: { type: "slot", x: 580, y: 300, bitmap: "chargeSlot" },
+      slot3: { type: "slot", x: 680, y: 300, bitmap: "chargeSlot" },
+      slot4: { type: "slot", x: 780, y: 300, bitmap: "chargeSlot" },
+    },
   });
 }
 /*

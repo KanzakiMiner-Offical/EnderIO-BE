@@ -1,10 +1,9 @@
 namespace Machine {
-  export abstract class SimpleMachine
-    extends ProgressingMachine {
+  export abstract class SimpleMachine extends ProgressingMachine {
     defaultValues = {
       energy: 0,
-      progress: 0
-    }
+      progress: 0,
+    };
 
     tier = 1;
     energyStorage = 2000;
@@ -24,8 +23,7 @@ namespace Machine {
     }
 
     lossEnergy(value: number = 0.1): void {
-      if (this.data.energy >= value)
-        this.data.energy -= value;
+      if (this.data.energy >= value) this.data.energy -= value;
     }
 
     canRotate(side: number): boolean {
@@ -33,7 +31,7 @@ namespace Machine {
     }
 
     energyReceive(type: string, amount: number, voltage: number): number {
-      let maxVoltage = 15 * 1.2
+      let maxVoltage = 15 * 1.2;
       if (voltage > maxVoltage) {
         amount = Math.min(amount, maxVoltage);
       }
@@ -41,6 +39,5 @@ namespace Machine {
       this.data.energy += add;
       return add;
     }
-
   }
 }

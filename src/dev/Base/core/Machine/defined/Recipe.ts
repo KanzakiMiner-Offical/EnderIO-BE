@@ -3,16 +3,20 @@ function isEmpty(obj): boolean {
 }
 
 namespace SmelterRecipe {
-  export type RecipeFormat = { result: ItemInstance, input: ItemInstance[], energy: number /*, exp ? : number*/ };
+  export type RecipeFormat = {
+    result: ItemInstance;
+    input: ItemInstance[];
+    energy: number /*, exp ? : number*/;
+  };
   export type RecipeType = {
-    ingredient1: ItemInstance,
-    ingredient2?: ItemInstance,
-    ingredient3?: ItemInstance,
-    result: ItemInstance,
-    energy: number,
-    by?: string
+    ingredient1: ItemInstance;
+    ingredient2?: ItemInstance;
+    ingredient3?: ItemInstance;
+    result: ItemInstance;
+    energy: number;
+    by?: string;
     //exp ? : number
-  }
+  };
   /*export type FurnaceRecipeFormat = {
     result: ItemInstance,
     ingredient: string
@@ -21,18 +25,18 @@ namespace SmelterRecipe {
   export const recipes: RecipeFormat[] = [];
 
   export function addRecipe(obj: RecipeType) {
-    let inputArray = [obj.ingredient1]
+    let inputArray = [obj.ingredient1];
     if (!!obj.ingredient2) {
-      inputArray.push(obj.ingredient2)
+      inputArray.push(obj.ingredient2);
     }
     if (!!obj.ingredient3) {
-      inputArray.push(obj.ingredient3)
+      inputArray.push(obj.ingredient3);
     }
     recipes.push({
       result: obj.result,
       input: inputArray,
-      energy: obj.energy
-    })
+      energy: obj.energy,
+    });
   }
 
   export function getInput(container: ItemContainer): ItemInstance[] {
@@ -93,56 +97,55 @@ namespace SmelterRecipe {
     for (let i = 1; i <= 3; i++) {
       let slot = container.getSlot("ingredient" + i);
       if (slot.id > 0 && slot.count > 0) {
-        inputItems["ingredient" + i] = new ItemStack(slot)
+        inputItems["ingredient" + i] = new ItemStack(slot);
       }
     }
     return inputItems;
   }
   export function getRecipeFurnace(input: any) {
     for (let slots in input) {
-      let slot = input[slots]
+      let slot = input[slots];
       if (!Recipes.getFurnaceRecipeResult(slot.id, slot.data, "iron")) {
         continue;
       } else if (Recipes.getFurnaceRecipeResult(slot.id, slot.data, "iron")) {
         return {
           result: Recipes.getFurnaceRecipeResult(slot.id, slot.data, "iron"),
-          ingredient: slots
-        }
+          ingredient: slots,
+        };
       }
     }
     return {
       result: null,
-      ingredient: null
-    }
+      ingredient: null,
+    };
   }
 }
 
 namespace CrusherRecipe {
   export type SagMillRecipeFormat = {
-    isGrinding: boolean,
-    ingredient: { id: number, data: number },
-    result0: { id: number, data: number, chance: number, count?: number },
-    result1?: { id: number, data: number, chance: number },
-    result2?: { id: number, data: number, chance: number },
-    result3?: { id: number, data: number, chance: number },
-    energy: number,
-    by: string
-  }
+    isGrinding: boolean;
+    ingredient: { id: number; data: number };
+    result0: { id: number; data: number; chance: number; count?: number };
+    result1?: { id: number; data: number; chance: number };
+    result2?: { id: number; data: number; chance: number };
+    result3?: { id: number; data: number; chance: number };
+    energy: number;
+    by: string;
+  };
 
-
-  export let recipes: SagMillRecipeFormat[] = []
+  export let recipes: SagMillRecipeFormat[] = [];
   export function add(obj: SagMillRecipeFormat): void {
     if (!obj.result0.count) {
-      obj.result0.count = 1
+      obj.result0.count = 1;
     }
     if (!obj.result1) {
-      obj.result1 = { id: 0, data: 0, chance: 0 }
+      obj.result1 = { id: 0, data: 0, chance: 0 };
     }
     if (!obj.result2) {
-      obj.result2 = { id: 0, data: 0, chance: 0 }
+      obj.result2 = { id: 0, data: 0, chance: 0 };
     }
     if (!obj.result3) {
-      obj.result3 = { id: 0, data: 0, chance: 0 }
+      obj.result3 = { id: 0, data: 0, chance: 0 };
     }
     if (obj.isGrinding == undefined || obj.isGrinding == null) {
       obj.isGrinding = false;
@@ -155,12 +158,10 @@ namespace CrusherRecipe {
     let id = input.id;
     let data = input.data;
     let count = input.count;
-    if (!id)
-      return null;
+    if (!id) return null;
     for (let recipe of recipes) {
       let ingredient = recipe.ingredient;
-      if (id == ingredient.id && (data == -1 || data == ingredient.data) && count >= 1)
-        return recipe
+      if (id == ingredient.id && (data == -1 || data == ingredient.data) && count >= 1) return recipe;
     }
     return null;
   }
@@ -171,24 +172,24 @@ namespace CrusherRecipe {
     for (let recipe of recipes) {
       let ingredient = recipe.ingredient;
       if (id == ingredient.id && (data == -1 || data == ingredient.data)) {
-        return true
+        return true;
       }
-      return false
+      return false;
     }
   }
 }
 
 namespace VatRecipe {
-  export let recipes = []
+  export let recipes = [];
 
   export type VatResultFormat = {
-    type: number,
-    liquidOut: string,
-    amount: number,
-    energy: number,
-    amount_input: number,
-    liquidIn: string,
-  }
+    type: number;
+    liquidOut: string;
+    amount: number;
+    energy: number;
+    amount_input: number;
+    liquidIn: string;
+  };
 
   export function add(obj: any) {
     let newData = {};
@@ -238,21 +239,21 @@ namespace VatRecipe {
       }
       if (newKey2) newData2[newKey2] = obj.input2[key2];
     }
-    obj.input1 = newData
-    obj.input2 = newData2
+    obj.input1 = newData;
+    obj.input2 = newData2;
     recipes.push(obj);
   }
   export function getResult(i1: ItemInstance, i2: ItemInstance, inputTank: BlockEngine.LiquidTank): VatResultFormat {
     let result: VatResultFormat;
     let liquidStorage = inputTank.getLiquidStored();
-    let liquidAmount = inputTank.getAmount(liquidStorage)
+    let liquidAmount = inputTank.getAmount(liquidStorage);
     for (let recipe of recipes) {
-      let input1 = recipe.input1
-      let input2 = recipe.input2
+      let input1 = recipe.input1;
+      let input2 = recipe.input2;
       let input2Check = !isEmpty(input2); // empty = false; non-empty = true
       let input1Multiplier = input1[i1.id + ":" + i1.data] || input1[i1.id];
       if (input1Multiplier && input2Check) {
-        let input2Multiplier = input2[i2.id] || input2[i2.id + ":" + i2.data]
+        let input2Multiplier = input2[i2.id] || input2[i2.id + ":" + i2.data];
         let ingredientMultiplier = input1Multiplier * input2Multiplier;
         let inputVolume = ingredientMultiplier * 1000;
         if (liquidStorage == recipe.inputLiquid && liquidAmount >= inputVolume) {
@@ -263,8 +264,8 @@ namespace VatRecipe {
             amount: outputVolume,
             energy: recipe.energy,
             amount_input: inputVolume,
-            liquidIn: recipe.inputLiquid
-          }
+            liquidIn: recipe.inputLiquid,
+          };
         }
       } else if (input1Multiplier && !input2Check) {
         let ingredientMultiplier = input1Multiplier;
@@ -277,28 +278,28 @@ namespace VatRecipe {
             amount: outputVolume,
             energy: recipe.energy,
             amount_input: inputVolume,
-            liquidIn: recipe.inputLiquid
-          }
+            liquidIn: recipe.inputLiquid,
+          };
         }
       }
     }
-    return result
+    return result;
   }
 
   export function getLiquidOutput(): string[] {
-    let outputLiquid = []
+    let outputLiquid = [];
     for (let i in recipes) {
-      outputLiquid.push(recipes[i].outputLiquid)
+      outputLiquid.push(recipes[i].outputLiquid);
     }
-    return outputLiquid
+    return outputLiquid;
   }
 
   export function getLiquidInput(): string[] {
-    let inputLiquid = []
+    let inputLiquid = [];
     for (let i in recipes) {
-      inputLiquid.push(recipes[i].inputLiquid)
+      inputLiquid.push(recipes[i].inputLiquid);
     }
-    return inputLiquid
+    return inputLiquid;
   }
 
   export function performRecipe(result: VatResultFormat, tile: TileEntity.TileEntityPrototype): void {
@@ -322,16 +323,16 @@ namespace VatRecipe {
 
 namespace SoulRecipe {
   export type SoulBinderRecipeFormat = {
-    soul: string | -1,
-    lvl: number,
-    ingredient: { id: number, data: number, count: number },
-    result0: { id: number, data: number, count: number, extra?: ItemExtraData },
+    soul: string | -1;
+    lvl: number;
+    ingredient: { id: number; data: number; count: number };
+    result0: { id: number; data: number; count: number; extra?: ItemExtraData };
     //result1 : { id: number, data: number, count: number },
-    energy: number,
-    by?: string
-  }
+    energy: number;
+    by?: string;
+  };
 
-  export let recipes: SoulBinderRecipeFormat[] = []
+  export let recipes: SoulBinderRecipeFormat[] = [];
   export function add(obj: SoulBinderRecipeFormat): void {
     if (!(!obj.soul || !obj.lvl || !obj.ingredient)) {
       recipes.push(obj);
@@ -342,15 +343,17 @@ namespace SoulRecipe {
     let id = input.id;
     let data = input.data;
     let count = input.count;
-    if (!id)
-      return null;
+    if (!id) return null;
     for (let recipe of recipes) {
       let ingredient = recipe.ingredient;
-      if ((id == ingredient.id &&
-        (data == -1 || data == ingredient.data) && count >= 1) &&
+      if (
+        id == ingredient.id &&
+        (data == -1 || data == ingredient.data) &&
+        count >= 1 &&
         (soul == recipe.soul || recipe.soul == "all") &&
-        lvl >= recipe.lvl)
-        return recipe
+        lvl >= recipe.lvl
+      )
+        return recipe;
     }
     return null;
   }
@@ -358,12 +361,12 @@ namespace SoulRecipe {
   export function getTypeSoul(item: any) {
     if (item.id == ItemID.soulVessel) {
       if (item.extra) {
-        if (item.extra.getString('name')) {
-          return item.extra.getString('name')
+        if (item.extra.getString("name")) {
+          return item.extra.getString("name");
         }
       }
     }
-    return null
+    return null;
   }
 }
 
@@ -372,15 +375,15 @@ namespace SliceAndSpliceRecipe {
 
   // }
   export type SASRecipe = {
-    input0: ItemInstance,
-    input1: ItemInstance,
-    input2: ItemInstance,
-    input3: ItemInstance,
-    input4: ItemInstance,
-    input5: ItemInstance,
-    result: ItemInstance,
-    energy: number
-  }
+    input0: ItemInstance;
+    input1: ItemInstance;
+    input2: ItemInstance;
+    input3: ItemInstance;
+    input4: ItemInstance;
+    input5: ItemInstance;
+    result: ItemInstance;
+    energy: number;
+  };
 
   export let recipes: SASRecipe[] = [];
 
@@ -390,7 +393,7 @@ namespace SliceAndSpliceRecipe {
 
   export function getRecipe(container: ItemContainer) {
     for (let i in recipes) {
-      let recipe = recipes[i]
+      let recipe = recipes[i];
       let slot0 = container.getSlot("slotInput0");
       let slot1 = container.getSlot("slotInput1");
       let slot2 = container.getSlot("slotInput2");
@@ -405,21 +408,35 @@ namespace SliceAndSpliceRecipe {
       let r_input4 = recipe["input4"];
       let r_input5 = recipe["input5"];
 
-      if ((slot0.id == r_input0.id && slot0.data == r_input0.data && slot0.count >= 1) &&
-        (slot1.id == r_input1.id && slot1.data == r_input1.data && slot1.count >= 1) &&
-        (slot2.id == r_input2.id && slot2.data == r_input2.data && slot2.count >= 1) &&
-        (slot3.id == r_input3.id && slot3.data == r_input3.data && slot3.count >= 1) &&
-        (slot4.id == r_input4.id && slot4.data == r_input4.data && slot4.count >= 1) &&
-        (slot5.id == r_input5.id && slot5.data == r_input5.data && slot5.count >= 1)) {
+      if (
+        slot0.id == r_input0.id &&
+        slot0.data == r_input0.data &&
+        slot0.count >= 1 &&
+        slot1.id == r_input1.id &&
+        slot1.data == r_input1.data &&
+        slot1.count >= 1 &&
+        slot2.id == r_input2.id &&
+        slot2.data == r_input2.data &&
+        slot2.count >= 1 &&
+        slot3.id == r_input3.id &&
+        slot3.data == r_input3.data &&
+        slot3.count >= 1 &&
+        slot4.id == r_input4.id &&
+        slot4.data == r_input4.data &&
+        slot4.count >= 1 &&
+        slot5.id == r_input5.id &&
+        slot5.data == r_input5.data &&
+        slot5.count >= 1
+      ) {
         return recipe;
       }
     }
-    return null
+    return null;
   }
 
   export function getRecipeWithItem(item: ItemInstance) {
     for (let i in recipes) {
-      let recipe = recipes[i]
+      let recipe = recipes[i];
       let r_input0 = recipe["input0"];
       let r_input1 = recipe["input1"];
       let r_input2 = recipe["input2"];
@@ -427,21 +444,35 @@ namespace SliceAndSpliceRecipe {
       let r_input4 = recipe["input4"];
       let r_input5 = recipe["input5"];
 
-      if ((item.id == r_input0.id && item.data == r_input0.data && item.count >= 1) &&
-        (item.id == r_input1.id && item.data == r_input1.data && item.count >= 1) &&
-        (item.id == r_input2.id && item.data == r_input2.data && item.count >= 1) &&
-        (item.id == r_input3.id && item.data == r_input3.data && item.count >= 1) &&
-        (item.id == r_input4.id && item.data == r_input4.data && item.count >= 1) &&
-        (item.id == r_input5.id && item.data == r_input5.data && item.count >= 1)) {
+      if (
+        item.id == r_input0.id &&
+        item.data == r_input0.data &&
+        item.count >= 1 &&
+        item.id == r_input1.id &&
+        item.data == r_input1.data &&
+        item.count >= 1 &&
+        item.id == r_input2.id &&
+        item.data == r_input2.data &&
+        item.count >= 1 &&
+        item.id == r_input3.id &&
+        item.data == r_input3.data &&
+        item.count >= 1 &&
+        item.id == r_input4.id &&
+        item.data == r_input4.data &&
+        item.count >= 1 &&
+        item.id == r_input5.id &&
+        item.data == r_input5.data &&
+        item.count >= 1
+      ) {
         return recipe;
       }
     }
-    return null
+    return null;
   }
 
   export function isInput(item: ItemInstance) {
     for (let i in recipes) {
-      let recipe = recipes[i]
+      let recipe = recipes[i];
       let r_input0 = recipe["input0"];
       let r_input1 = recipe["input1"];
       let r_input2 = recipe["input2"];
@@ -466,7 +497,7 @@ namespace SliceAndSpliceRecipe {
 }
 namespace RecipeRegistry {
   export function addSmelter(obj: SmelterRecipe.RecipeType): void {
-    SmelterRecipe.addRecipe(obj)
+    SmelterRecipe.addRecipe(obj);
   }
   export function addCrusher(obj: CrusherRecipe.SagMillRecipeFormat): void {
     CrusherRecipe.add(obj);
@@ -477,7 +508,7 @@ namespace RecipeRegistry {
   }
 
   export function addSBinder(obj: SoulRecipe.SoulBinderRecipeFormat): void {
-    if (obj.soul === -1) obj.soul = "all"
+    if (obj.soul === -1) obj.soul = "all";
     SoulRecipe.add(obj);
   }
 

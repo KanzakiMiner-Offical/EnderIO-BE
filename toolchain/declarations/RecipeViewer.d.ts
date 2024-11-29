@@ -7,48 +7,48 @@ declare interface ItemInfo {
   type: ItemType;
 }
 declare interface LiquidInstance {
-  liquid: string,
+  liquid: string;
   amount: number;
 }
 declare interface ItemInstanceWithTips extends ItemInstance {
-  tips ? : {
-    [key: string]: any
+  tips?: {
+    [key: string]: any;
   };
 }
 declare interface LiquidInstanceWithTips extends LiquidInstance {
-  tips ? : {
-    [key: string]: any
+  tips?: {
+    [key: string]: any;
   };
 }
 declare interface RecipePattern {
-  input ? : ItemInstanceWithTips[];
-  output ? : ItemInstanceWithTips[];
-  inputLiq ? : LiquidInstanceWithTips[];
-  outputLiq ? : LiquidInstanceWithTips[];
-    [key: string]: any;
+  input?: ItemInstanceWithTips[];
+  output?: ItemInstanceWithTips[];
+  inputLiq?: LiquidInstanceWithTips[];
+  outputLiq?: LiquidInstanceWithTips[];
+  [key: string]: any;
 }
 declare interface OldRecipeContents {
   icon: Tile | number;
-  description ? : string;
-  params ? : UI.BindingsSet;
-  drawing ? : UI.DrawingSet;
+  description?: string;
+  params?: UI.BindingsSet;
+  drawing?: UI.DrawingSet;
   elements: {
-    [key: string]: Partial < UI.UIElement >
+    [key: string]: Partial<UI.UIElement>;
   };
 }
 declare interface OldRecipeTypeProperty {
-  title ? : string;
+  title?: string;
   contents: OldRecipeContents;
-  recipeList ? : RecipePattern[];
-  getList ? : (id: number, data: number, isUsage: boolean) => RecipePattern[];
-  getAllList ? : () => RecipePattern[];
-  onOpen ? : (elements: java.util.HashMap < string, UI.Element > , recipe: RecipePattern) => void;
+  recipeList?: RecipePattern[];
+  getList?: (id: number, data: number, isUsage: boolean) => RecipePattern[];
+  getAllList?: () => RecipePattern[];
+  onOpen?: (elements: java.util.HashMap<string, UI.Element>, recipe: RecipePattern) => void;
 }
 declare interface RecipeTE {
   type: "grid" | "line" | "not_shape";
   recipe: string[] | string[][];
   ingredients: {
-    [key: string]: ItemInstance
+    [key: string]: ItemInstance;
   };
   result: ItemInstance;
 }
@@ -58,18 +58,18 @@ declare interface RecipeViewerOld {
   getIOFromTEWorkbench(recipe: RecipeTE, cols: number): RecipePattern;
   registerTEWorkbenchRecipeType(sid: string, contents: OldRecipeContents, recipes: RecipeTE[]): void;
   removeDuplicate(item1: ItemInfo, index: number, array: ItemInfo[]): boolean;
-  getName(id: number, data ? : number): string;
-  addList(id: number, data: number, type ? : ItemType): void;
-  addListByData(id: number, data: number, type ? : ItemType): void;
+  getName(id: number, data?: number): string;
+  addList(id: number, data: number, type?: ItemType): void;
+  addListByData(id: number, data: number, type?: ItemType): void;
   openRecipePage(key: string, container: UI.Container): void;
   putButtonOnNativeGui(screen: string, key: string): void;
 }
 declare interface RecipeContents {
-  params ? : UI.BindingsSet,
-    drawing ? : UI.DrawingSet,
-    elements: {
-      [key: string]: Partial < UI.Elements >
-    };
+  params?: UI.BindingsSet;
+  drawing?: UI.DrawingSet;
+  elements: {
+    [key: string]: Partial<UI.Elements>;
+  };
 }
 declare abstract class RecipeType {
   private readonly name;
@@ -84,14 +84,18 @@ declare abstract class RecipeType {
   private readonly outputTankSize;
   private windowWidth;
   private windowHeight;
-  constructor(name: string, icon: Tile | number, content: {
-    params ? : UI.BindingsSet;
-    drawing ? : UI.DrawingSet;
-    elements: {
-            [key: string]: Partial < UI.UIElement > ;
-    };
-  });
-  setGridView(row: number, col: number, border ? : boolean | number): RecipeType;
+  constructor(
+    name: string,
+    icon: Tile | number,
+    content: {
+      params?: UI.BindingsSet;
+      drawing?: UI.DrawingSet;
+      elements: {
+        [key: string]: Partial<UI.UIElement>;
+      };
+    },
+  );
+  setGridView(row: number, col: number, border?: boolean | number): RecipeType;
   setDescription(text: string): RecipeType;
   setTankLimit(limit: number): RecipeType;
   getName(): string;
@@ -104,14 +108,22 @@ declare abstract class RecipeType {
   getListByLiquid(liquid: string, isUsage: boolean): RecipePattern[];
   hasAnyRecipe(id: number, data: number, isUsage: boolean): boolean;
   hasAnyRecipeByLiquid(liquid: string, isUsage: boolean): boolean;
-  onOpen(elements: java.util.HashMap < string, UI.Element > , recipe: RecipePattern): void;
+  onOpen(elements: java.util.HashMap<string, UI.Element>, recipe: RecipePattern): void;
   showRecipe(recipes: RecipePattern[]): void;
-  slotTooltip(name: string, item: ItemInstance, tips: {
-        [key: string]: any;
-  }): string;
-  tankTooltip(name: string, liquid: LiquidInstance, tips: {
-        [key: string]: any;
-  }): string;
+  slotTooltip(
+    name: string,
+    item: ItemInstance,
+    tips: {
+      [key: string]: any;
+    },
+  ): string;
+  tankTooltip(
+    name: string,
+    liquid: LiquidInstance,
+    tips: {
+      [key: string]: any;
+    },
+  ): string;
 }
 declare class RecipeTypeRegistry {
   private static readonly types;
@@ -132,11 +144,11 @@ declare class ItemList {
   private static list;
   static get(): ItemInfo[];
   static getItemType(id: number): "block" | "item";
-  static addToList(id: number, data: number, type ? : "block" | "item"): void;
-  static addToListByData(id: number, data: number | number[], type ? : "block" | "item"): void;
+  static addToList(id: number, data: number, type?: "block" | "item"): void;
+  static addToListByData(id: number, data: number | number[], type?: "block" | "item"): void;
   static addVanillaItems(): void;
   static addModItems(): void;
-  static getName(id: number, data ? : number): string;
+  static getName(id: number, data?: number): string;
   static setup(): void;
   static cacheIcons(): void;
 }

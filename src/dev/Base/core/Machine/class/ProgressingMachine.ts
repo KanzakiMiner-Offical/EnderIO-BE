@@ -1,4 +1,4 @@
-/// <reference path="Base.ts" /> 
+/// <reference path="Base.ts" />
 
 namespace Machine {
   export abstract class ProgressingMachine extends MachineBase implements EnergyTile {
@@ -6,7 +6,7 @@ namespace Machine {
     energyTypes: object;
 
     defaultValues = {
-      energy: 0
+      energy: 0,
     };
 
     tier: number;
@@ -19,12 +19,23 @@ namespace Machine {
       return 0;
     }
 
-    getRelativeEnergy(): number {
-      return this.data.energy / this.getEnergyStorage()
+    updateEnergyStorage(newStorage: number): number {
+      Game.message("energyStorage" + newStorage);
+      const energyStorage = newStorage || 0;
+      const energyCurrent = this.data.energy;
+      Game.message("energy new" + energyCurrent);
+      this.data.energy = Math.min(energyCurrent, energyStorage);
+      Game.message("energy old" + energyCurrent);
+      return newStorage;
     }
 
-    getMaxIntake(): number { // replace getMaxPacketSize
-      return this.getTier() * 15 + this.getTier();
+    getRelativeEnergy(): number {
+      return this.data.energy / this.getEnergyStorage();
+    }
+    /** Replace getMaxPacketSize */
+    getMaxIntake(): number {
+      // return this.getTier() * 15 + this.getTier();
+      return 0;
     }
 
     chargeSlot(slotName: string) {
@@ -40,7 +51,7 @@ namespace Machine {
       return super.onItemUse(coords, item, player);
     }
 
-    energyTick(type: string, src: EnergyTileNode): void { }
+    energyTick(type: string, src: EnergyTileNode): void {}
 
     energyReceive(type: string, amount: number, voltage: number): number {
       return 0;
@@ -62,6 +73,5 @@ namespace Machine {
     isConductor(type: string): boolean {
       return false;
     }
-
   }
 }

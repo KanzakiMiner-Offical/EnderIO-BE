@@ -10,7 +10,7 @@ namespace ItemName {
   }
 
   export function addTooltip(id: number, tooltip: string): void {
-    Item.registerNameOverrideFunction(id, function(item: ItemInstance, name: string) {
+    Item.registerNameOverrideFunction(id, function (item: ItemInstance, name: string) {
       return ItemRegistry.getItemRarityColor(item.id) + name + "\n§7" + tooltip;
     });
   }
@@ -20,7 +20,7 @@ namespace ItemName {
   }
 
   export function addStorageBlockTooltip(blockID: string | number, tier: number, capacity: string): void {
-    Item.registerNameOverrideFunction(Block.getNumericId(blockID), function(item: ItemInstance, name: string) {
+    Item.registerNameOverrideFunction(Block.getNumericId(blockID), function (item: ItemInstance, name: string) {
       const color = ItemRegistry.getItemRarityColor(item.id);
       return color + name + "\n§7" + getBlockStorageText(item, tier, capacity);
     });

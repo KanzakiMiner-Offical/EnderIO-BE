@@ -7,111 +7,25 @@ BlockRegistry.createBlock(
       inCreative: true,
     },
   ],
-  "other-machine"
+  "other-machine",
 );
 
 Callback.addCallback("PreLoaded", function () {
-  Recipes.addShaped(
-    { id: BlockID.zombieGen, count: 1, data: 0 },
-    ["iii", "rmr", "rrr"],
-    [
-      "i",
-      ItemID.electricalSteel,
-      0,
-      "r",
-      BlockID.fusedQuartz,
-      0,
-      "m",
-      ItemID.skullZombieElectrode,
-      0,
-    ]
-  );
+  Recipes.addShaped({ id: BlockID.zombieGen, count: 1, data: 0 }, ["iii", "rmr", "rrr"], ["i", ItemID.electricalSteel, 0, "r", BlockID.fusedQuartz, 0, "m", ItemID.skullZombieElectrode, 0]);
 });
 
 var zombieGenRender = new ICRender.Model();
 var model = BlockRenderer.createModel();
 
-model.addBox(
-  1 / 16,
-  0 / 16,
-  1 / 16,
-  15 / 16,
-  1 / 16,
-  15 / 16,
-  "darkSteelBlock",
-  0
-);
-model.addBox(
-  1 / 16,
-  1 / 16,
-  14 / 16,
-  2 / 16,
-  13 / 16,
-  15 / 16,
-  "darkSteelBlock",
-  0
-);
-model.addBox(
-  14 / 16,
-  1 / 16,
-  14 / 16,
-  15 / 16,
-  13 / 16,
-  15 / 16,
-  "darkSteelBlock",
-  0
-);
-model.addBox(
-  14 / 16,
-  1 / 16,
-  1 / 16,
-  15 / 16,
-  13 / 16,
-  2 / 16,
-  "darkSteelBlock",
-  0
-);
-model.addBox(
-  1 / 16,
-  1 / 16,
-  1 / 16,
-  2 / 16,
-  13 / 16,
-  2 / 16,
-  "darkSteelBlock",
-  0
-);
-model.addBox(
-  1 / 16,
-  13 / 16,
-  1 / 16,
-  15 / 16,
-  14 / 16,
-  15 / 16,
-  "darkSteelBlock",
-  0
-);
+model.addBox(1 / 16, 0 / 16, 1 / 16, 15 / 16, 1 / 16, 15 / 16, "darkSteelBlock", 0);
+model.addBox(1 / 16, 1 / 16, 14 / 16, 2 / 16, 13 / 16, 15 / 16, "darkSteelBlock", 0);
+model.addBox(14 / 16, 1 / 16, 14 / 16, 15 / 16, 13 / 16, 15 / 16, "darkSteelBlock", 0);
+model.addBox(14 / 16, 1 / 16, 1 / 16, 15 / 16, 13 / 16, 2 / 16, "darkSteelBlock", 0);
+model.addBox(1 / 16, 1 / 16, 1 / 16, 2 / 16, 13 / 16, 2 / 16, "darkSteelBlock", 0);
+model.addBox(1 / 16, 13 / 16, 1 / 16, 15 / 16, 14 / 16, 15 / 16, "darkSteelBlock", 0);
 
-model.addBox(
-  4 / 16,
-  2 / 16,
-  3 / 16,
-  13 / 16,
-  12 / 16,
-  13 / 16,
-  "killerJoeZombieOther",
-  0
-);
-model.addBox(
-  3 / 16,
-  2 / 16,
-  3 / 16,
-  4 / 16,
-  12 / 16,
-  13 / 16,
-  "killerJoeZombie",
-  0
-);
+model.addBox(4 / 16, 2 / 16, 3 / 16, 13 / 16, 12 / 16, 13 / 16, "killerJoeZombieOther", 0);
+model.addBox(3 / 16, 2 / 16, 3 / 16, 4 / 16, 12 / 16, 13 / 16, "killerJoeZombie", 0);
 
 model.addBox(1 / 16, 1 / 16, 2 / 16, 2 / 16, 13 / 16, 14 / 16, 20, 0);
 model.addBox(2 / 16, 1 / 16, 1 / 16, 14 / 16, 13 / 16, 2 / 16, 20, 0);
@@ -121,11 +35,7 @@ model.addBox(14 / 16, 1 / 16, 2 / 16, 15 / 16, 13 / 16, 14 / 16, 20, 0);
 zombieGenRender.addEntry(model);
 BlockRenderer.setStaticICRender(BlockID.zombieGen, -1, zombieGenRender);
 
-Block.setBlockShape(
-  BlockID.zombieGen,
-  { x: 0, y: 0, z: 0 },
-  { x: 1, y: 1, z: 1 }
-);
+Block.setBlockShape(BlockID.zombieGen, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 });
 
 var guiZombieGen = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_zombie_generator.name"), {
   drawing: [
@@ -135,7 +45,14 @@ var guiZombieGen = MachineRegistry.createInventoryWindow(Translation.translate("
   ],
 
   elements: {
-    text: { type: "text", x: 400, y: 100, width: 100, height: 30, text: "RF" },
+    text: {
+      type: "text",
+      x: 400,
+      y: 100,
+      width: 100,
+      height: 30,
+      text: "RF",
+    },
     energyScale: {
       type: "scale",
       x: 335,
@@ -190,17 +107,17 @@ namespace Machine {
     defaultBonus = 1;
 
     getScreenByName(screenName?: string): UI.IWindow {
-        return guiZombieGen
+      return guiZombieGen;
     }
 
     setupContainer(): void {
       this.liquidTank = this.addLiquidTank("fluid", 4000, ["nutrientDistillation"]);
     }
-    useCapacitor(): CapacitorAPI.CapacitorSet {
-      var upgrades = CapacitorAPI.useCapacitor(this);
-      this.bonus = upgrades.getBonusGenerator(this.defaultBonus);
-      this.energyStorage = upgrades.getEnergyStorage(this.defaultEnergyStorage);
-      return upgrades;
+    useCapacitor(): CapacitorData.CapacitorSet {
+      let capacitors = CapacitorData.useCapacitor(this);
+      this.bonus = capacitors.getValue(CapacitorKey.ZOMBIE_POWER_GEN);
+      this.energyStorage = this.updateEnergyStorage(capacitors.getValue(CapacitorKey.ZOMBIE_POWER_BUFFER));
+      return capacitors;
     }
 
     onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean {
@@ -219,7 +136,7 @@ namespace Machine {
       let capacitor = this.container.getSlot("slotCapacitor");
       this.liquidTank.updateUiScale("liquidScale");
 
-      if (CapacitorAPI.isValidCapacitor(capacitor.id, this)) {
+      if (CapacitorData.isValidCapacitor(capacitor.id, this)) {
         this.container.setText("textInstall", "Installed");
         if (this.liquidTank.getAmount("nutrientDistillation") >= 1400 && this.data.energy <= this.getEnergyStorage() + 80 * this.bonus) {
           this.data.energy += 80 * this.bonus;
@@ -262,7 +179,7 @@ namespace Machine {
       return liquid == "nutrientDistillation";
     },
     canTransportLiquid: (liquid: string, side: number): boolean => {
-      return false
-    }
-  })
+      return false;
+    },
+  });
 }

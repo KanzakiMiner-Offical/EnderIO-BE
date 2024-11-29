@@ -1,6 +1,5 @@
 /// <reference path="core-engine.d.ts" />
 
-
 declare type jstring = java.lang.String;
 declare type any_string = string | jstring;
 
@@ -9,10 +8,10 @@ declare module com {
     export module innercore {
       export module api {
         export class NativeItemInstance extends java.lang.Object {
-          static class: java.lang.Class < NativeItemInstance > ;
+          static class: java.lang.Class<NativeItemInstance>;
           count: number;
           data: number;
-          extra: Nullable < NativeItemInstanceExtra > ;
+          extra: Nullable<NativeItemInstanceExtra>;
           id: number;
           isValid: boolean;
           constructor(ptr: number);
@@ -26,13 +25,12 @@ declare module com {
   }
 }
 
-
 declare module vsdum {
   export module kex {
     export module util {
       export class ItemFactoryHelper extends java.lang.Object {
-        static class: java.lang.Class < ItemFactoryHelper > ;
-        static killItem(id: number): Nullable < ItemFactoryInterface > ;
+        static class: java.lang.Class<ItemFactoryHelper>;
+        static killItem(id: number): Nullable<ItemFactoryInterface>;
       }
       interface ItemFactoryInterface {
         readonly nameId: jstring;
@@ -51,7 +49,7 @@ declare module vsdum {
   export module kex {
     export module common {
       export class INativeInterface extends java.lang.Object {
-        static class: java.lang.Class < INativeInterface > ;
+        static class: java.lang.Class<INativeInterface>;
         getPointer(): number;
         constructor();
         constructor(impl: { getPointer: () => number });
@@ -64,7 +62,7 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class Actor extends common.INativeInterface {
-        static class: java.lang.Class < Actor > ;
+        static class: java.lang.Class<Actor>;
         static isValid(entityUID: number): boolean;
         constructor(entity: number);
         isBreakingObstruction(): boolean;
@@ -88,7 +86,7 @@ declare module vsdum {
         hasDimension(): boolean;
         canChangeDimensions(): boolean;
         getDimensionId(): number;
-        getDimension(): Nullable < Dimension > ;
+        getDimension(): Nullable<Dimension>;
         wasLastHitByPlayer(): boolean;
         isDelayedAttacking(): boolean;
         setDelayedAttacking(delayed: boolean): void;
@@ -96,7 +94,7 @@ declare module vsdum {
         getStructuralIntegrity(): number;
         setStructuralIntegrity(integrity: number): void;
         hasLevel(): boolean;
-        getLevel(): Nullable < Level > ;
+        getLevel(): Nullable<Level>;
         getCameraDistance(): number;
         setCameraDistance(distance: number): void;
         isDoorOpener(): boolean;
@@ -104,8 +102,8 @@ declare module vsdum {
         hasType(type: number): boolean;
         isType(type: number): boolean;
         removeEffectNoUpdate(id: number): void;
-        getEffect(effect: MobEffect): Nullable < MobEffectInstance > ;
-        getEffect(effectId: number): Nullable < MobEffectInstance > ;
+        getEffect(effect: MobEffect): Nullable<MobEffectInstance>;
+        getEffect(effectId: number): Nullable<MobEffectInstance>;
         getActiveEffectCount(): number;
         hasEffect(effect: MobEffect): boolean;
         hasEffect(effectId: number): boolean;
@@ -118,7 +116,7 @@ declare module vsdum {
         isInSnow(): boolean;
         canMate(mate: Actor): boolean;
         hasTickingArea(): boolean;
-        getTickingArea(): Nullable < TickingArea > ;
+        getTickingArea(): Nullable<TickingArea>;
         getIsOnScreen(): boolean;
         setIsOnScreen(onScreen: boolean): void;
         isOverScaffolding(): boolean;
@@ -138,7 +136,7 @@ declare module vsdum {
         removeAllRiders(b1: boolean, b2: boolean): void;
         hasPlayerRider(): boolean;
         isRiding(): boolean;
-        getRide(): Nullable < Actor > ;
+        getRide(): Nullable<Actor>;
         hasRider(): boolean;
         getStatusFlag(flag: number): boolean;
         isChested(): boolean;
@@ -152,7 +150,7 @@ declare module vsdum {
         isInsidePortal(): boolean;
         hasTeleported(): boolean;
         moveRelative(strafe: number, up: number, forward: number, friction: number): void;
-        getRegion(): Nullable < BlockSource > ;
+        getRegion(): Nullable<BlockSource>;
         isTame(): boolean;
         isLeashed(): boolean;
         isLeashableType(): boolean;
@@ -234,7 +232,7 @@ declare module vsdum {
         isOutOfControl(): boolean;
         isSneaking(): boolean;
         setSneaking(sneaking: boolean): void;
-        getTarget(): Nullable < Actor > ;
+        getTarget(): Nullable<Actor>;
         setTarget(target: Actor): void;
         setStunned(stunned: boolean): void;
         getTotalAirSupply(): number;
@@ -312,13 +310,13 @@ declare module vsdum {
         onLightningHit(): void;
         feed(amount: number): void;
         getPickRadius(): number;
-        getArmor(slot: number): Nullable < ItemInstance > ;
+        getArmor(slot: number): Nullable<ItemInstance>;
         setArmor(slot: number, stack: com.zhekasmirnov.innercore.api.NativeItemInstance): void;
         getArmorMaterialTypeInSlot(slot: number): number;
         getArmorMaterialTextureTypeInSlot(slot: number): number;
-        getEquippedSlot(slot: number): Nullable < ItemInstance > ;
+        getEquippedSlot(slot: number): Nullable<ItemInstance>;
         setEquippedSlot(slot: number, stack: com.zhekasmirnov.innercore.api.NativeItemInstance): void;
-        getCarriedItem(): Nullable < ItemInstance > ;
+        getCarriedItem(): Nullable<ItemInstance>;
         setCarriedItem(stack: com.zhekasmirnov.innercore.api.NativeItemInstance): void;
         setOffhandSlot(stack: com.zhekasmirnov.innercore.api.NativeItemInstance): void;
         consumeTotem(): void;
@@ -366,7 +364,7 @@ declare module vsdum {
         getAirRegenPerTick(): number;
         isElytraFlying(): boolean;
         isMob(): boolean;
-        asMob(): Nullable < Mob > ;
+        asMob(): Nullable<Mob>;
       }
     }
   }
@@ -377,7 +375,7 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class Mob extends Actor {
-        static class: java.lang.Class < Mob > ;
+        static class: java.lang.Class<Mob>;
         constructor(entity: number);
         constructor(actor: Actor);
         setSleeping(sleeping: boolean): void;
@@ -394,19 +392,19 @@ declare module vsdum {
         getItemUseStartupProgress(): number;
         getItemUseIntervalProgress(): number;
         getMaxHeadXRot(): number;
-        getLastHurtByMob(): Nullable < Mob > ;
+        getLastHurtByMob(): Nullable<Mob>;
         setLastHurtByMob(mob: Mob): void;
-        getLastHurtMob(): Nullable < Actor > ;
+        getLastHurtMob(): Nullable<Actor>;
         setLastHurtMob(actor: Actor): void;
         isAlliedTo(mob: Mob): boolean;
         canBeControlledByRider(): boolean;
         leaveCaravan(): void;
         joinCaravan(caravanHead: Mob): void;
         hasCaravanTail(): boolean;
-        getCaravanHead(): Nullable < Mob > ;
+        getCaravanHead(): Nullable<Mob>;
         getArmorValue(): number;
         getArmorCoverPercentage(): number;
-        getItemSlot(slot: number): Nullable < ItemInstance > ;
+        getItemSlot(slot: number): Nullable<ItemInstance>;
         setItemSlot(slot: number, instance: com.zhekasmirnov.innercore.api.NativeItemInstance): void;
         isTransitioningSitting(): boolean;
         setTransitioningSitting(transitioningSitting: boolean): void;
@@ -467,7 +465,7 @@ declare module vsdum {
         getCaravanSize(): number;
         shouldApplyWaterGravity(): boolean;
         isGliding(): boolean;
-        getFirstCaravanHead(): Nullable < Mob > ;
+        getFirstCaravanHead(): Nullable<Mob>;
         getYRotA(): number;
         setYRotA(yrota: number): void;
         setJumping(jumping: boolean): void;
@@ -476,7 +474,7 @@ declare module vsdum {
         isSwinging(): boolean;
         calculateJumpImpulse(): number;
         isSlime(): boolean;
-        asSlime(): Nullable < Slime > ;
+        asSlime(): Nullable<Slime>;
       }
     }
   }
@@ -487,7 +485,7 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class Slime extends Mob {
-        static class: java.lang.Class < Slime > ;
+        static class: java.lang.Class<Slime>;
         constructor(entity: number);
         constructor(mob: Mob);
         constructor(actor: Actor);
@@ -509,12 +507,18 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class Player extends Mob {
-        static class: java.lang.Class < Player > ;
+        static class: java.lang.Class<Player>;
         constructor(entity: number);
         constructor(mob: Mob);
         constructor(actor: Actor);
         addExperience(exp: number): void;
-        addItemToInventory(id: number, count: number, data: number, extra ? : com.zhekasmirnov.innercore.api.NativeItemInstanceExtra, dropRemaining ? : boolean): void;
+        addItemToInventory(
+          id: number,
+          count: number,
+          data: number,
+          extra?: com.zhekasmirnov.innercore.api.NativeItemInstanceExtra,
+          dropRemaining?: boolean,
+        ): void;
         getExhaustion(): number;
         getExperience(): number;
         getGameMode(): number;
@@ -524,11 +528,22 @@ declare module vsdum {
         getSaturation(): number;
         getScore(): number;
         getSelectedSlot(): number;
-        invokeUseItemNoTarget(id: number, count: number, data: number, extra: Nullable < com.zhekasmirnov.innercore.api.NativeItemInstanceExtra > ): void;
+        invokeUseItemNoTarget(
+          id: number,
+          count: number,
+          data: number,
+          extra: Nullable<com.zhekasmirnov.innercore.api.NativeItemInstanceExtra>,
+        ): void;
         setExhaustion(value: number): void;
         setExperience(value: number): void;
         setHunger(value: number): void;
-        setInventorySlot(slot: number, id: number, count: number, data: number, extra: Nullable < com.zhekasmirnov.innercore.api.NativeItemInstanceExtra > ): void;
+        setInventorySlot(
+          slot: number,
+          id: number,
+          count: number,
+          data: number,
+          extra: Nullable<com.zhekasmirnov.innercore.api.NativeItemInstanceExtra>,
+        ): void;
         setExpLevel(level: number): void;
         setRespawnCoords(x: number, y: number, z: number): void;
         setSaturation(value: number): void;
@@ -597,12 +612,12 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class LocalPlayer extends Player {
-        static class: java.lang.Class < LocalPlayer > ;
+        static class: java.lang.Class<LocalPlayer>;
         constructor(entity: number);
         constructor(player: Player);
         constructor(mob: Mob);
         constructor(actor: Actor);
-        getMoveInputHandler(): Nullable < MoveInputHandler > ;
+        getMoveInputHandler(): Nullable<MoveInputHandler>;
         isFlying(): boolean;
       }
     }
@@ -614,7 +629,7 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class MoveInputHandler extends common.INativeInterface {
-        static class: java.lang.Class < MoveInputHandler > ;
+        static class: java.lang.Class<MoveInputHandler>;
         constructor(ptr: number);
         clearInputState(): void;
         isChangeHeight(): boolean;
@@ -640,8 +655,8 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class GlobalContext extends java.lang.Object {
-        static class: java.lang.Class < GlobalContext > ;
-        static getLocalPlayer(): Nullable < LocalPlayer > ;
+        static class: java.lang.Class<GlobalContext>;
+        static getLocalPlayer(): Nullable<LocalPlayer>;
       }
     }
   }
@@ -652,7 +667,7 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class Dimension extends common.INativeInterface {
-        static class: java.lang.Class < Dimension > ;
+        static class: java.lang.Class<Dimension>;
         constructor(pointer: number);
       }
     }
@@ -663,7 +678,7 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class Level extends common.INativeInterface {
-        static class: java.lang.Class < Level > ;
+        static class: java.lang.Class<Level>;
         constructor(pointer: number);
       }
     }
@@ -674,9 +689,9 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class MobEffect extends common.INativeInterface {
-        static class: java.lang.Class < MobEffect > ;
+        static class: java.lang.Class<MobEffect>;
         constructor(pointer: number);
-        static getById(id: number): Nullable < MobEffect > ;
+        static getById(id: number): Nullable<MobEffect>;
         isVisible(): boolean;
         getId(): number;
         isHarmful(): boolean;
@@ -690,14 +705,21 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class MobEffectInstance extends common.INativeInterface {
-        static class: java.lang.Class < MobEffectInstance > ;
+        static class: java.lang.Class<MobEffectInstance>;
         constructor(pointer: number, flagForPointerOverload: boolean);
         constructor(id: number);
         constructor(id: number, duration: number);
         constructor(id: number, duration: number, amplifier: number);
-        constructor(id: number, duration: number, amplifier: number, isAmbient: boolean, isVisible: boolean, displaysOnScreenTextureAnimation: boolean);
+        constructor(
+          id: number,
+          duration: number,
+          amplifier: number,
+          isAmbient: boolean,
+          isVisible: boolean,
+          displaysOnScreenTextureAnimation: boolean,
+        );
         getId(): number;
-        getEffect(): Nullable < MobEffect > ;
+        getEffect(): Nullable<MobEffect>;
         getAmplifier(): number;
         isAmbient(): boolean;
         isVisible(): boolean;
@@ -714,7 +736,7 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class TickingArea extends common.INativeInterface {
-        static class: java.lang.Class < TickingArea > ;
+        static class: java.lang.Class<TickingArea>;
         constructor(pointer: number);
       }
     }
@@ -725,26 +747,26 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class FoodItemComponent extends java.lang.Object {
-        static class: java.lang.Class < FoodItemComponent > ;
+        static class: java.lang.Class<FoodItemComponent>;
         getItem(): number;
         getNutrition(): number;
         getSaturationModifier(): number;
         getSaturation(): number;
-        getUsingConvertsTo(): Nullable < jstring > ;
+        getUsingConvertsTo(): Nullable<jstring>;
         getOnUseAction(): number;
         getOnUseRange(): Vector;
-        getCooldownType(): Nullable < jstring > ;
+        getCooldownType(): Nullable<jstring>;
         getCooldownTime(): number;
         canAlwaysEat(): boolean;
-        getEffects(): java.util.List < FoodItemComponent.Effect > ;
-        getRemoveEffects(): java.util.List < number > ;
+        getEffects(): java.util.List<FoodItemComponent.Effect>;
+        getRemoveEffects(): java.util.List<number>;
       }
       export module FoodItemComponent {
         export class Effect extends java.lang.Object {
-          static class: java.lang.Class < Effect > ;
-          getDescriptionId(): Nullable < jstring > ;
+          static class: java.lang.Class<Effect>;
+          getDescriptionId(): Nullable<jstring>;
           getId(): number;
-          getEffect(): Nullable < MobEffect > ;
+          getEffect(): Nullable<MobEffect>;
           getDuration(): number;
           getAmplifier(): number;
           getChance(): number;
@@ -758,28 +780,28 @@ declare module vsdum {
   export module kex {
     export module natives {
       export class LootTableContext extends common.INativeInterface {
-        static class: java.lang.Class < LootTableContext > ;
+        static class: java.lang.Class<LootTableContext>;
         constructor(ptr: number);
-        getThisEntity(): Nullable < Actor > ;
-        getOriginalItemName(): Nullable < jstring > ;
+        getThisEntity(): Nullable<Actor>;
+        getOriginalItemName(): Nullable<jstring>;
         setOriginalItemName(name: any_string): void;
-        getLevel(): Nullable < Level > ;
+        getLevel(): Nullable<Level>;
         getExplosionRadius(): number;
         getLuck(): number;
-        getKillerPlayer(): Nullable < Player > ;
-        getKillerPet(): Nullable < Actor > ;
-        getKillerEntity(): Nullable < Actor > ;
+        getKillerPlayer(): Nullable<Player>;
+        getKillerPet(): Nullable<Actor>;
+        getKillerEntity(): Nullable<Actor>;
       }
       export module LootTableContext {
         export class Builder extends common.INativeInterface {
-          static class: java.lang.Class < Builder > ;
+          static class: java.lang.Class<Builder>;
           constructor(level: Level);
           withExplosionRadius(radius: number): Builder;
           withThisEntity(entity: Actor): Builder;
           withLuck(luck: number): Builder;
           withOriginalItemName(name: any_string): Builder;
           withKillerPlayer(player: Player): Builder;
-          create(): Nullable < LootTableContext > ;
+          create(): Nullable<LootTableContext>;
         }
       }
     }
@@ -787,130 +809,175 @@ declare module vsdum {
 }
 declare function WRAP_JAVA(clazz: "vsdum.kex.natives.LootTableContext"): typeof vsdum.kex.natives.LootTableContext;
 
-type MinMax = { min: number, max: number }
-type FeatureTypes = "buriedtreasure" | "endcity" | "fortress" | "mansion" | "mineshaft" | "monument" | "pillageroutpost" | "ruins" | "shipwreck" | "stronghold" | "temple" | "village";
-type EnchantTypes = Lowercase < keyof typeof EEnchantment > ;
+type MinMax = { min: number; max: number };
+type FeatureTypes =
+  | "buriedtreasure"
+  | "endcity"
+  | "fortress"
+  | "mansion"
+  | "mineshaft"
+  | "monument"
+  | "pillageroutpost"
+  | "ruins"
+  | "shipwreck"
+  | "stronghold"
+  | "temple"
+  | "village";
+type EnchantTypes = Lowercase<keyof typeof EEnchantment>;
 
 declare namespace LootTableTypes {
-  export type LootPoolEntryFunction = {
-    function: "enchant_book_for_trading",
-    base_cost: number,
-    base_random_cost: number,
-    per_level_cost: number,
-    per_level_random_cost: number;
-  } | {
-    function: "enchant_random_gear",
-    chance ? : number;
-  } | {
-    function: "enchant_randomly",
-    treasure ? : boolean;
-  } | {
-    function: "enchant_with_levels",
-    levels ? : number | MinMax,
-    treasure ? : boolean;
-  } | {
-    function: "exploration_map",
-    destination ? : FeatureTypes;
-  } | {
-    function: "fill_container",
-    loot_table ? : any_string;
-  } | {
-    function: "furnace_smelt",
-    conditions ? : LootCondition[];
-  } | {
-    function: "looting_enchant",
-    count ? : MinMax;
-  } | {
-    function: "random_aux_value",
-    values ? : MinMax;
-  } | {
-    function: "random_block_state",
-    block_state ? : any_string,
-    values ? : MinMax;
-  } | { function: "random_dye" | "set_data_from_color_index" | "trader_material_type" } | {
-    function: "set_actor_id",
-    id ? : any_string;
-  } | {
-    function: "set_banner_details",
-    type ? : number;
-  } | {
-    function: "set_book_contents",
-    author: any_string,
-    title: any_string,
-    pages: any_string[];
-  } | {
-    function: "set_count",
-    count ? : number | MinMax;
-  } | {
-    function: "set_damage",
-    damage ? : number | MinMax;
-  } | {
-    function: "set_data",
-    data ? : number | MinMax;
-  } | {
-    function: "set_lore",
-    lore ? : any_string[];
-  } | {
-    function: "set_name",
-    name ? : any_string;
-  } | {
-    function: "specific_enchants",
-    enchants ? : { id ? : EnchantTypes, level ? : number } [];
-  }
-  export type LootPoolEntry = { type: "empty" } | { type: "loot_table", pools ? : LootPool[] } | {
-    type: "item",
-    name ? : any_string,
-    count ? : number,
-    quality ? : number,
-    weight ? : number,
-    functions ? : LootPoolEntryFunction[];
-  }
-  export type LootCondition = {
-    condition: "entity_properties",
-    entity ? : "this",
-    properties ? : {
-      on_fire ? : boolean,
-      on_ground ? : boolean;
-    };
-  } | {
-    condition: "has_mark_variant",
-    value ? : number;
-  } | { condition: "killed_by_player" | "killed_by_player_or_pets" } | {
-    condition: "random_chance",
-    chance ? : number,
-    max_chance ? : number;
-  } | {
-    condition: "random_chance_with_looting",
-    chance ? : number,
-    looting_multiplier ? : number;
-  } | {
-    condition: "random_difficulty_chance" | "random_regional_difficulty_chance",
-    default_chance ? : number,
-    easy ? : number,
-    normal ? : number,
-    hard ? : number,
-    peaceful ? : number;
-  }
+  export type LootPoolEntryFunction =
+    | {
+        function: "enchant_book_for_trading";
+        base_cost: number;
+        base_random_cost: number;
+        per_level_cost: number;
+        per_level_random_cost: number;
+      }
+    | {
+        function: "enchant_random_gear";
+        chance?: number;
+      }
+    | {
+        function: "enchant_randomly";
+        treasure?: boolean;
+      }
+    | {
+        function: "enchant_with_levels";
+        levels?: number | MinMax;
+        treasure?: boolean;
+      }
+    | {
+        function: "exploration_map";
+        destination?: FeatureTypes;
+      }
+    | {
+        function: "fill_container";
+        loot_table?: any_string;
+      }
+    | {
+        function: "furnace_smelt";
+        conditions?: LootCondition[];
+      }
+    | {
+        function: "looting_enchant";
+        count?: MinMax;
+      }
+    | {
+        function: "random_aux_value";
+        values?: MinMax;
+      }
+    | {
+        function: "random_block_state";
+        block_state?: any_string;
+        values?: MinMax;
+      }
+    | {
+        function: "random_dye" | "set_data_from_color_index" | "trader_material_type";
+      }
+    | {
+        function: "set_actor_id";
+        id?: any_string;
+      }
+    | {
+        function: "set_banner_details";
+        type?: number;
+      }
+    | {
+        function: "set_book_contents";
+        author: any_string;
+        title: any_string;
+        pages: any_string[];
+      }
+    | {
+        function: "set_count";
+        count?: number | MinMax;
+      }
+    | {
+        function: "set_damage";
+        damage?: number | MinMax;
+      }
+    | {
+        function: "set_data";
+        data?: number | MinMax;
+      }
+    | {
+        function: "set_lore";
+        lore?: any_string[];
+      }
+    | {
+        function: "set_name";
+        name?: any_string;
+      }
+    | {
+        function: "specific_enchants";
+        enchants?: { id?: EnchantTypes; level?: number }[];
+      };
+  export type LootPoolEntry =
+    | { type: "empty" }
+    | { type: "loot_table"; pools?: LootPool[] }
+    | {
+        type: "item";
+        name?: any_string;
+        count?: number;
+        quality?: number;
+        weight?: number;
+        functions?: LootPoolEntryFunction[];
+      };
+  export type LootCondition =
+    | {
+        condition: "entity_properties";
+        entity?: "this";
+        properties?: {
+          on_fire?: boolean;
+          on_ground?: boolean;
+        };
+      }
+    | {
+        condition: "has_mark_variant";
+        value?: number;
+      }
+    | { condition: "killed_by_player" | "killed_by_player_or_pets" }
+    | {
+        condition: "random_chance";
+        chance?: number;
+        max_chance?: number;
+      }
+    | {
+        condition: "random_chance_with_looting";
+        chance?: number;
+        looting_multiplier?: number;
+      }
+    | {
+        condition: "random_difficulty_chance" | "random_regional_difficulty_chance";
+        default_chance?: number;
+        easy?: number;
+        normal?: number;
+        hard?: number;
+        peaceful?: number;
+      };
   export interface LootTiers {
-    bonus_chance ? : number,
-      bonus_rolls ? : number,
-      initial_range ? : number;
+    bonus_chance?: number;
+    bonus_rolls?: number;
+    initial_range?: number;
   }
   export interface LootPool {
-    type ? : "item",
-      rolls ? : number | MinMax,
-      tiers ? : LootTiers,
-      conditions ? : LootCondition[],
-      entries ? : LootPoolEntry[];
+    type?: "item";
+    rolls?: number | MinMax;
+    tiers?: LootTiers;
+    conditions?: LootCondition[];
+    entries?: LootPoolEntry[];
   }
-  export interface JsonFormat { pools ? : LootPool[] }
+  export interface JsonFormat {
+    pools?: LootPool[];
+  }
 }
 
 declare module vsdum {
   export module kex {
     export module modules {
       export class LootModule extends java.lang.Object {
-        static class: java.lang.Class < LootModule > ;
+        static class: java.lang.Class<LootModule>;
         static createLootTableModifier(tableName: any_string): LootModifier;
         static createConditionsList(): LootConditions;
         static addPiglinBarteringItem(): LootEntry;
@@ -919,10 +986,10 @@ declare module vsdum {
       export interface OnDropCallback {
         (drops: RandomItemsList, context: natives.LootTableContext): void;
       }
-      export interface RandomItemsList extends java.util.ArrayList < ItemInstance > {
+      export interface RandomItemsList extends java.util.ArrayList<ItemInstance> {
         getPointer(): number;
         markChanged(): void;
-        addItem(id: number, count: number, data: number, extra ? : Nullable < ItemExtraData > ): void;
+        addItem(id: number, count: number, data: number, extra?: Nullable<ItemExtraData>): void;
       }
       export interface LootModifier {
         createNewPool(): LootPool;
@@ -930,8 +997,15 @@ declare module vsdum {
         createNewPool(minRolls: number, maxRolls: number): LootPool;
         modifyWithAnotherLootTable(path: any_string): LootModifier;
         modifyWithJSON(json: LootTableTypes.JsonFormat): LootModifier;
-        addItem(id: number, count: number | MinMax, data: number, chance: number, rolls ? : number | MinMax): LootModifier;
-        addAddonItem(namespace: any_string, identifier: any_string, count: number | MinMax, data: number, chance: number, rolls ? : number | MinMax): LootModifier;
+        addItem(id: number, count: number | MinMax, data: number, chance: number, rolls?: number | MinMax): LootModifier;
+        addAddonItem(
+          namespace: any_string,
+          identifier: any_string,
+          count: number | MinMax,
+          data: number,
+          chance: number,
+          rolls?: number | MinMax,
+        ): LootModifier;
         addJSModifyCallback(cb: JSModifyCallback): LootModifier;
         addJSONModifyCallback(cb: JSONModifyCallback): LootModifier;
         addJSPostModifyCallback(cb: JSModifyCallback): LootModifier;
@@ -956,10 +1030,22 @@ declare module vsdum {
         addMarkVariantCondition(markVariant: number): LootConditions;
         addKilledByPlayerCondition(): LootConditions;
         addKilledByPlayerOrPetsCondition(): LootConditions;
-        addRandomChanceCondition(chance: number, maxChance ? : number): LootConditions;
+        addRandomChanceCondition(chance: number, maxChance?: number): LootConditions;
         addRandomChanceWithLootingCondition(chance: number, lootingMultiplier: number): LootConditions;
-        addRandomDifficultyChanceCondition(defaultChance: number, easy ? : number, normal ? : number, hard ? : number, peaceful ? : number): LootConditions;
-        addRandomRegionalDifficultyChanceCondition(defaultChance: number, easy ? : number, normal ? : number, hard ? : number, peaceful ? : number): LootConditions;
+        addRandomDifficultyChanceCondition(
+          defaultChance: number,
+          easy?: number,
+          normal?: number,
+          hard?: number,
+          peaceful?: number,
+        ): LootConditions;
+        addRandomRegionalDifficultyChanceCondition(
+          defaultChance: number,
+          easy?: number,
+          normal?: number,
+          hard?: number,
+          peaceful?: number,
+        ): LootConditions;
         endConditions(): LootPool;
       }
       export interface LootTiers {
@@ -984,14 +1070,19 @@ declare module vsdum {
         endEntry(): LootPool;
       }
       export interface LootEntryFunctions {
-        addEnchantBookForTradingFunction(baseCost: number, baseRandomCost: number, perLevelCost: number, perLevelRandomCost: number): LootEntryFunctions;
-        addEnchantRandomGearFunction(chance ? : number): LootEntryFunctions;
-        addEnchantRandomlyFunction(treasure ? : boolean): LootEntryFunctions;
-        addEnchantWithLevelsFunction(levels: number, treasure ? : boolean): LootEntryFunctions;
-        addEnchantWithLevelsFunction(minLevels: number, maxLevels: number, treasure ? : boolean): LootEntryFunctions;
+        addEnchantBookForTradingFunction(
+          baseCost: number,
+          baseRandomCost: number,
+          perLevelCost: number,
+          perLevelRandomCost: number,
+        ): LootEntryFunctions;
+        addEnchantRandomGearFunction(chance?: number): LootEntryFunctions;
+        addEnchantRandomlyFunction(treasure?: boolean): LootEntryFunctions;
+        addEnchantWithLevelsFunction(levels: number, treasure?: boolean): LootEntryFunctions;
+        addEnchantWithLevelsFunction(minLevels: number, maxLevels: number, treasure?: boolean): LootEntryFunctions;
         addExplorationMapFunction(destination: FeatureTypes): LootEntryFunctions;
         addFillContainerFunction(lootTable: any_string): LootEntryFunctions;
-        addFurnaceSmeltFunction(conditions ? : LootConditions): LootEntryFunctions;
+        addFurnaceSmeltFunction(conditions?: LootConditions): LootEntryFunctions;
         addLootingEnchantFunction(): LootEntryFunctions;
         addLootingEnchantFunction(minCount: number, maxCount: number): LootEntryFunctions;
         addRandomAuxValueFunction(): LootEntryFunctions;
@@ -1002,7 +1093,7 @@ declare module vsdum {
         addBookContentsFunction(author: any_string, title: any_string, pages: any_string[]): LootEntryFunctions;
         addDataFromColorIndexFunction(): LootEntryFunctions;
         addLoreFunction(lore: any_string[]): LootEntryFunctions;
-        addSpecificEnchantsFunction(enchants: java.util.Map < jstring, number > ): LootEntryFunctions;
+        addSpecificEnchantsFunction(enchants: java.util.Map<jstring, number>): LootEntryFunctions;
         addTraderMaterialTypeFunction(): LootEntryFunctions;
         endFunctions(): LootEntry;
       }
@@ -1015,7 +1106,7 @@ declare module vsdum {
   export module kex {
     export module modules {
       export class ItemsModule extends java.lang.Object {
-        static class: java.lang.Class < ItemsModule > ;
+        static class: java.lang.Class<ItemsModule>;
         static setRequiresWorldBuilder(id: number, requiresWorldBuilder: boolean): void;
         static setExplodable(id: number, explodable: boolean): void;
         static setFireResistant(id: number, fireResistant: boolean): void;
@@ -1025,7 +1116,7 @@ declare module vsdum {
         static setFurnaceXPMultiplier(id: number, multiplier: number): void;
         static setCannotBeRepairedInAnvil(id: number): void;
         static isFood(id: number): boolean;
-        static getFood(id: number): Nullable < natives.FoodItemComponent > ;
+        static getFood(id: number): Nullable<natives.FoodItemComponent>;
         static newFoodSaturationModifier(name: any_string, value: number): void;
         static saturationModifierFromString(name: any_string): number;
       }
@@ -1038,30 +1129,78 @@ declare module vsdum {
   export module kex {
     export module modules {
       interface ExtendedToolParams extends ToolAPI.ToolParams {
-        getAttackDamageBonus ? : (item: ItemInstance) => number;
+        getAttackDamageBonus?: (item: ItemInstance) => number;
       }
       interface BlockData {
-        readonly materialName: Nullable < jstring > ;
+        readonly materialName: Nullable<jstring>;
         readonly destroyLevel: number;
         readonly isNative: boolean;
       }
       export class ToolsModule extends java.lang.Object {
-        static class: java.lang.Class < ToolsModule > ;
+        static class: java.lang.Class<ToolsModule>;
         static getBlockDestroyTime(blockID: number): number;
         static getToolLevel(itemID: number): number;
         static getToolLevelViaBlock(itemID: number, blockID: number): number;
         static enableDynamicDamageFor(itemID: number): void;
-        static getTierByName(tierName: any_string): Nullable < ToolsModule.ItemTier > ;
-        static registerSword(id: number, nameId: any_string, name: any_string, textureName: any_string, textureMeta: number, tier: ToolsModule.ItemTier, isTech ? : boolean): void;
-        static registerAxe(id: number, nameId: any_string, name: any_string, textureName: any_string, textureMeta: number, tier: ToolsModule.ItemTier, isTech ? : boolean): void;
-        static registerPickaxe(id: number, nameId: any_string, name: any_string, textureName: any_string, textureMeta: number, tier: ToolsModule.ItemTier, isTech ? : boolean): void;
-        static registerShovel(id: number, nameId: any_string, name: any_string, textureName: any_string, textureMeta: number, tier: ToolsModule.ItemTier, isTech ? : boolean): void;
-        static registerHoe(id: number, nameId: any_string, name: any_string, textureName: any_string, textureMeta: number, tier: ToolsModule.ItemTier, isTech ? : boolean): void;
-        static registerShears(id: number, nameId: any_string, name: any_string, textureName: any_string, textureMeta: number, tierOrDurability: ToolsModule.ItemTier | number, isTech ? : boolean): void;
+        static getTierByName(tierName: any_string): Nullable<ToolsModule.ItemTier>;
+        static registerSword(
+          id: number,
+          nameId: any_string,
+          name: any_string,
+          textureName: any_string,
+          textureMeta: number,
+          tier: ToolsModule.ItemTier,
+          isTech?: boolean,
+        ): void;
+        static registerAxe(
+          id: number,
+          nameId: any_string,
+          name: any_string,
+          textureName: any_string,
+          textureMeta: number,
+          tier: ToolsModule.ItemTier,
+          isTech?: boolean,
+        ): void;
+        static registerPickaxe(
+          id: number,
+          nameId: any_string,
+          name: any_string,
+          textureName: any_string,
+          textureMeta: number,
+          tier: ToolsModule.ItemTier,
+          isTech?: boolean,
+        ): void;
+        static registerShovel(
+          id: number,
+          nameId: any_string,
+          name: any_string,
+          textureName: any_string,
+          textureMeta: number,
+          tier: ToolsModule.ItemTier,
+          isTech?: boolean,
+        ): void;
+        static registerHoe(
+          id: number,
+          nameId: any_string,
+          name: any_string,
+          textureName: any_string,
+          textureMeta: number,
+          tier: ToolsModule.ItemTier,
+          isTech?: boolean,
+        ): void;
+        static registerShears(
+          id: number,
+          nameId: any_string,
+          name: any_string,
+          textureName: any_string,
+          textureMeta: number,
+          tierOrDurability: ToolsModule.ItemTier | number,
+          isTech?: boolean,
+        ): void;
         static addBlockMaterial(name: any_string, breakingMultiplier: number): void;
         static getBlockMaterialBreakingMultiplier(name: any_string): number;
         static getBlockData(id: number): BlockData;
-        static getBlockMaterialName(id: number): Nullable < jstring > ;
+        static getBlockMaterialName(id: number): Nullable<jstring>;
         static getBlockDestroyLevel(id: number): number;
         static getBlockIsNative(id: number): boolean;
         static setBlockData(id: number, materialName: any_string, destroyLevel: number, isNative: boolean): void;
@@ -1069,13 +1208,27 @@ declare module vsdum {
         static setBlockDestroyLevel(id: number, destroyLevel: number): void;
         static setBlockIsNative(id: number, isNative: boolean): void;
         static getDestroyTimeViaTool(block: Tile, x: number, y: number, z: number, side: number, item: ItemInstance): number;
-        static registerCustomTool(id: number, nameId: any_string, name: any_string, textureName: any_string, textureMeta: number, tier: ToolsModule.ItemTier, isTech: boolean, isWeapon: boolean, blockMaterials: Nullable < any_string[] > , brokenId: number, baseAttackDamage: number, enchantType: number, toolData: ExtendedToolParams): void;
+        static registerCustomTool(
+          id: number,
+          nameId: any_string,
+          name: any_string,
+          textureName: any_string,
+          textureMeta: number,
+          tier: ToolsModule.ItemTier,
+          isTech: boolean,
+          isWeapon: boolean,
+          blockMaterials: Nullable<any_string[]>,
+          brokenId: number,
+          baseAttackDamage: number,
+          enchantType: number,
+          toolData: ExtendedToolParams,
+        ): void;
         static destroyBlockHook(coords: Callback.ItemUseCoordinates, block: Tile, item: ItemInstance, player: number): void;
         static playerAttackHook(attacker: number, victim: number, item: ItemInstance): void;
       }
       export module ToolsModule {
         export class ItemTier extends java.lang.Object {
-          static class: java.lang.Class < ItemTier > ;
+          static class: java.lang.Class<ItemTier>;
           constructor(name: any_string, level: number, uses: number, speed: number, attackDamageBonus: number, enchantmentValue: number);
           getLevel(): number;
           getUses(): number;
@@ -1092,7 +1245,7 @@ declare function WRAP_JAVA(clazz: "vsdum.kex.modules.ToolsModule"): typeof vsdum
 declare module vsdum {
   export module kex {
     export class KernelExtension extends java.lang.Object {
-      static class: java.lang.Class < KernelExtension > ;
+      static class: java.lang.Class<KernelExtension>;
       static getVersion(): [number, number, number];
       static getVersionCode(): number;
     }
@@ -1104,10 +1257,10 @@ declare module vsdum {
   export module kex {
     export module util {
       export class AddonUtils extends java.lang.Object {
-        static class: java.lang.Class < AddonUtils > ;
+        static class: java.lang.Class<AddonUtils>;
         static getAddonItemIdentifier(id: number): jstring;
         static getAddonItemIdentifier(namespace: any_string, identifier: any_string): jstring;
-        static getBlockNameId(id: number): Nullable < jstring > ;
+        static getBlockNameId(id: number): Nullable<jstring>;
         static getNumericIdFromIdentifier(identifier: any_string): number;
       }
     }
@@ -1115,53 +1268,116 @@ declare module vsdum {
 }
 declare function WRAP_JAVA(clazz: "vsdum.kex.util.AddonUtils"): typeof vsdum.kex.util.AddonUtils;
 
-
 declare namespace Item {
   interface FoodParamsDescription {
-    stack ? : number,
-      isTech ? : boolean,
-      food ? : number,
-      nutrition ? : number,
-      saturation_modifier ? : "poor" | "low" | "normal" | "good" | "max" | "supernatural",
-      is_meat ? : boolean,
-      can_always_eat ? : boolean,
-      cooldown_time ? : number,
-      cooldown_type ? : "chorusfruit" | "none",
-      on_use_range ? : [number, number, number],
-      on_use_action ? : "chorus_teleport" | "suspicious_stew_effect" | "none",
-      using_converts_to ? : any_string,
-      effects ? : {
-        name ? : Lowercase < keyof typeof EPotionEffect > | any_string,
-        duration ? : number,
-        amplifier ? : number,
-        chance ? : number
-      } []
+    stack?: number;
+    isTech?: boolean;
+    food?: number;
+    nutrition?: number;
+    saturation_modifier?: "poor" | "low" | "normal" | "good" | "max" | "supernatural";
+    is_meat?: boolean;
+    can_always_eat?: boolean;
+    cooldown_time?: number;
+    cooldown_type?: "chorusfruit" | "none";
+    on_use_range?: [number, number, number];
+    on_use_action?: "chorus_teleport" | "suspicious_stew_effect" | "none";
+    using_converts_to?: any_string;
+    effects?: {
+      name?: Lowercase<keyof typeof EPotionEffect> | any_string;
+      duration?: number;
+      amplifier?: number;
+      chance?: number;
+    }[];
   }
 
   function createFoodItem(nameID: any_string, name: any_string, texture: TextureData, params: FoodParamsDescription): NativeItem;
 
-  function createSwordItem(id: any_string, name: any_string, texture: TextureData, params: { stack ? : number, isTech ? : boolean, tier ? : any_string | ToolAPI.ToolMaterial }): void;
+  function createSwordItem(
+    id: any_string,
+    name: any_string,
+    texture: TextureData,
+    params: {
+      stack?: number;
+      isTech?: boolean;
+      tier?: any_string | ToolAPI.ToolMaterial;
+    },
+  ): void;
 
-  function createAxeItem(id: any_string, name: any_string, texture: TextureData, params: { stack ? : number, isTech ? : boolean, tier ? : any_string | ToolAPI.ToolMaterial }): void;
+  function createAxeItem(
+    id: any_string,
+    name: any_string,
+    texture: TextureData,
+    params: {
+      stack?: number;
+      isTech?: boolean;
+      tier?: any_string | ToolAPI.ToolMaterial;
+    },
+  ): void;
 
-  function createPickaxeItem(id: any_string, name: any_string, texture: TextureData, params: { stack ? : number, isTech ? : boolean, tier ? : any_string | ToolAPI.ToolMaterial }): void;
+  function createPickaxeItem(
+    id: any_string,
+    name: any_string,
+    texture: TextureData,
+    params: {
+      stack?: number;
+      isTech?: boolean;
+      tier?: any_string | ToolAPI.ToolMaterial;
+    },
+  ): void;
 
-  function createShovelItem(id: any_string, name: any_string, texture: TextureData, params: { stack ? : number, isTech ? : boolean, tier ? : any_string | ToolAPI.ToolMaterial }): void;
+  function createShovelItem(
+    id: any_string,
+    name: any_string,
+    texture: TextureData,
+    params: {
+      stack?: number;
+      isTech?: boolean;
+      tier?: any_string | ToolAPI.ToolMaterial;
+    },
+  ): void;
 
-  function createHoeItem(id: any_string, name: any_string, texture: TextureData, params: { stack ? : number, isTech ? : boolean, tier ? : any_string | ToolAPI.ToolMaterial }): void;
+  function createHoeItem(
+    id: any_string,
+    name: any_string,
+    texture: TextureData,
+    params: {
+      stack?: number;
+      isTech?: boolean;
+      tier?: any_string | ToolAPI.ToolMaterial;
+    },
+  ): void;
 
-  function createShearsItem(id: any_string, name: any_string, texture: TextureData, params: { stack ? : number, isTech ? : boolean, tier ? : any_string | ToolAPI.ToolMaterial, durability ? : number }): void;
+  function createShearsItem(
+    id: any_string,
+    name: any_string,
+    texture: TextureData,
+    params: {
+      stack?: number;
+      isTech?: boolean;
+      tier?: any_string | ToolAPI.ToolMaterial;
+      durability?: number;
+    },
+  ): void;
 
-  function createCustomTool(id: any_string, name: any_string, texture: TextureData, params: { stack ? : number, isTech ? : boolean, tier ? : any_string | ToolAPI.ToolMaterial }, toolParams ? : vsdum.kex.modules.ExtendedToolParams, numericId ? : number): void;
+  function createCustomTool(
+    id: any_string,
+    name: any_string,
+    texture: TextureData,
+    params: {
+      stack?: number;
+      isTech?: boolean;
+      tier?: any_string | ToolAPI.ToolMaterial;
+    },
+    toolParams?: vsdum.kex.modules.ExtendedToolParams,
+    numericId?: number,
+  ): void;
 }
-
 
 declare namespace Callback {
   export function addCallback(name: "KEX-InnerCoreIdsCached", func: () => void): void;
   export function addCallback(name: "PlayerJump", func: (player: number) => void): void;
   export function addCallback(name: "GameModeChanged", func: (mode: number) => void): void;
 }
-
 
 /**
  * Interface you can use in case you inject KEX API
@@ -1179,27 +1395,27 @@ declare namespace Callback {
  * ```
  */
 declare interface KEXAPI {
-  ItemsModule: typeof vsdum.kex.modules.ItemsModule,
-  LootModule: typeof vsdum.kex.modules.LootModule,
-  ToolsModule: typeof vsdum.kex.modules.ToolsModule,
-  LootTableContext: typeof vsdum.kex.natives.LootTableContext,
-  MobEffect: typeof vsdum.kex.natives.MobEffect,
-  MobEffectInstance: typeof vsdum.kex.natives.MobEffectInstance,
-  Actor: typeof vsdum.kex.natives.Actor,
-  Mob: typeof vsdum.kex.natives.Mob,
-  Player: typeof vsdum.kex.natives.Player,
-  LocalPlayer: typeof vsdum.kex.natives.LocalPlayer,
-  Slime: typeof vsdum.kex.natives.Slime,
-  GlobalContext: typeof vsdum.kex.natives.GlobalContext,
-  AddonUtils: typeof vsdum.kex.util.AddonUtils,
+  ItemsModule: typeof vsdum.kex.modules.ItemsModule;
+  LootModule: typeof vsdum.kex.modules.LootModule;
+  ToolsModule: typeof vsdum.kex.modules.ToolsModule;
+  LootTableContext: typeof vsdum.kex.natives.LootTableContext;
+  MobEffect: typeof vsdum.kex.natives.MobEffect;
+  MobEffectInstance: typeof vsdum.kex.natives.MobEffectInstance;
+  Actor: typeof vsdum.kex.natives.Actor;
+  Mob: typeof vsdum.kex.natives.Mob;
+  Player: typeof vsdum.kex.natives.Player;
+  LocalPlayer: typeof vsdum.kex.natives.LocalPlayer;
+  Slime: typeof vsdum.kex.natives.Slime;
+  GlobalContext: typeof vsdum.kex.natives.GlobalContext;
+  AddonUtils: typeof vsdum.kex.util.AddonUtils;
   ESaturationModifier: {
-    readonly POOR: 0.2,
-    readonly LOW: 0.6,
-    readonly NORMAL: 1.2,
-    readonly GOOD: 1.6,
-    readonly MAX: 2.0,
-    readonly SUPERNATURAL: 2.4
-  },
-  getKEXVersion: () => [number, number, number],
+    readonly POOR: 0.2;
+    readonly LOW: 0.6;
+    readonly NORMAL: 1.2;
+    readonly GOOD: 1.6;
+    readonly MAX: 2.0;
+    readonly SUPERNATURAL: 2.4;
+  };
+  getKEXVersion: () => [number, number, number];
   getKEXVersionCode: () => number;
 }

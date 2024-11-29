@@ -11,21 +11,20 @@ BlockRegistry.registerBlock(new ChassisBlock("machineChassi", "Industrial Machin
 BlockRegistry.registerBlock(new ChassisBlock("machineChassiSimple", "Simple Machine Chassis", [["machineChassiSimple", 0]]));
 BlockRegistry.registerBlock(new ChassisBlock("machineChassiSoul", "Soul Machine Chassis", [["machineChassiSoul", 0]]));
 
-Callback.addCallback("PreLoaded", function() {
-  Recipes.addShaped({ id: BlockID.machineChassiSimple, count: 1, data: 0 }, [
-  	"aba",
-  	"bcb",
-	  "aba"
-], ['a', VanillaBlockID.iron_bars, 0, 'b', VanillaItemID.iron_ingot, 0, 'c', ItemID.dustInfinity, 0]);
-
+Callback.addCallback("PreLoaded", function () {
+  Recipes.addShaped(
+    { id: BlockID.machineChassiSimple, count: 1, data: 0 },
+    ["aba", "bcb", "aba"],
+    ["a", VanillaBlockID.iron_bars, 0, "b", VanillaItemID.iron_ingot, 0, "c", ItemID.dustInfinity, 0],
+  );
 });
 
-ModAPI.addAPICallback("ICore", function(api) {
-  Callback.addCallback("PreLoaded", function() {
-    Recipes.addShaped({ id: BlockID.machineChassiSimple, count: 1, data: 0 }, [
-  	"aba",
-  	"bcb",
-	  "aba"
-], ['a', VanillaBlockID.iron_bars, 0, 'b', ItemID.ingotCopper, 0, 'c', ItemID.dustInfinity, 0]);
+ModAPI.addAPICallback("ICore", function (api) {
+  Callback.addCallback("PreLoaded", function () {
+    Recipes.addShaped(
+      { id: BlockID.machineChassiSimple, count: 1, data: 0 },
+      ["aba", "bcb", "aba"],
+      ["a", VanillaBlockID.iron_bars, 0, "b", ItemID.ingotCopper, 0, "c", ItemID.dustInfinity, 0],
+    );
   });
 });

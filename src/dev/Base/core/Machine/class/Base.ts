@@ -2,11 +2,9 @@
 namespace Machine {
   export let { ClientSide, NetworkEvent, ContainerEvent } = BlockEngine.Decorators;
 
-  export abstract class MachineBase
-  extends TileEntityBase
-  implements IWrench {
-    capacitor ? : string[];
-    defaultDrop ? : number;
+  export abstract class MachineBase extends TileEntityBase implements IWrench {
+    capacitor?: string[];
+    defaultDrop?: number;
     data: this["defaultValues"];
 
     onInit(): void {
@@ -19,7 +17,10 @@ namespace Machine {
 
     setupContainer(): void {}
 
-    addLiquidTank(name: string, limit: number, liquids ? : string[]) {
+    onConnectionPlayer: (client: NetworkClient) => void;
+    onDisconnectionPlayer: (client: NetworkClient) => void;
+
+    addLiquidTank(name: string, limit: number, liquids?: string[]) {
       let tank = new BlockEngine.LiquidTank(this, name, limit, liquids);
       let liquid = this.liquidStorage.getLiquidStored();
       if (liquid) {
@@ -101,6 +102,5 @@ namespace Machine {
     adjustDrop(item: ItemInstance): ItemInstance {
       return item;
     }
-
   }
 }

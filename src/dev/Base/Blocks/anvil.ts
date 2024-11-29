@@ -5,7 +5,6 @@
 //   sound: "anvil"
 // });
 
-
 // BlockRegistry.createBlock("darkSteelAnvil", [
 //   { name: "Dark Stell Anvil", texture: [["darkSteelBlock", 0]], inCreative: true },
 // ], "BLOCK_TYPE_ANVIL");
@@ -95,7 +94,6 @@
 // for (let i in diamondTools) {
 //   Anvil.registerToolMaterial(diamondTools[i], "diamond");
 // }
-
 
 // namespace Machine {
 //   export class DarkSteelAnvil extends MachineBase {

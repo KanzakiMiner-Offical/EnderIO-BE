@@ -1,5 +1,4 @@
-class ToolWrench extends ItemCommon
-implements IWrech {
+class ToolWrench extends ItemCommon implements IWrech {
   constructor(stringID: string, name: string, icon: string) {
     super(stringID, name, icon);
     this.setMaxStack(1);
