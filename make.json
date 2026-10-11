@@ -1,76 +1,54 @@
 {
-    "global": {
-        "info": {
-            "name": "EnderIO",
-            "author": "KanzakiMiner",
-            "version": "1.3.2",
-            "description": "Unofficial port of EnderIO for PC to Minecraft on Android",
-            "icon": "src/icon.png"
-        },
-        "api": "CoreEngine"
-    },
-    "make": {
-        "debugAbi": "armeabi-v7a",
-        "abis": [
-            "armeabi-v7a",
-            "x86"
-        ],
-        "linkNative": [
-            "minecraftpe",
-            "innercore",
-            "nativejs"
-        ],
-        "excludeFromRelease": [],
-        "pushTo": "storage/emulated/0/games/horizon/packs/Inner_Core_1/innercore/mods/EnderIO",
-        "ndkPath": null
-    },
-    "resources": [
-        {
-            "path": "src/assets",
-            "type": "resource_directory"
-        },
-        {
-            "path": "src/gui",
-            "type": "gui"
-        }
-    ],
-    "sources": [
-        {
-            "source": "src/dev",
-            "target": "main.js",
-            "type": "main",
-            "language": "typescript"
-        },
-        {
-            "source": "src/launcher.js",
-            "type": "launcher",
-            "language": "javascript"
-        },
-        {
-            "source": "src/lib/*",
-            "type": "library",
-            "language": "javascript"
-        },
-        {
-            "source": "src/preloader/*",
-            "type": "preloader",
-            "language": "javascript"
-        }
-    ],
-    "compile": [
-        {
-            "source": "src/native/*",
-            "type": "native"
-        },
-        {
-            "source": "src/java/*",
-            "type": "java"
-        }
-    ],
-    "additional": [
-        {
-            "source": "src/root/*",
-            "targetDir": "."
-        }
-    ]
+	"$schema": "https://raw.githubusercontent.com/zheka2304/innercore-mod-toolchain/develop/toolchain/schemas/make.schema.json",
+	"info": {
+		"name": "EnderIO",
+		"author": "KanzakiMiner",
+		"version": "1.3.3",
+		"description": "Unofficial port of EnderIO for PC to Minecraft on Android",
+		"clientOnly": false,
+		"icon": "assets/mod_icon.png"
+	},
+	"resources": [
+		{
+			"path": "assets/res",
+			"type": "resource_directory"
+		},
+		{
+			"path": "assets/gui",
+			"type": "gui"
+		},
+		{
+			"path": "assets/resource_packs/*",
+			"type": "minecraft_resource_pack"
+		},
+		{
+			"path": "assets/behavior_packs/*",
+			"type": "minecraft_behavior_pack"
+		}
+	],
+	"sources": [
+		{
+			"source": "dev",
+			"target": "main.js",
+			"type": "main",
+			"language": "typescript"
+		},
+		{
+			"source": "launcher.js",
+			"type": "launcher",
+			"language": "javascript"
+		},
+		{
+			"source": "lib/*",
+			"type": "library",
+			"language": "javascript"
+		}
+	],
+	"additional": [
+		{
+			"source": "root/*",
+			"targetDir": "."
+		}
+	]
+	
 }
