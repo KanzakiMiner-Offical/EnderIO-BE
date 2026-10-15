@@ -19,7 +19,7 @@ BlockRegistry.createBlock(
 BlockRegistry.setBlockMaterial(BlockID.bankBasic, "stone");
 
 Callback.addCallback("PreLoaded", function () {
-  Recipes.addShaped({ id: BlockID.bankBasic, count: 1, data: 0 }, ["ici", "crc", "ici"], ["i", 265, 0, "c", ItemID.basicCapacitor, 0, "r", BlockID.machineChassi, 0]);
+  Recipes.addShaped({ id: BlockID.bankBasic, count: 1, data: 0 }, ["ici", "crc", "ici"], ["i", 265, 0, "c", ItemID.basicCapacitor, 0, "r", BlockID.machineChassis, 0]);
 });
 
 const guiBasicCapacitor = CapacitorBlockWindow(Translation.translate("tile.block_cap_bank.simple.name"));

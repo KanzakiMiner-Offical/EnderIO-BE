@@ -16,17 +16,12 @@ class BlockPhotovoltaic extends BlockBase {
     this.setDestroyTime(3);
     this.setShape(0, 0, 0, 1, 0.2, 1, -1);
 
-    Item.registerNameOverrideFunction(Block.getNumericId(id), function (item, translation, name) {
-      return (
-        name +
-        "\n" +
-        Translation.translate("tile.block_solar_panel.tooltip.common.line1") +
-        "\n" +
-        Translation.translate("tile.block_solar_panel.tooltip.detailed.line1") +
-        "\n" +
-        Translation.translate("tile.block_solar_panel.tooltip.detailed.line2")
-      );
-    });
+    ItemName.addTooltip(
+      Block.getNumericId(id),
+      `\n${Translation.translate("tile.block_solar_panel.tooltip.common.line1")}
+      \n${Translation.translate("tile.block_solar_panel.tooltip.detailed.line1")}
+      \n${Translation.translate("tile.block_solar_panel.tooltip.detailed.line2")}`,
+    );
   }
 }
 
@@ -63,7 +58,26 @@ Callback.addCallback("PreLoaded", function () {
     Recipes.addShaped(
       { id: BlockID.advancedPhotovoltaicCell, count: 1, data: 0 },
       ["aga", "sbs", "epe"],
-      ["e", ItemID.basicCapacitor, 0, "a", ItemID.pulsatingIron, 0, "s", ItemID.energeticAlloy, 0, "p", BlockID.photovoltaicCell, 0, "g", BlockID.fusedQuartz, 0, "b", ItemID.dustCoal, 0],
+      [
+        "e",
+        ItemID.basicCapacitor,
+        0,
+        "a",
+        ItemID.pulsatingIron,
+        0,
+        "s",
+        ItemID.energeticAlloy,
+        0,
+        "p",
+        BlockID.photovoltaicCell,
+        0,
+        "g",
+        BlockID.fusedQuartz,
+        0,
+        "b",
+        ItemID.dustCoal,
+        0,
+      ],
     );
 
     Recipes.addShaped(

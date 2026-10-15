@@ -38,7 +38,7 @@ ModelHelper.setHandModel(new ItemStack(BlockID["combustionGenerator"], 1, 0), "c
   noRebuild: false,
 });
 
-ModelHelper.registerModelWithRotation(BlockID["combustionGenerator"], "resources/assets/models/combustion/combustion", ["combustion", 0], {
+ModelHelper.registerModelWithRotation(BlockID["combustionGenerator"], "resources/res/models/combustion/combustion", ["combustion", 0], {
   translate: [0.5, 0.5, 0.5],
   scale: [1, 1, 1],
   invertV: false,
@@ -62,7 +62,26 @@ Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped(
     { id: BlockID.combustionGenerator, count: 1, data: 0 },
     ["ici", "rmr", "gfg"],
-    ["i", ItemID.electricalSteel, 0, "c", ItemID.darkSteel, 0, "r", BlockID.eioTank, 0, "m", BlockID.machineChassi, 0, "f", VanillaBlockID.piston, 0, "g", ItemID.darkSteelGear, 0],
+    [
+      "i",
+      ItemID.electricalSteel,
+      0,
+      "c",
+      ItemID.darkSteel,
+      0,
+      "r",
+      BlockID.eioTank,
+      0,
+      "m",
+      BlockID.machineChassis,
+      0,
+      "f",
+      VanillaBlockID.piston,
+      0,
+      "g",
+      ItemID.darkSteelGear,
+      0,
+    ],
   );
 });
 

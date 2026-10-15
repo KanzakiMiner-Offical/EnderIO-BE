@@ -61,80 +61,61 @@ function setSimpleAlloyRender() {
 }
 
 setSimpleAlloyRender();*/
-let simpleAlloyUI = MachineRegistry.createInventoryWindow(
-  "Simple Alloy Smelter",
-  {
-    drawing: [
-      { type: "bitmap", x: 527, y: 235, bitmap: "fire_scale0", scale: 3.2 },
-      { type: "bitmap", x: 687, y: 235, bitmap: "fire_scale0", scale: 3.2 },
-      { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
-      // { type: "bitmap", x: 600, y: 170, bitmap: "bar_alloy", scale: 4.5 },
-    ],
-    elements: {
-      progressScale0: {
-        type: "scale",
-        x: 527,
-        y: 235,
-        direction: 1,
-        bitmap: "fire_scale1",
-        scale: 3.2,
-        clicker: {
-          onClick: function () {
-            RV?.RecipeTypeRegistry.openRecipePage("enderio_alloy");
-          },
+let simpleAlloyUI = MachineRegistry.createInventoryWindow("Simple Alloy Smelter", {
+  drawing: [
+    { type: "bitmap", x: 527, y: 235, bitmap: "fire_scale0", scale: 3.2 },
+    { type: "bitmap", x: 687, y: 235, bitmap: "fire_scale0", scale: 3.2 },
+    { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
+    // { type: "bitmap", x: 600, y: 170, bitmap: "bar_alloy", scale: 4.5 },
+  ],
+  elements: {
+    progressScale0: {
+      type: "scale",
+      x: 527,
+      y: 235,
+      direction: 1,
+      bitmap: "fire_scale1",
+      scale: 3.2,
+      clicker: {
+        onClick: function () {
+          RV?.RecipeTypeRegistry.openRecipePage("enderio_alloy");
         },
       },
-      progressScale1: {
-        type: "scale",
-        x: 687,
-        y: 235,
-        direction: 1,
-        bitmap: "fire_scale1",
-        scale: 3.2,
-        clicker: {
-          onClick: function () {
-            RV?.RecipeTypeRegistry.openRecipePage("enderio_alloy");
-          },
-        },
-      },
-      energyScale: {
-        type: "scale",
-        x: 335,
-        y: 140,
-        direction: 1,
-        bitmap: "redflux_bar1",
-        scale: 3.2,
-      },
-      ingredient1: { type: "slot", x: 520, y: 170 },
-      ingredient2: { type: "slot", x: 600, y: 140 },
-      ingredient3: { type: "slot", x: 680, y: 170 },
-      //"text": { type: "text", x: 400, y: 100, width: 100, height: 30, text: "RF" },
-      slotResult: { type: "slot", x: 600, y: 320 },
     },
+    progressScale1: {
+      type: "scale",
+      x: 687,
+      y: 235,
+      direction: 1,
+      bitmap: "fire_scale1",
+      scale: 3.2,
+      clicker: {
+        onClick: function () {
+          RV?.RecipeTypeRegistry.openRecipePage("enderio_alloy");
+        },
+      },
+    },
+    energyScale: {
+      type: "scale",
+      x: 335,
+      y: 140,
+      direction: 1,
+      bitmap: "redflux_bar1",
+      scale: 3.2,
+    },
+    ingredient1: { type: "slot", x: 520, y: 170 },
+    ingredient2: { type: "slot", x: 600, y: 140 },
+    ingredient3: { type: "slot", x: 680, y: 170 },
+    //"text": { type: "text", x: 400, y: 100, width: 100, height: 30, text: "RF" },
+    slotResult: { type: "slot", x: 600, y: 320 },
   },
-);
+});
 
 Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped(
     { id: BlockID.simpleAlloySmelter, count: 1, data: 0 },
     ["bbb", "fmf", "ici"],
-    [
-      "i",
-      ItemID.stoneGear,
-      0,
-      "f",
-      61,
-      0,
-      "m",
-      BlockID.machineChassiSimple,
-      0,
-      "c",
-      VanillaItemID.bucket,
-      0,
-      "b",
-      VanillaItemID.iron_ingot,
-      0,
-    ],
+    ["i", ItemID.stoneGear, 0, "f", 61, 0, "m", BlockID.machineChassisSimple, 0, "c", VanillaItemID.bucket, 0, "b", VanillaItemID.iron_ingot, 0],
   );
 });
 
@@ -167,11 +148,7 @@ namespace Machine {
       const recipe = SmelterRecipe.getRecipe(input);
       if (recipe) {
         let resultSlot = this.container.getSlot("slotResult");
-        if (
-          (resultSlot.id == recipe.result.id &&
-            resultSlot.count + recipe.result.count <= 64) ||
-          !resultSlot.id
-        ) {
+        if ((resultSlot.id == recipe.result.id && resultSlot.count + recipe.result.count <= 64) || !resultSlot.id) {
           this.processTime = recipe.energy;
           if (this.data.energy >= this.energyConsume) {
             this.data.energy -= this.energyConsume;
@@ -189,21 +166,12 @@ namespace Machine {
 
       this.setActive(newActive);
 
-      this.container.setScale(
-        "progressScale0",
-        this.data.progress / this.processTime || 0,
-      );
-      this.container.setScale(
-        "progressScale1",
-        this.data.progress / this.processTime || 0,
-      );
+      this.container.setScale("progressScale0", this.data.progress / this.processTime || 0);
+      this.container.setScale("progressScale1", this.data.progress / this.processTime || 0);
       this.container.setScale("energyScale", this.getRelativeEnergy() || 0);
       this.container.sendChanges();
     }
   }
 
-  MachineRegistry.registerPrototype(
-    BlockID.simpleAlloySmelter,
-    new AlloySmelter_Simple(),
-  );
+  MachineRegistry.registerPrototype(BlockID.simpleAlloySmelter, new AlloySmelter_Simple());
 }

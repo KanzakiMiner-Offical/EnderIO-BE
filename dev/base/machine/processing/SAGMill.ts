@@ -120,12 +120,12 @@ Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped(
     { id: BlockID.sagmill, count: 1, data: 0 },
     ["fff", "ipi", "ama"],
-    ["i", ItemID.darkSteel, 0, "f", VanillaItemID.flint, 0, "m", BlockID.simplesagmill, 0, "p", BlockID.machineChassi, 0, "a", ItemID.darkSteelGear, 0],
+    ["i", ItemID.darkSteel, 0, "f", VanillaItemID.flint, 0, "m", BlockID.simplesagmill, 0, "p", BlockID.machineChassis, 0, "a", ItemID.darkSteelGear, 0],
   );
   Recipes.addShaped(
     { id: BlockID.sagmill, count: 1, data: 0 },
     ["fff", "ipi", "ama"],
-    ["i", ItemID.darkSteel, 0, "f", VanillaItemID.flint, 0, "m", VanillaBlockID.piston, 0, "p", BlockID.machineChassi, 0, "a", ItemID.darkSteelGear, 0],
+    ["i", ItemID.darkSteel, 0, "f", VanillaItemID.flint, 0, "m", VanillaBlockID.piston, 0, "p", BlockID.machineChassis, 0, "a", ItemID.darkSteelGear, 0],
   );
 
   RecipeRegistry.addCrusher({

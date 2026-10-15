@@ -34,11 +34,7 @@ ItemRegistry.createItem("soulMachineDye", {
 });
 
 Callback.addCallback("PreLoaded", function () {
-  Recipes.addShaped(
-    { id: ItemID.soulMachineDye, count: 6, data: 0 },
-    [" pi", "pmp", "ip "],
-    ["i", ItemID.brownDye, 0, "m", ItemID.blackDye, 0, "p", ItemID.dustQuarzt, 0],
-  );
+  Recipes.addShaped({ id: ItemID.soulMachineDye, count: 6, data: 0 }, [" pi", "pmp", "ip "], ["i", ItemID.brownDye, 0, "m", ItemID.blackDye, 0, "p", ItemID.dustQuarzt, 0]);
 
   Recipes.addShaped(
     { id: ItemID.machineDye, count: 6, data: 0 },
@@ -246,19 +242,19 @@ Callback.addCallback("PreLoaded", function () {
   // chassis
 
   SmelterRecipe.addRecipe({
-    ingredient1: { id: BlockID.machineChassiSimple, data: 0, count: 1 },
+    ingredient1: { id: BlockID.machineChassisSimple, data: 0, count: 1 },
     ingredient2: { id: ItemID.machineDye, data: 0, count: 1 },
     //ingredient3: { id: 0, data: 0, count: 0 },
-    result: { id: BlockID.machineChassi, count: 1, data: 0 },
+    result: { id: BlockID.machineChassis, count: 1, data: 0 },
     energy: 250,
     by: "EnderIO",
   });
 
   SmelterRecipe.addRecipe({
-    ingredient1: { id: BlockID.machineChassiSimple, data: 0, count: 1 },
+    ingredient1: { id: BlockID.machineChassisSimple, data: 0, count: 1 },
     ingredient2: { id: ItemID.soulMachineDye, data: 0, count: 1 },
     //ingredient3: { id: 0, data: 0, count: 0 },
-    result: { id: BlockID.machineChassiSoul, count: 1, data: 0 },
+    result: { id: BlockID.machineChassisSoul, count: 1, data: 0 },
     energy: 250,
     by: "EnderIO",
   });

@@ -5,10 +5,6 @@ namespace ItemName {
     });
   }
 
-  export function addTierTooltip(blockID: string | number, tier: number): void {
-    addTooltip(Block.getNumericId(blockID), getPowerTierText(tier));
-  }
-
   export function addStorageBlockTooltip(blockID: string | number, tier: number, capacity: string): void {
     Item.registerNameOverrideFunction(Block.getNumericId(blockID), function (item: ItemInstance, name: string) {
       const color = ItemRegistry.getItemRarityColor(item.id);
@@ -18,11 +14,7 @@ namespace ItemName {
 
   export function getBlockStorageText(item: ItemInstance, tier: number, capacity: string): string {
     const energy = item.extra ? item.extra.getInt("energy") : 0;
-    return `${getPowerTierText(tier)}\n${displayEnergy(energy)}/${capacity} RF`;
-  }
-
-  export function getPowerTierText(tier: number): string {
-    return Translation.translate("tooltip.power_tier").replace("%s", tier.toString());
+    return `${displayEnergy(energy)}/${capacity} RF`;
   }
 
   export function getItemStorageText(item: ItemInstance): string {

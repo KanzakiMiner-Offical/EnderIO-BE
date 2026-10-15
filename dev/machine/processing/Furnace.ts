@@ -9,12 +9,12 @@ BlockRegistry.createBlock(
         ["simple_machine_side", 0],
         ["furnace_simple_front", 0],
         ["simple_machine_side", 0],
-        ["simple_machine_side", 0]
+        ["simple_machine_side", 0],
       ],
-      inCreative: true
-    }
+      inCreative: true,
+    },
   ],
-  "machine"
+  "machine",
 );
 
 TileRenderer.setHandAndUiModel(BlockID.simplePoweredFurnace, 0, [
@@ -23,7 +23,7 @@ TileRenderer.setHandAndUiModel(BlockID.simplePoweredFurnace, 0, [
   ["simple_machine_side", 0],
   ["furnace_simple_front", 0],
   ["simple_machine_side", 0],
-  ["simple_machine_side", 0]
+  ["simple_machine_side", 0],
 ]);
 TileRenderer.setStandardModelWithRotation(BlockID.simplePoweredFurnace, 2, [
   ["simple_machine_bottom", 0],
@@ -31,7 +31,7 @@ TileRenderer.setStandardModelWithRotation(BlockID.simplePoweredFurnace, 2, [
   ["simple_machine_side", 0],
   ["furnace_simple_front", 0],
   ["simple_machine_side", 0],
-  ["simple_machine_side", 0]
+  ["simple_machine_side", 0],
 ]);
 TileRenderer.registerModelWithRotation(BlockID.simplePoweredFurnace, 2, [
   ["simple_machine_bottom", 0],
@@ -39,7 +39,7 @@ TileRenderer.registerModelWithRotation(BlockID.simplePoweredFurnace, 2, [
   ["simple_machine_side", 0],
   ["furnace_simple_front_on", 0],
   ["simple_machine_side", 0],
-  ["simple_machine_side", 0]
+  ["simple_machine_side", 0],
 ]);
 
 TileRenderer.setRotationFunction(BlockID.simplePoweredFurnace);
@@ -66,7 +66,7 @@ let simpleFurnaceUI = MachineRegistry.createInventoryWindow("Simple Powered Furn
   drawing: [
     { type: "bitmap", x: 527, y: 235, bitmap: "fire_scale0", scale: 3.2 },
     { type: "bitmap", x: 687, y: 235, bitmap: "fire_scale0", scale: 3.2 },
-    { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 }
+    { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
     //{type: "bitmap", x: 600, y: 170, bitmap: "bar_alloy", scale: 4.5},
   ],
   elements: {
@@ -80,8 +80,8 @@ let simpleFurnaceUI = MachineRegistry.createInventoryWindow("Simple Powered Furn
       clicker: {
         onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("furnace");
-        }
-      }
+        },
+      },
     },
     progressScale1: {
       type: "scale",
@@ -93,8 +93,8 @@ let simpleFurnaceUI = MachineRegistry.createInventoryWindow("Simple Powered Furn
       clicker: {
         onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("furnace");
-        }
-      }
+        },
+      },
     },
     energyScale: {
       type: "scale",
@@ -102,26 +102,26 @@ let simpleFurnaceUI = MachineRegistry.createInventoryWindow("Simple Powered Furn
       y: 140,
       direction: 1,
       bitmap: "redflux_bar1",
-      scale: 3.2
+      scale: 3.2,
     },
     sourceSlot: { type: "slot", x: 600, y: 140 },
     //"text": { type: "text", x: 400, y: 100, width: 100, height: 30, text: "RF" },
-    slotResult: { type: "slot", x: 600, y: 320 }
-  }
+    slotResult: { type: "slot", x: 600, y: 320 },
+  },
 });
 
 Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped(
     { id: BlockID.simplePoweredFurnace, count: 1, data: 0 },
     ["ibi", "fmf", "aca"],
-    ["i", 265, 0, "f", 98, 0, "m", BlockID.machineChassiSimple, 0, "c", VanillaItemID.bucket, 0, "a", ItemID.stoneGear, 0, "b", 61, 0]
+    ["i", 265, 0, "f", 98, 0, "m", BlockID.machineChassisSimple, 0, "c", VanillaItemID.bucket, 0, "a", ItemID.stoneGear, 0, "b", 61, 0],
   );
 });
 namespace Machine {
   export class PoweredFurnace_Simple extends SimpleMachine {
     defaultValues = {
       energy: 0,
-      progress: 0
+      progress: 0,
     };
     processTime = (Recipes.getFuelBurnDuration(VanillaItemID.coal, -1) * 10) / 8;
 
@@ -130,7 +130,7 @@ namespace Machine {
         CapacitorKey.SIMPLE_ALLOY_SMELTER_POWER_USE,
         CapacitorKey.SIMPLE_ALLOY_SMELTER_POWER_BUFFER,
         CapacitorKey.SIMPLE_ALLOY_SMELTER_POWER_INTAKE,
-        CapacitorKey.SIMPLE_ALLOY_SMELTER_POWER_LOSS
+        CapacitorKey.SIMPLE_ALLOY_SMELTER_POWER_LOSS,
       );
     }
 

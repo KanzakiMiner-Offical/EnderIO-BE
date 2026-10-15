@@ -115,25 +115,15 @@ namespace EnderTool {
 namespace ModelHelper {
   export function renderModel(model: string, import_params: RenderMesh.ImportParams): RenderMesh {
     const mesh = new RenderMesh();
-    mesh.importFromFile(__dir__ + "resources/assets/models/" + model + ".obj", "obj", import_params || null);
+    mesh.importFromFile(__dir__ + "resources/res/models/" + model + ".obj", "obj", import_params || null);
     return mesh;
   }
 
-  export function setHandModel(
-    item: ItemStack,
-    model_name: string,
-    texture: string,
-    import_params?: RenderMesh.ImportParams
-  ) {
+  export function setHandModel(item: ItemStack, model_name: string, texture: string, import_params?: RenderMesh.ImportParams) {
     const model = ItemModel.getForWithFallback(item.id, 0);
     model.setHandModel(renderModel(model_name, import_params), "models/" + texture);
   }
-  export function setItemModel(
-    item: ItemStack,
-    model_name: string,
-    texture: string,
-    import_params?: RenderMesh.ImportParams
-  ) {
+  export function setItemModel(item: ItemStack, model_name: string, texture: string, import_params?: RenderMesh.ImportParams) {
     const model = ItemModel.getForWithFallback(item.id, 0);
     model.setModel(renderModel(model_name, import_params), "models/" + texture);
   }
@@ -142,14 +132,10 @@ namespace ModelHelper {
     model_name: string,
     texture: string,
     import_params?: RenderMesh.ImportParams,
-    rotation: [number, number, number] = [0, 0, 0]
+    rotation: [number, number, number] = [0, 0, 0],
   ) {
     const mesh = renderModel(model_name, import_params) as RenderMesh;
-    mesh.rotate(
-      MathHelper.degreeToRadian(rotation[0]),
-      MathHelper.degreeToRadian(rotation[1]),
-      MathHelper.degreeToRadian(rotation[2])
-    );
+    mesh.rotate(MathHelper.degreeToRadian(rotation[0]), MathHelper.degreeToRadian(rotation[1]), MathHelper.degreeToRadian(rotation[2]));
     const model = ItemModel.getForWithFallback(item.id, 0);
     model.setUiModel(mesh, "models/" + texture);
   }
@@ -164,7 +150,7 @@ namespace ModelHelper {
       translate: [0, 0, 0],
       noRebuild: false,
       invertV: false,
-    }
+    },
   ): RenderMesh {
     const mesh = new RenderMesh();
     mesh.importFromFile(__dir__ + dir + ".obj", "obj", {
@@ -182,12 +168,7 @@ namespace ModelHelper {
     [0, 90, 0],
     [0, 270, 0],
   ];
-  export function registerModelWithRotation(
-    block: number,
-    dir: string,
-    texture: [string, number],
-    importParams?: RenderMesh.ImportParams
-  ) {
+  export function registerModelWithRotation(block: number, dir: string, texture: [string, number], importParams?: RenderMesh.ImportParams) {
     let mesh: RenderMesh, model: BlockRenderer.Model, render: ICRender.Model;
     for (let i = 2; i <= 5; i++) {
       mesh = generateMesh(dir, 0, MathHelper.degreeToRadian(rotate[i - 2][1]), 0, importParams);

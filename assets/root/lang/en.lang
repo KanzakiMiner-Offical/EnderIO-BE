@@ -1,6 +1,3 @@
-#PARSE_ESCAPES
-# ^ having this in the first line allows us to use "\uXXXX" escapes in this file
-
 #***  Ender IO *****#
 
 # Translators, check your ".guess" file to see which keys your

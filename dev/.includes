@@ -20,8 +20,9 @@ base/core/machine/helper/CombustionMath.ts
 base/core/machine/helper/SAGHelper.ts
 
 base/core/machine/tool.ts
-base/core/machine/config.ts
 base/core/machine/item_name.ts
+
+base/core/config.ts
 
 base/core/conduit/core.ts
 
@@ -34,7 +35,7 @@ base/init_resource.ts
 
 base/items/gear.ts
 base/items/powder.ts
-base/items/SoulVessel.js
+base/items/SoulVessel.ts
 
 base/items/capacitor/defined.ts
 base/items/capacitor/loot_capacitor.ts

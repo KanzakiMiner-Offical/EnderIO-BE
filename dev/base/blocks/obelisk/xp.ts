@@ -16,29 +16,26 @@ ToolAPI.registerBlockMaterial(BlockID.experience_obelisk, "stone");
 
 ObeliskCore.registerModel("experience_obelisk", "experience_obelisk");
 
-Block.registerPlaceFunction(
-  "experience_obelisk",
-  function (coords: Callback.ItemUseCoordinates, item: ItemInstance, block: Tile, _player: number, blockSource: BlockSource) {
-    const region = new WorldRegion(blockSource);
-    const place = World.canTileBeReplaced(block.id, block.data) ? coords : coords.relative;
-    const rotation = TileRenderer.getBlockRotation(_player, false);
-    region.setBlock(place, item.id, rotation);
-    const tile = region.addTileEntity(place);
-    if (item.extra) {
-      let name_fluid = item.extra.getString("fluid");
-      let amount_fluid = item.extra.getInt("amount");
-      if (amount_fluid > 0) {
-        tile.liquidStorage.addLiquid(name_fluid, amount_fluid);
-      }
+Block.registerPlaceFunction("experience_obelisk", function (coords: Callback.ItemUseCoordinates, item: ItemInstance, block: Tile, _player: number, blockSource: BlockSource) {
+  const region = new WorldRegion(blockSource);
+  const place = World.canTileBeReplaced(block.id, block.data) ? coords : coords.relative;
+  const rotation = TileRenderer.getBlockRotation(_player, false);
+  region.setBlock(place, item.id, rotation);
+  const tile = region.addTileEntity(place);
+  if (item.extra) {
+    let name_fluid = item.extra.getString("fluid");
+    let amount_fluid = item.extra.getInt("amount");
+    if (amount_fluid > 0) {
+      tile.liquidStorage.addLiquid(name_fluid, amount_fluid);
     }
-  },
-);
+  }
+});
 
 Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped(
     { id: BlockID.experience_obelisk, count: 1, data: 0 },
     [" e ", " a ", "aba"],
-    ["a", ItemID.soularium, 0, "e", ItemID.itemXpTransfer, 0, "b", BlockID.machineChassiSoul, 0], // function (api: Recipes.WorkbenchFieldAPI, field: com.zhekasmirnov.innercore.api.mod.ui.container.Slot[], result: ItemInstance) {
+    ["a", ItemID.soularium, 0, "e", ItemID.itemXpTransfer, 0, "b", BlockID.machineChassisSoul, 0], // function (api: Recipes.WorkbenchFieldAPI, field: com.zhekasmirnov.innercore.api.mod.ui.container.Slot[], result: ItemInstance) {
     //   let xp = new ItemExtraData();
     //   for (let i = 0; i < field.length; i++) {
     //     if (field[i].id == ItemID.itemXpTransfer && field[i].extra) {

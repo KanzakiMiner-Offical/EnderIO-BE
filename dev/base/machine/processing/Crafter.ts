@@ -1,4 +1,3 @@
-//@ts-nocheck
 BlockRegistry.createBlock(
   "crafter",
   [
@@ -10,19 +9,19 @@ BlockRegistry.createBlock(
         ["machineSide", 0],
         ["block_crafter_solid", 0],
         ["machineSide", 0],
-        ["machineSide", 0]
+        ["machineSide", 0],
       ],
-      inCreative: true
-    }
+      inCreative: true,
+    },
   ],
-  "machine"
+  "machine",
 );
 
 Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped(
     { id: BlockID.crafter, count: 1, data: 0 },
     ["iai", "imi", "ici"],
-    ["i", VanillaItemID.iron_ingot, 0, "m", BlockID.machineChassi, 0, "c", ItemID.skullZombieController, 0, "a", VanillaBlockID.crafting_table, 0]
+    ["i", VanillaItemID.iron_ingot, 0, "m", BlockID.machineChassis, 0, "c", ItemID.skullZombieController, 0, "a", VanillaBlockID.crafting_table, 0],
   );
 });
 
@@ -37,7 +36,7 @@ let craftUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.
       y: 50,
       width: 100,
       height: 30,
-      text: ""
+      text: "",
     },
     energyScale: {
       type: "scale",
@@ -45,7 +44,7 @@ let craftUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.
       y: 60,
       direction: 1,
       bitmap: "redflux_bar1",
-      scale: 3.2
+      scale: 3.2,
     },
     // Capacitor
     slotCapacitor: { type: "slot", x: 370, y: 230, size: 60 },
@@ -75,8 +74,8 @@ let craftUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.
         },
         onLongClick: function (position, container, tileEntity) {
           this.onClick(position, container, tileEntity);
-        }
-      }
+        },
+      },
     },
     // Output
     slotI1: { type: "slot", x: 730, y: 110, size: 60 },
@@ -89,15 +88,15 @@ let craftUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.
     slotI8: { type: "slot", x: 790, y: 230, size: 60 },
     slotI9: { type: "slot", x: 850, y: 230, size: 60 },
 
-    slotResult: { type: "slot", x: 920, y: 170, size: 60 }
-  }
+    slotResult: { type: "slot", x: 920, y: 170, size: 60 },
+  },
 });
 
 namespace Machine {
   export class Crafter extends BasicMachine {
     defaultValues = {
       energy: 0,
-      progress: 0
+      progress: 0,
     };
     BASE_TICK_RATE = 10;
     // defaultEnergyConsume = 125;
@@ -127,7 +126,7 @@ namespace Machine {
       this.energyConsumePerCraft = capacitors.getValue(CapacitorKey.CRAFTER_POWER_CRAFT);
     }
 
-    getTicksPerCraft() {
+    getTicksPerCraft(): number {
       if (this.speed > 0) {
         return this.BASE_TICK_RATE / this.speed;
       }
@@ -173,7 +172,7 @@ namespace Machine {
       let keys = Object.keys(recipe);
       for (let a in keys) {
         let count = recipe[keys[a]];
-        for (let i = 1; i <= 10; i++) {
+        for (let i = 1; i <= 9; i++) {
           let item = this.container.getSlot("slotI" + i);
           let keys__ = keys[a].split(":");
           if (count <= 0 || (item.id != parseInt(keys__[0]) && item.data != parseInt(keys__[1]))) continue;
@@ -256,6 +255,6 @@ StorageInterface.createInterface(BlockID.crafter, {
     slotI7: { input: true },
     slotI8: { input: true },
     slotI9: { input: true },
-    slotResult: { output: true }
-  }
+    slotResult: { output: true },
+  },
 });

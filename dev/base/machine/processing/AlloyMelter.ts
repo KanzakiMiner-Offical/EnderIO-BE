@@ -14,7 +14,7 @@ BlockRegistry.createBlock(
       inCreative: true,
     },
   ],
-  "machine"
+  "machine",
 );
 
 TileRenderer.setHandAndUiModel(BlockID.alloySmelter, 0, [
@@ -192,29 +192,13 @@ Callback.addCallback("PreLoaded", function () {
         "ifi",
         "fmf",
        "ici"
-    ], ['i', 265, 0, 'f', 61, 0, "m", BlockID.machineChassi, 0, "c", 380, 0])
+    ], ['i', 265, 0, 'f', 61, 0, "m", BlockID.machineChassis, 0, "c", 380, 0])
    */
   // Machine Addon :>
   Recipes.addShaped(
     { id: BlockID.alloySmelter, count: 1, data: 0 },
     ["i i", "amf", "c c"],
-    [
-      "i",
-      ItemID.darkSteel,
-      0,
-      "f",
-      BlockID.simpleAlloySmelter,
-      0,
-      "m",
-      BlockID.machineChassi,
-      0,
-      "c",
-      ItemID.darkSteelGear,
-      0,
-      "a",
-      BlockID.simplePoweredFurnace,
-      0,
-    ]
+    ["i", ItemID.darkSteel, 0, "f", BlockID.simpleAlloySmelter, 0, "m", BlockID.machineChassis, 0, "c", ItemID.darkSteelGear, 0, "a", BlockID.simplePoweredFurnace, 0],
   );
 });
 
@@ -285,10 +269,7 @@ namespace Machine {
       if (
         !!recipe.result &&
         !!recipe.ingredient &&
-        ((resultSlot.id == recipe.result.id &&
-          resultSlot.data == recipe.result.data &&
-          resultSlot.count <= 64 - recipe.result.count) ||
-          !resultSlot.id)
+        ((resultSlot.id == recipe.result.id && resultSlot.data == recipe.result.data && resultSlot.count <= 64 - recipe.result.count) || !resultSlot.id)
       ) {
         if (this.data.energy >= this.energyConsume) {
           this.data.energy -= this.energyConsume;
@@ -301,11 +282,7 @@ namespace Machine {
           inputSlot.count -= count;
           inputSlot.validate();
           inputSlot.markDirty();
-          resultSlot.setSlot(
-            recipe.result.id,
-            resultSlot.count + Math.min(count * recipe.result.count, 3 * recipe.result.count),
-            recipe.result.data || 0
-          );
+          resultSlot.setSlot(recipe.result.id, resultSlot.count + Math.min(count * recipe.result.count, 3 * recipe.result.count), recipe.result.data || 0);
           this.container.validateAll();
           this.data.progress = 0;
         }

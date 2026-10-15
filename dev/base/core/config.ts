@@ -12,15 +12,9 @@ namespace EnderConfig {
   }
   export let debugMode = getBool("debug_mode");
   export let oldMode = getBool("old_mode");
+  export let fireMinAge = getInt("fireMinAge");
+  export let maxTrackedFire = getInt("maxTrackedFire");
 }
-
-let isLevelDisplayed = false;
-Callback.addCallback("LevelDisplayed", function () {
-  isLevelDisplayed = true;
-});
-Callback.addCallback("LevelLeft", function () {
-  isLevelDisplayed = false;
-});
 
 // namespace EnergyConfig {
 

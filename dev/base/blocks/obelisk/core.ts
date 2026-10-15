@@ -4,7 +4,7 @@ namespace ObeliskCore {
     let mesh = new RenderMesh();
     let model = new BlockRenderer.Model(mesh);
     let render = new ICRender.Model();
-    mesh.importFromFile(__dir__ + "resources/assets/terrain-atlas/Base/obelisk/experience_obelisk.obj", "obj", null);
+    mesh.importFromFile(__dir__ + "resources/res/terrain-atlas/Base/obelisk/experience_obelisk.obj", "obj", null);
     mesh.setBlockTexture(texture, 0);
     render.addEntry(model);
     BlockRenderer.setStaticICRender(BlockID[id], -1, render);

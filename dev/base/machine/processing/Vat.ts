@@ -18,7 +18,7 @@ ModelHelper.setInventoryModel(
     invertV: false,
     noRebuild: false,
   },
-  [0, 0, 0]
+  [0, 0, 0],
 );
 ModelHelper.setHandModel(new ItemStack(BlockID.theVat, 1, 0), "vat/theVat", "vat/theVat", {
   translate: [0.25, 0, 0],
@@ -27,7 +27,7 @@ ModelHelper.setHandModel(new ItemStack(BlockID.theVat, 1, 0), "vat/theVat", "vat
   noRebuild: false,
 });
 
-ModelHelper.registerModelWithRotation(BlockID.theVat, "resources/assets/models/vat/theVat", ["theVat", 0], {
+ModelHelper.registerModelWithRotation(BlockID.theVat, "resources/res/models/vat/theVat", ["theVat", 0], {
   translate: [0, 0, 0],
   scale: [1, 1, 1],
   invertV: false,
@@ -324,26 +324,7 @@ Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped(
     { id: BlockID.theVat, count: 1, data: 0 },
     ["ici", "rmr", "gfg"],
-    [
-      "i",
-      ItemID.electricalSteel,
-      0,
-      "c",
-      380,
-      0,
-      "r",
-      BlockID.eioTank,
-      0,
-      "f",
-      VanillaBlockID.furnace,
-      0,
-      "m",
-      BlockID.machineChassi,
-      0,
-      "g",
-      ItemID.darkSteel,
-      0,
-    ]
+    ["i", ItemID.electricalSteel, 0, "c", 380, 0, "r", BlockID.eioTank, 0, "f", VanillaBlockID.furnace, 0, "m", BlockID.machineChassis, 0, "g", ItemID.darkSteel, 0],
   );
 });
 
@@ -394,8 +375,7 @@ namespace Machine {
         let outputAmount = result.amount;
         this.processTime = time;
         if (
-          (this.outputTank.getLiquidStored() == outputID &&
-            this.outputTank.getAmount(outputID) <= this.outputTank.getLimit() - outputAmount) ||
+          (this.outputTank.getLiquidStored() == outputID && this.outputTank.getAmount(outputID) <= this.outputTank.getLimit() - outputAmount) ||
           !this.outputTank.getLiquidStored()
         ) {
           if (this.data.energy >= this.energyConsume) {

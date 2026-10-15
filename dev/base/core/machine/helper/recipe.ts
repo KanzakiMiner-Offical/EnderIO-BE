@@ -348,14 +348,7 @@ namespace SoulRecipe {
     if (!id) return null;
     for (let recipe of recipes) {
       let ingredient = recipe.ingredient;
-      if (
-        id == ingredient.id &&
-        (data == -1 || data == ingredient.data) &&
-        count >= 1 &&
-        (soul == recipe.soul || recipe.soul == "all") &&
-        lvl >= recipe.lvl
-      )
-        return recipe;
+      if (id == ingredient.id && (data == -1 || data == ingredient.data) && count >= 1 && (soul == recipe.soul || recipe.soul == "all") && lvl >= recipe.lvl) return recipe;
     }
     return null;
   }
@@ -373,9 +366,6 @@ namespace SoulRecipe {
 }
 
 namespace SliceAndSpliceRecipe {
-  // export interface ItemInstanceMissCount {
-
-  // }
   export type SASRecipe = {
     input0: ItemInstance;
     input1: ItemInstance;

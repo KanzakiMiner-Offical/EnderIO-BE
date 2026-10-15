@@ -9,12 +9,12 @@ BlockRegistry.createBlock(
         ["machineSide", 0],
         ["stirlingGenFront", 0],
         ["machineSide", 0],
-        ["machineSide", 0]
+        ["machineSide", 0],
       ],
-      inCreative: true
-    }
+      inCreative: true,
+    },
   ],
-  "machine"
+  "machine",
 );
 
 TileRenderer.setStandardModelWithRotation(BlockID.stirlingGen, 2, [
@@ -23,7 +23,7 @@ TileRenderer.setStandardModelWithRotation(BlockID.stirlingGen, 2, [
   ["machineSide", 0],
   ["stirlingGenFront", 0],
   ["machineSide", 0],
-  ["machineSide", 0]
+  ["machineSide", 0],
 ]);
 TileRenderer.registerModelWithRotation(BlockID.stirlingGen, 2, [
   ["machineBottom", 0],
@@ -31,7 +31,7 @@ TileRenderer.registerModelWithRotation(BlockID.stirlingGen, 2, [
   ["machineSide", 0],
   ["stirlingGenFrontOn", 0],
   ["machineSide", 0],
-  ["machineSide", 0]
+  ["machineSide", 0],
 ]);
 
 TileRenderer.setRotationFunction(BlockID.stirlingGen);
@@ -40,14 +40,14 @@ Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped(
     { id: BlockID.stirlingGen, count: 1, data: 0 },
     ["   ", "sfs", "gpg"],
-    ["s", ItemID.darkSteel, 0, "f", BlockID.machineChassi, 0, "g", ItemID.darkSteelGear, 0, "p", BlockID.simpleStirlingGen, 0]
+    ["s", ItemID.darkSteel, 0, "f", BlockID.machineChassis, 0, "g", ItemID.darkSteelGear, 0, "p", BlockID.simpleStirlingGen, 0],
   );
 });
 
 let stirlingGenGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_stirling_generator.name"), {
   drawing: [
     { type: "bitmap", x: 445, y: 90, bitmap: "fire_scale0", scale: 3.2 },
-    { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 }
+    { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
   ],
 
   elements: {
@@ -58,7 +58,7 @@ let stirlingGenGUI = MachineRegistry.createInventoryWindow(Translation.translate
       direction: 1,
       value: 0.5,
       bitmap: "redflux_bar1",
-      scale: 3.2
+      scale: 3.2,
     },
     textInstall: {
       type: "text",
@@ -67,7 +67,7 @@ let stirlingGenGUI = MachineRegistry.createInventoryWindow(Translation.translate
       y: 50,
       width: 50,
       height: 30,
-      text: ""
+      text: "",
     },
     burningScale: {
       type: "scale",
@@ -75,12 +75,12 @@ let stirlingGenGUI = MachineRegistry.createInventoryWindow(Translation.translate
       y: 90,
       direction: 1,
       bitmap: "fire_scale1",
-      scale: 3.2
+      scale: 3.2,
     },
     slotFuel: { type: "slot", x: 440, y: 150 },
     //"text": { type: "text", x: 400, y: 100, width: 100, height: 30, text: "RF" },
-    slotCapacitor: { type: "slot", x: 325, y: 320 }
-  }
+    slotCapacitor: { type: "slot", x: 325, y: 320 },
+  },
 });
 
 namespace Machine {
@@ -88,7 +88,7 @@ namespace Machine {
     defaultValues = {
       energy: 0,
       burn: 0,
-      burnMax: 0
+      burnMax: 0,
     };
 
     // defaultBonus = 1
@@ -189,8 +189,8 @@ namespace Machine {
 
   StorageInterface.createInterface(BlockID.stirlingGen, {
     slots: {
-      slotFuel: { input: true }
+      slotFuel: { input: true },
     },
-    isValidInput: (item: ItemInstance) => Recipes.getFuelBurnDuration(item.id, item.data) > 0
+    isValidInput: (item: ItemInstance) => Recipes.getFuelBurnDuration(item.id, item.data) > 0,
   });
 }

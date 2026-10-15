@@ -125,7 +125,7 @@ Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped(
     { id: BlockID.sliceAndSplice, count: 1, data: 0 },
     ["shs", "amc", "sss"],
-    ["s", ItemID.soularium, 0, "h", 397, -1, "a", 258, 0, "c", 359, 0, "m", BlockID.machineChassiSoul, 0],
+    ["s", ItemID.soularium, 0, "h", 397, -1, "a", 258, 0, "c", 359, 0, "m", BlockID.machineChassisSoul, 0],
   );
 
   RecipeRegistry.addSliceAndSplice({

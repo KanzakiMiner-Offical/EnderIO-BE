@@ -8,6 +8,7 @@ EnderCore.createResourceItem("soularium", "Soularium Alloy");
 EnderCore.createResourceItem("electricalSteel", "Electrical Steel");
 EnderCore.createResourceItem("energeticAlloy", "Energetic Alloy");
 EnderCore.createResourceItem("redstoneAlloy", "Redstone Alloy");
+EnderCore.createResourceItem("vibrantAlloy", "Vibrant Alloy");
 EnderCore.createResourceBlock("conductiveIron", "Conductive Iron");
 EnderCore.createResourceBlock("darkSteel", "Dark Steel");
 EnderCore.createResourceBlock("electricalSteel", "Electrical Steel");
@@ -32,7 +33,7 @@ ItemRegistry.createItem("dustInfinity", {
   icon: "dustInfinity",
   stack: 64,
 });
-
+Item.setFireResistant(ItemID.dustInfinity, true); // Say bye to KEX Extension
 ItemRegistry.createItem("binderComposite", {
   name: "item.item_material.binder_composite.name",
   icon: "binderComposite",
@@ -48,7 +49,6 @@ ItemRegistry.createItem("silicon", {
   icon: "silicon",
   stack: 64,
 });
-EnderCore.createResourceItem("vibrantAlloy", "Vibrant Alloy");
 ItemRegistry.createItem("vibrantCrystal", {
   name: "item.item_material.vibrant_crystal.name",
   icon: "vibrantCrystal",
@@ -113,7 +113,11 @@ Callback.addCallback("PreLoaded", function () {
 
   Recipes.addShaped({ id: ItemID.itemYetaWrench, count: 1, data: 0 }, ["e e", " a ", " e "], ["a", ItemID.stoneGear, 0, "e", ItemID.electricalSteel, 0]);
 
-  Recipes.addShaped({ id: ItemID.weatherCrystal, count: 1, data: 0 }, [" a ", "beb", " a "], ["a", ItemID.pulsatingCrystal, 0, "e", ItemID.enderCrystal, 0, "b", ItemID.vibrantCrystal, 0]);
+  Recipes.addShaped(
+    { id: ItemID.weatherCrystal, count: 1, data: 0 },
+    [" a ", "beb", " a "],
+    ["a", ItemID.pulsatingCrystal, 0, "e", ItemID.enderCrystal, 0, "b", ItemID.vibrantCrystal, 0],
+  );
 
   Recipes.addShaped({ id: ItemID.vibrantCrystal, count: 1, data: 0 }, ["aaa", "aea", "aaa"], ["a", ItemID.vibrantAlloyNugget, 0, "e", 388, 0]);
 
@@ -138,17 +142,24 @@ ItemRegistry.createItem("skullZombieElectrode", {
   icon: "skullZombieElectrode",
   stack: 64,
 });
-Callback.addCallback("ItemUse", function (coords: Callback.ItemUseCoordinates, item: ItemInstance, block: Tile, isExternal: boolean, player: number): void {
+Callback.addCallback("ItemUseServer", function (coords: Callback.ItemUseCoordinates, item: ItemInstance, block: Tile, player: number): void {
   let region = BlockSource.getDefaultForActor(player);
   if (region.getBlockId(coords.x, coords.y, coords.z) == VanillaBlockID.bedrock && item.id == VanillaItemID.flint_and_steel && coords.side == EBlockSide.UP) {
     if (Math.random() <= 0.5) {
       region.spawnDroppedItem(coords.x, coords.y + 1, coords.z, ItemID.dustInfinity, 1, 0);
+      if (region.getBlock(coords.x, coords.y + 1, coords.z).id == VanillaBlockID.fire) region.setBlock(coords.x, coords.y + 1, coords.z, 0, 0); // remove fire
+      // region.setBlock(coords.x, coords.y, coords.z, VanillaBlockID.deepslate, 0); // Wait for 1.18
     }
   }
 });
 
+Callback.addCallback("BlockEventNeighbourChange", (coords: Vector, block: Tile | BlockState, changedCoords: Vector, region: BlockSource): void => {
+  if (block.id == VanillaBlockID.bedrock && changedCoords.y === coords.y + 1 && region.getBlockId(changedCoords.x, changedCoords.y, changedCoords.z) == VanillaBlockID.fire) {
+    alert("Bedrock is not flammable! Please remove the fire block above it.");
+  }
+});
 class XpTransfer extends ItemCommon {
-  max_store: number = 10000; // xp
+  readonly max_store: number = 10000; // maximum xp that can be stored in the item
   constructor() {
     super("itemXpTransfer", "item.item_xp_transfer.name", "item_xp_transfer");
     this.setMaxStack(1);
@@ -162,7 +173,6 @@ class XpTransfer extends ItemCommon {
     return name;
   }
   onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, block: Tile, player: number): void {
-    let xp_stored: number = 0;
     let extra = item.extra || null;
     if (!extra) {
       extra = new ItemExtraData();

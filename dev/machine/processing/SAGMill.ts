@@ -14,7 +14,7 @@ BlockRegistry.createBlock(
       inCreative: true,
     },
   ],
-  "machine"
+  "machine",
 );
 
 TileRenderer.setHandAndUiModel(BlockID.simplesagmill, 0, [
@@ -48,23 +48,7 @@ Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped(
     { id: BlockID.simplesagmill, count: 1, data: 0 },
     ["fff", "ipi", "ama"],
-    [
-      "i",
-      VanillaItemID.iron_ingot,
-      0,
-      "f",
-      VanillaItemID.flint,
-      0,
-      "m",
-      VanillaBlockID.piston,
-      0,
-      "p",
-      BlockID.machineChassiSimple,
-      0,
-      "a",
-      ItemID.woodGear,
-      0,
-    ]
+    ["i", VanillaItemID.iron_ingot, 0, "f", VanillaItemID.flint, 0, "m", VanillaBlockID.piston, 0, "p", BlockID.machineChassisSimple, 0, "a", ItemID.woodGear, 0],
   );
 });
 let simpleSAGGui = MachineRegistry.createInventoryWindow("Simple SAG Mill", {
@@ -120,7 +104,7 @@ namespace Machine {
         CapacitorKey.SIMPLE_SAG_MILL_POWER_USE,
         CapacitorKey.SIMPLE_SAG_MILL_POWER_BUFFER,
         CapacitorKey.SIMPLE_SAG_MILL_POWER_INTAKE,
-        CapacitorKey.SIMPLE_SAG_MILL_POWER_LOSS
+        CapacitorKey.SIMPLE_SAG_MILL_POWER_LOSS,
       );
     }
 

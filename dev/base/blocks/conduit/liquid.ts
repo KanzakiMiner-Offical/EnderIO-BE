@@ -26,26 +26,22 @@ Block.createBlock("fluidConduitIn", [
 ]);
 
 Callback.addCallback("PreLoaded", function () {
-  Recipes.addShaped(
-    { id: BlockID.fluidConduit, count: 8, data: 0 },
-    ["bbb", "ccc", "bbb"],
-    ["b", ItemID.conduitBinder, 0, "c", BlockID.fusedGlass, 0],
-  );
+  Recipes.addShaped({ id: BlockID.fluidConduit, count: 8, data: 0 }, ["bbb", "ccc", "bbb"], ["b", ItemID.conduitBinder, 0, "c", BlockID.fusedGlass, 0]);
 });
 
-Callback.addCallback("ItemUse", function (coords, item, block, isExternal, player) {
+Callback.addCallback("ItemUseServer", function (coords, item, block, player) {
   if (item.id == ItemID.itemYetaWrench && block.id == BlockID.fluidConduit && Entity.getSneaking(player)) {
     let region = BlockSource.getDefaultForActor(player);
     region.setBlock(coords.x, coords.y, coords.z, BlockID.fluidConduitEx, 0);
   }
 });
-Callback.addCallback("ItemUse", function (coords, item, block, isExternal, player) {
+Callback.addCallback("ItemUseServer", function (coords, item, block, player) {
   if (item.id == ItemID.itemYetaWrench && block.id == BlockID.fluidConduitEx && Entity.getSneaking(player)) {
     let region = BlockSource.getDefaultForActor(player);
     region.setBlock(coords.x, coords.y, coords.z, BlockID.fluidConduitIn, 0);
   }
 });
-Callback.addCallback("ItemUse", function (coords, item, block, isExternal, player) {
+Callback.addCallback("ItemUseServer", function (coords, item, block, player) {
   if (item.id == ItemID.itemYetaWrench && block.id == BlockID.fluidConduitIn && Entity.getSneaking(player)) {
     let region = BlockSource.getDefaultForActor(player);
     region.setBlock(coords.x, coords.y, coords.z, BlockID.fluidConduit, 0);
@@ -144,21 +140,9 @@ MachineRegistry.registerPrototype(BlockID.fluidConduitEx, {
             let liquids = Object.keys(tile.liquidStorage.liquidAmounts);
             for (let i in liquids)
               if (output.canTransportLiquid(liquids[i], 0))
-                StorageInterface.transportLiquid(
-                  liquids[i],
-                  50,
-                  output,
-                  StorageInterface.getLiquidStorage(this.blockSource, pos.x + ip.x, pos.y + ip.y, pos.z + ip.z),
-                  0,
-                );
+                StorageInterface.transportLiquid(liquids[i], 50, output, StorageInterface.getLiquidStorage(this.blockSource, pos.x + ip.x, pos.y + ip.y, pos.z + ip.z), 0);
           } catch (e) {
-            StorageInterface.extractLiquid(
-              null,
-              50,
-              StorageInterface.getLiquidStorage(this.blockSource, pos.x + ip.x, pos.y + ip.y, pos.z + ip.z),
-              output,
-              0,
-            );
+            StorageInterface.extractLiquid(null, 50, StorageInterface.getLiquidStorage(this.blockSource, pos.x + ip.x, pos.y + ip.y, pos.z + ip.z), output, 0);
           }
         }
       }

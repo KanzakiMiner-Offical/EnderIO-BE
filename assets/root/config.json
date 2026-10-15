@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "old_mode": false,
+
+  "fireMinAge": 260,
+  "maxTrackedFire": 500
+}
