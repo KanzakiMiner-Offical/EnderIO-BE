@@ -78,9 +78,9 @@ base/machine/storage/vibrant.ts
 machine/SimpleMachine.ts
 machine/generator/PhotoCeil.ts
 machine/generator/Stirling.ts
-machine/machines/AlloyMelter.ts
-machine/machines/Furnace.ts
-machine/machines/SAGMill.ts
+machine/processing/AlloyMelter.ts
+machine/processing/Furnace.ts
+machine/processing/SAGMill.ts
 
 endergy/init_resource.ts
 endergy/item/capacitor.ts

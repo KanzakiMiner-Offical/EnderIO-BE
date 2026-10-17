@@ -26,19 +26,19 @@ namespace CapacitorData {
     return new CapacitorSet(machine);
   }
   export class CapacitorSet {
-    level: number;
     type: string;
+    level: number;
     base_level: number;
-    accept_type: string[];
+    accept_type: { [key: string]: number };
     constructor(protected tileEntity: TileEntity) {
       this.resetRates();
       this.useCapacitor();
     }
 
     resetRates(): void {
-      this.level = this.base_level = 0;
       this.type = "";
-      this.accept_type = [];
+      this.level = this.base_level = 0;
+      this.accept_type = {};
     }
 
     useCapacitor(): void {
@@ -68,23 +68,21 @@ namespace CapacitorData {
       if (capacitor.type == "loot_capacitor") {
         this.type = "loot_capacitor";
         let base = capacitor.getBaseLevel(stack);
+        this.base_level = base;
 
-        let temp_: string[] = [];
+        // get all Capacitor types
+        let capacitorTypeList: string[] = [];
         if (capacitor.getMachineLevel(stack)) {
           for (const type in capacitor.getMachineLevel(stack)) {
-            temp_.push(type);
+            capacitorTypeList.push(type);
           }
         }
 
-        let have: string[] = [];
-        for (const type of temp_) {
+        // find accept type from all Capacitor types
+        for (const type of capacitorTypeList) {
           if (reqires.indexOf(type) > -1) {
-            have.push(type);
+            this.accept_type[type] = capacitor.getMachineLevel(stack)[type];
           }
-        }
-        this.base_level = base;
-        if (have.length > 0) {
-          this.accept_type = have;
         }
       }
     }
@@ -98,7 +96,7 @@ namespace CapacitorData {
         case "loot_capacitor":
           let value_ = 0;
           if (defaultValue) {
-            for (const type of this.accept_type) {
+            for (const type in this.accept_type) {
               let level = this.accept_type[type];
               if (defaultValue.owner == type) {
                 value_ = level * defaultValue.getBaseValue();
@@ -107,13 +105,6 @@ namespace CapacitorData {
               }
             }
           }
-          // Energy Storage Fix
-          // if (defaultValue.getValueType() == CapacitorKey.Key.LEGACY_ENERGY_BUFFER) {
-          //   const energyStorage = value_;
-          //   const tileData = this.tileEntity.data;
-          //   tileData.energy = Math.min(tileData.energy, energyStorage);
-          //   // return energyStorage;
-          // }
           return value_;
         default:
           return 0;

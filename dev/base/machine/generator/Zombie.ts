@@ -11,7 +11,11 @@ BlockRegistry.createBlock(
 );
 
 Callback.addCallback("PreLoaded", function () {
-  Recipes.addShaped({ id: BlockID.zombieGen, count: 1, data: 0 }, ["iii", "rmr", "rrr"], ["i", ItemID.electricalSteel, 0, "r", BlockID.fusedQuartz, 0, "m", ItemID.skullZombieElectrode, 0]);
+  Recipes.addShaped(
+    { id: BlockID.zombieGen, count: 1, data: 0 },
+    ["iii", "rmr", "rrr"],
+    ["i", ItemID.electricalSteel, 0, "r", BlockID.fusedQuartz, 0, "m", ItemID.skullZombieElectrode, 0],
+  );
 });
 
 var zombieGenRender = new ICRender.Model();
@@ -131,6 +135,7 @@ namespace Machine {
     }
 
     onTick(): void {
+      this.useCapacitor();
       let slot0 = this.container.getSlot("slotLiquid0");
       let slot1 = this.container.getSlot("slotLiquid1");
       let capacitor = this.container.getSlot("slotCapacitor");

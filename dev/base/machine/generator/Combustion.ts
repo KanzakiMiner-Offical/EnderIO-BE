@@ -24,7 +24,6 @@ ModelHelper.setInventoryModel(
   "combustion/combustion",
   "combustion/combustion",
   {
-    translate: [0.25, 0, 0],
     scale: [1, 1, 1],
     invertV: false,
     noRebuild: false,
@@ -32,7 +31,6 @@ ModelHelper.setInventoryModel(
   [0, 0, 0],
 );
 ModelHelper.setHandModel(new ItemStack(BlockID["combustionGenerator"], 1, 0), "combustion/combustion", "combustion/combustion", {
-  translate: [0.25, 0, 0],
   scale: [1, 1, 1],
   invertV: false,
   noRebuild: false,
@@ -221,15 +219,6 @@ namespace Machine {
         this.data.energy += powerPerCycle;
         return true;
       }
-      // oops, seems we need to refill...
-
-      // Check: Refresh from fluid if we're out of ticks
-      // if (this.data.burn_time <= 0) {
-      //   this.data.curFuel = null;
-      // }
-      // if (this.data.cool_time <= 0) {
-      //   this.data.curCoolant = null;
-      // }
 
       // new math as one of the fluids may have changed
       math = this.getMath();
@@ -240,10 +229,10 @@ namespace Machine {
       }
 
       // re-fill
-      if (this.data.cool_time <= 0 && math.getTicksPerCoolant(this.coolTank.getLiquid(this.coolTank.getLiquidStored(), 100)) > 0) {
+      if (this.data.cool_time <= 0 && this.coolTank.getAmount() > 100 && math.getTicksPerCoolant(this.coolTank.getLiquid(this.coolTank.getLiquidStored(), 100)) > 0) {
         this.data.cool_time += math.getTicksPerCoolant(this.coolTank.getLiquid(this.coolTank.getLiquidStored(), 100));
       }
-      if (this.data.burn_time <= 0 && math.getTicksPerFuel(this.heatTank.getLiquid(this.heatTank.getLiquidStored(), 100)) > 0) {
+      if (this.data.burn_time <= 0 && this.heatTank.getAmount() > 100 && math.getTicksPerFuel(this.heatTank.getLiquid(this.heatTank.getLiquidStored(), 100)) > 0) {
         this.data.burn_time += math.getTicksPerFuel(this.heatTank.getLiquid(this.heatTank.getLiquidStored(), 100));
       }
       // last sanity check, then generate energy

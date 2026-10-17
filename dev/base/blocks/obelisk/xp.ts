@@ -331,7 +331,7 @@ namespace Machine {
       xp10: function (eventData, connectedClient) {
         let player = new PlayerActor(connectedClient.getPlayerUid());
         let player_lvl = player.getLevel();
-        if (player_lvl == 0) return;
+        if (player_lvl < 10) return;
         let player_xp = player.getExperience();
         let xp = player_xp - ObeliskCore.LVLtoXP(player_lvl - 10);
         ObeliskCore.setPlayerXp(player, player_xp - xp);

@@ -1,3 +1,4 @@
+// TODO: NEED REWORK\
 BlockRegistry.createBlock(
   "crafter",
   [

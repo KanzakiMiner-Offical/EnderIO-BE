@@ -1,4 +1,4 @@
-function isEmpty(obj): boolean {
+function isEmpty(obj: any): boolean {
   return Object.keys(obj).length === 0;
 }
 
@@ -155,8 +155,8 @@ namespace CrusherRecipe {
     recipes.push(obj);
   }
 
-  export function getRecipe(input: any): SagMillRecipeFormat {
-    // ItemContainerSlot
+  // Logic for Tile Entity
+  export function getRecipe(input: ItemContainerSlot): SagMillRecipeFormat {
     let id = input.id;
     let data = input.data;
     let count = input.count;
@@ -176,116 +176,93 @@ namespace CrusherRecipe {
       if (id == ingredient.id && (data == -1 || data == ingredient.data)) {
         return true;
       }
-      return false;
     }
+    return false;
   }
 }
 
 namespace VatRecipe {
-  export let recipes = [];
+  export let recipes: RecipeMap<string>[] = [];
 
+  export type InputType = `minecraft:${string}` | `ItemID.${string}` | `BlockID.${string}`;
+  export type InputMap<T extends string> = {
+    [key in T]?: number;
+  };
+
+  export type RecipeMap<T extends string> = {
+    // string for save recipes, InputType for input recipes
+    input1: InputMap<T>;
+    input2?: InputMap<T>;
+    inputLiquid: string;
+    inputMutilplier: number;
+    outputLiquid: string;
+    energy: number;
+  };
   export type VatResultFormat = {
-    type: number;
     liquidOut: string;
     amount: number;
     energy: number;
-    amount_input: number;
+    amountInput: number;
     liquidIn: string;
+    slotIndex: number[];
   };
 
-  export function add(obj: any) {
-    let newData = {};
-    let newData2 = {};
-    for (let key1 in obj.input1) {
-      let newKey: any;
-      if (key1.includes(":")) {
-        let keyArray = key1.split(":");
-        if (keyArray[0] == "minecraft") {
-          let stringID = keyArray[1];
-          let numericID = VanillaBlockID[stringID] || VanillaItemID[stringID];
-          if (!numericID) {
-            let source = IDConverter.getIDData(stringID);
-            newKey = source.id + ":" + source.data;
-          } else {
-            newKey = numericID;
-            if (keyArray[2]) newKey += ":" + keyArray[2];
+  export function solveInput(obj: InputMap<InputType>): InputMap<string> {
+    let newData: InputMap<string> = {};
+    if (!obj) return newData;
+    for (let key in obj) {
+      let newKey: string;
+      if (key.startsWith("minecraft:")) {
+        // Vanilla id
+        let keyArray = key.split(":");
+        let stringID = keyArray[1];
+        let numericID = VanillaBlockID[stringID] || VanillaItemID[stringID];
+        if (!numericID) {
+          let source = IDConverter.getIDData(stringID);
+          newKey = source.id + ":" + source.data;
+        } else {
+          newKey = `${numericID}`;
+          if (keyArray[2]) newKey += ":" + keyArray[2];
+        }
+      } else if (key.includes(".")) {
+        // Innercore id
+        let keyArray = key.split(":");
+        if (keyArray[0].startsWith("ItemID") || keyArray[0].startsWith("BlockID")) {
+          let dotIndex = keyArray[0].indexOf(".");
+          let stringID = keyArray[0].substring(dotIndex + 1);
+          let numericID = keyArray[0].startsWith("ItemID") ? ItemID[stringID] : BlockID[stringID];
+          if (numericID) {
+            newKey = `${numericID}`;
+            if (keyArray[1]) newKey += ":" + keyArray[1];
           }
         } else {
-          newKey = eval(keyArray[0]) + ":" + keyArray[1];
+          Logger.Log(`Can't parse ${key} into InnerCore ID`, "ERROR");
         }
-      } else {
-        newKey = eval(key1);
-      }
-      if (newKey) newData[newKey] = obj.input1[key1];
+      } else Logger.Log(`Found a recipe with undefined input item ID: ${key}`, "ERROR");
+      if (newKey && !newData[newKey]) newData[newKey] = obj[key];
     }
-
-    for (let key2 in obj.input2) {
-      let newKey2: any;
-      if (key2.includes(":")) {
-        let keyArray = key2.split(":");
-        if (keyArray[0] == "minecraft") {
-          let stringID = keyArray[1];
-          let numericID = VanillaBlockID[stringID] || VanillaItemID[stringID];
-          if (!numericID) {
-            let source = IDConverter.getIDData(stringID);
-            newKey2 = source.id + ":" + source.data;
-          } else {
-            newKey2 = numericID;
-            if (keyArray[2]) newKey2 += ":" + keyArray[2];
-          }
-        } else {
-          newKey2 = eval(keyArray[0]) + ":" + keyArray[1];
-        }
-      } else {
-        newKey2 = eval(key2);
-      }
-      if (newKey2) newData2[newKey2] = obj.input2[key2];
-    }
-    obj.input1 = newData;
-    obj.input2 = newData2;
-    recipes.push(obj);
+    return newData;
   }
-  export function getResult(i1: ItemInstance, i2: ItemInstance, inputTank: BlockEngine.LiquidTank): VatResultFormat {
-    let result: VatResultFormat;
-    let liquidStorage = inputTank.getLiquidStored();
-    let liquidAmount = inputTank.getAmount(liquidStorage);
-    for (let recipe of recipes) {
-      let input1 = recipe.input1;
-      let input2 = recipe.input2;
-      let input2Check = !isEmpty(input2); // empty = false; non-empty = true
-      let input1Multiplier = input1[i1.id + ":" + i1.data] || input1[i1.id];
-      if (input1Multiplier && input2Check) {
-        let input2Multiplier = input2[i2.id] || input2[i2.id + ":" + i2.data];
-        let ingredientMultiplier = input1Multiplier * input2Multiplier;
-        let inputVolume = ingredientMultiplier * 1000;
-        if (liquidStorage == recipe.inputLiquid && liquidAmount >= inputVolume) {
-          let outputVolume = ingredientMultiplier * recipe.inputMutilplier * 1000;
-          result = {
-            type: 2,
-            liquidOut: recipe.outputLiquid,
-            amount: outputVolume,
-            energy: recipe.energy,
-            amount_input: inputVolume,
-            liquidIn: recipe.inputLiquid,
-          };
-        }
-      } else if (input1Multiplier && !input2Check) {
-        let ingredientMultiplier = input1Multiplier;
-        let inputVolume = ingredientMultiplier * 1000;
-        if (liquidStorage == recipe.inputLiquid && liquidAmount >= inputVolume) {
-          let outputVolume = ingredientMultiplier * recipe.inputMutilplier * 1000;
-          result = {
-            type: 1,
-            liquidOut: recipe.outputLiquid,
-            amount: outputVolume,
-            energy: recipe.energy,
-            amount_input: inputVolume,
-            liquidIn: recipe.inputLiquid,
-          };
-        }
-      }
-    }
-    return result;
+  /**
+
+  * Add vat recipe, with [input_] will accept item with no metadata like
+
+  * `minecraft:${string_id}` | `ItemID.${string_id}` | `BlockID.${string_id}` or with metadata like
+
+  * `minecraft:${string_id}:${metadata}` | `ItemID.${string}:${metadata}` | `BlockID.${string}:${metadata}`.
+
+  * @param obj object that contain recipe
+
+  */
+  export function add(obj: RecipeMap<InputType>) {
+    let newData = solveInput(obj.input1);
+    let newData2 = obj.input2 ? solveInput(obj.input2) : {};
+    let recipe: RecipeMap<string> = {
+      ...obj,
+      input1: newData,
+      input2: newData2,
+    };
+    recipes.push(recipe);
   }
 
   export function getLiquidOutput(): string[] {
@@ -304,20 +281,84 @@ namespace VatRecipe {
     return inputLiquid;
   }
 
-  export function performRecipe(result: VatResultFormat, tile: TileEntity.TileEntityPrototype): void {
-    let ingredient1 = tile.container.getSlot("slotInput0");
-    let ingredient2 = tile.container.getSlot("slotInput1");
-    if (result.type == 2) {
-      ingredient1.count--;
-      ingredient1.markDirty();
-      ingredient2.count--;
-      ingredient2.markDirty();
-    } else if (result.type == 1) {
-      ingredient1.count--;
-      ingredient1.markDirty();
+  // Logic for Tile Entity
+  export function getInput(container: ItemContainer): ItemInstance[] {
+    const inputItems: ItemInstance[] = [];
+    for (let i = 0; i <= 1; i++) {
+      const slot = container.getSlot("slotInput" + i);
+      inputItems.push(new ItemStack(slot));
     }
+    return inputItems;
+  }
+
+  export function getResult(inputItems: ItemInstance[], inputTank: BlockEngine.LiquidTank): VatResultFormat | null {
+    if (inputItems.length == 0) return null;
+    let result: VatResultFormat | null = null;
+    let liquidStorage = inputTank.getLiquidStored();
+    let liquidAmount = inputTank.getAmount(liquidStorage);
+
+    for (let recipe of recipes) {
+      let input1 = recipe.input1;
+      let input2 = recipe.input2;
+      let hasInput2 = !isEmpty(input2); // empty = false; have input item 2 = true
+      let input1Multiplier = 0;
+      let input2Multiplier = 0;
+      let input1Index = -1;
+      let input2Index = -1;
+
+      for (let i = 0; i < inputItems.length; i++) {
+        let slot = inputItems[i];
+        if (!slot || slot.count == 0) continue;
+
+        let multiFromInput = input1[slot.id + ":" + slot.data] ?? input1[slot.id];
+        if (!multiFromInput || multiFromInput <= 0) continue;
+        input1Multiplier = multiFromInput;
+        input1Index = i;
+        break;
+      }
+      if (input1Index == -1) continue;
+      if (hasInput2) {
+        for (let i = 0; i < inputItems.length; i++) {
+          if (i == input1Index) continue;
+          let slot = inputItems[i];
+          if (!slot || slot.count == 0) continue;
+
+          let multiFromInput = input2[slot.id + ":" + slot.data] ?? input2[slot.id];
+          if (!multiFromInput || multiFromInput <= 0) continue;
+          input2Multiplier = multiFromInput;
+          input2Index = i;
+          break;
+        }
+        if (input2Index == -1) continue;
+      }
+
+      let ingredientMultiplier = input1Multiplier * (hasInput2 ? input2Multiplier : 1);
+      if (ingredientMultiplier <= 0) continue;
+      let inputVolume = ingredientMultiplier * 1000;
+      if (liquidStorage == recipe.inputLiquid && liquidAmount >= inputVolume) {
+        let outputVolume = ingredientMultiplier * recipe.inputMutilplier * 1000;
+        result = {
+          liquidOut: recipe.outputLiquid,
+          amount: outputVolume,
+          energy: recipe.energy,
+          amountInput: inputVolume,
+          liquidIn: recipe.inputLiquid,
+          slotIndex: hasInput2 ? [input1Index, input2Index] : [input1Index],
+        };
+      }
+    }
+    return result;
+  }
+
+  export function performRecipe(result: VatResultFormat, tile: TileEntity.TileEntityPrototype): void {
+    for (const idx of result.slotIndex) {
+      let slot = tile.container.getSlot(`slotInput${idx}`);
+      slot.setSlot(slot.id, slot.count - 1, slot.data);
+      slot.validate();
+    }
+
     tile.outputTank.addLiquid(result.liquidOut, result.amount);
-    tile.inputTank.getLiquid(result.liquidIn, result.amount_input);
+    tile.inputTank.getLiquid(result.liquidIn, result.amountInput);
     tile.container.validateAll();
     tile.data.progress = 0;
   }
@@ -437,24 +478,12 @@ namespace SliceAndSpliceRecipe {
       let r_input5 = recipe["input5"];
 
       if (
-        item.id == r_input0.id &&
-        item.data == r_input0.data &&
-        item.count >= 1 &&
-        item.id == r_input1.id &&
-        item.data == r_input1.data &&
-        item.count >= 1 &&
-        item.id == r_input2.id &&
-        item.data == r_input2.data &&
-        item.count >= 1 &&
-        item.id == r_input3.id &&
-        item.data == r_input3.data &&
-        item.count >= 1 &&
-        item.id == r_input4.id &&
-        item.data == r_input4.data &&
-        item.count >= 1 &&
-        item.id == r_input5.id &&
-        item.data == r_input5.data &&
-        item.count >= 1
+        (item.id == r_input0.id && item.data == r_input0.data && item.count >= 1) ||
+        (item.id == r_input1.id && item.data == r_input1.data && item.count >= 1) ||
+        (item.id == r_input2.id && item.data == r_input2.data && item.count >= 1) ||
+        (item.id == r_input3.id && item.data == r_input3.data && item.count >= 1) ||
+        (item.id == r_input4.id && item.data == r_input4.data && item.count >= 1) ||
+        (item.id == r_input5.id && item.data == r_input5.data && item.count >= 1)
       ) {
         return recipe;
       }
@@ -479,10 +508,8 @@ namespace SliceAndSpliceRecipe {
         case r_input4:
         case r_input5:
           return true;
-          break;
         default:
           return false;
-          break;
       }
     }
   }

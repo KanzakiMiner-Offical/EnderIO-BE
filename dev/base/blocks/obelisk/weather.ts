@@ -142,7 +142,7 @@ namespace Machine {
           (input1.data == 0 || input1.data == -1) &&
           !!weather_type &&
           this.liquidTank.getAmount() >= 1000 &&
-          weather_type == cur_weather
+          !(weather_type.rain == cur_weather.rain && weather_type.thunder == cur_weather.thunder)
         ) {
           if (this.data.energy >= 50) {
             newActive = true;
@@ -185,7 +185,7 @@ namespace Machine {
         extra.putString("fluid", liquid);
         extra.putInt("amount", this.liquidTank.getAmount(liquid));
       }
-      region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.experience_obelisk, 1, 0, extra);
+      region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.weather_obelisk, 1, 0, extra);
     }
 
     energyReceive(type: string, amount: number, voltage: number): number {

@@ -64,7 +64,7 @@ let MOBS: number[] = [
   EEntityType.SQUID,
   EEntityType.VILLAGER,
   EEntityType.WOLF,
-  23,
+  EEntityType.HORSE,
   24,
   25,
   26,
@@ -104,7 +104,7 @@ namespace Machine {
     }
 
     onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean {
-      if (Entity.getSneaking(player)) {
+      if (Entity.getSneaking(player) && item.id != ItemID.itemYetaWrench) {
         MachineRegistry.fillTankOnClick(this.liquidTank, item, player);
       } else if (Entity.getSneaking(player) && item.id == ItemID.itemYetaWrench) {
         let extra: ItemExtraData;
@@ -135,11 +135,7 @@ namespace Machine {
       } else {
         slot.data += damage;
       }
-      if (
-        slot.data >= Item.getMaxDamage(slot.id) &&
-        !ChargeItemRegistry.isValidItem(slot.id, "Rf", 5) &&
-        !ChargeItemRegistry.isValidItem(slot.id, "Eu", 5)
-      ) {
+      if (slot.data >= Item.getMaxDamage(slot.id) && !ChargeItemRegistry.isValidItem(slot.id, "Rf", 5) && !ChargeItemRegistry.isValidItem(slot.id, "Eu", 5)) {
         slot.id = slot.data = slot.count = 0;
         slot.extra = null;
       }
@@ -174,7 +170,7 @@ namespace Machine {
     }
 
     destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
-      let extra;
+      let extra: ItemExtraData;
       let _region = BlockSource.getDefaultForActor(player);
       let liquid = this.liquidTank.getLiquidStored();
       if (liquid == "nutrientDistillation") {
@@ -184,18 +180,13 @@ namespace Machine {
       }
       if (extra) _region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.killerJoe, 1, 0, extra);
       else _region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.killerJoe, 1, 0);
-      //debug;
     }
   }
   MachineRegistry.registerPrototype(BlockID.killerJoe, new KillerJoe());
   MachineRegistry.setTankPlaceFunction("killerJoe");
-  MachineRegistry.addTankTooltip(BlockID.eioTank);
+  MachineRegistry.addTankTooltip(BlockID.killerJoe);
 }
 
 Callback.addCallback("PreLoaded", function () {
-  Recipes.addShaped(
-    { id: BlockID.killerJoe, count: 1, data: 0 },
-    ["sss", "qzq", "qqq"],
-    ["s", ItemID.darkSteel, 0, "q", 20, 0, "z", ItemID.skullZombieController, 0],
-  );
+  Recipes.addShaped({ id: BlockID.killerJoe, count: 1, data: 0 }, ["sss", "qzq", "qqq"], ["s", ItemID.darkSteel, 0, "q", 20, 0, "z", ItemID.skullZombieController, 0]);
 });

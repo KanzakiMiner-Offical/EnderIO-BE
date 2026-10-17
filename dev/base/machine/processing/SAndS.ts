@@ -44,7 +44,7 @@ TileRenderer.registerModelWithRotation(BlockID.sliceAndSplice, 2, [
 
 TileRenderer.setRotationFunction(BlockID.sliceAndSplice);
 
-var SliceAndSpliceGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_slice.name"), {
+let SliceAndSpliceGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_slice.name"), {
   drawing: [
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
     { type: "bitmap", x: 630, y: 235, bitmap: "bar_progress0", scale: 3.2 },
@@ -105,13 +105,13 @@ let accept_shear = {};
 Callback.addCallback("PreLoaded", function () {
   for (let id in VanillaItemID) {
     if (id.endsWith("_axe") && !id.startsWith("wooden") && !id.startsWith("stone")) {
-      accept_axe[id] = true;
+      accept_axe[VanillaItemID[id]] = true;
     }
   }
 
   for (let id in ItemID) {
     if (id.endsWith("Axe")) {
-      accept_axe[id] = true;
+      accept_axe[ItemID[id]] = true;
     }
   }
 
@@ -204,7 +204,7 @@ namespace Machine {
     }
 
     applyDamage(slot: ItemContainerSlot): void {
-      var unbreakingLevel = slot.extra.getEnchantLevel(EEnchantment.UNBREAKING);
+      let unbreakingLevel = slot.extra ? slot.extra.getEnchantLevel(EEnchantment.UNBREAKING) : 0;
       if (Math.random() < 1 / (unbreakingLevel + 1)) {
         slot.data += 1;
       }
@@ -274,7 +274,7 @@ namespace Machine {
       } else {
         this.container.setText("textInstall", "Please put Capacitor in slot capacitor to install function for machine");
       }
-      var energyStorage = this.getEnergyStorage();
+      let energyStorage = this.getEnergyStorage();
       this.data.energy = Math.min(this.data.energy, energyStorage);
       this.container.setScale("energyScale", this.data.energy / energyStorage);
       this.container.setScale("progressScale", this.data.progress / this.processTime || 0);

@@ -375,7 +375,6 @@ namespace Machine {
       let grinding = this.container.getSlot("slotGrinding");
       // cơ chế mài bóng
       this.executeBall();
-      // let recipe = CrusherRecipe.getRecipe(input.id, input.data);
       let recipe = CrusherRecipe.getRecipe(input);
       if (recipe) {
         let isGrinding = recipe.isGrinding;
@@ -403,7 +402,7 @@ namespace Machine {
             input.count--;
             input.markDirty();
             let outputRandom = Math.random();
-            let outputBonusRandom = canUseGrinding ? outputRandom * this.data.sag_bonus : outputRandom;
+            let outputBonusRandom = canUseGrinding ? outputRandom / this.data.sag_bonus : outputRandom;
             let countOutput = 1;
             let mainCountIuput = result0.count;
             if (canUseGrinding && Math.random() <= this.data.main) {

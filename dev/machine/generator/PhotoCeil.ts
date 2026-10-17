@@ -34,6 +34,10 @@ namespace Machine {
     getEnergyStorage(): number {
       return 20;
     }
+    energyTick(type: string, src: EnergyTileNode): void {
+      let output = Math.min(this.data.energy, 20);
+      this.data.energy += src.add(output) - output;
+    }
   }
   MachineRegistry.registerPrototype(BlockID.simplePhotovoltaicCell, new SimplePhotovoltaicCell());
 }
@@ -42,22 +46,6 @@ Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped(
     { id: BlockID.simplePhotovoltaicCell, count: 1, data: 0 },
     ["aga", "sss", "epe"],
-    [
-      "e",
-      ItemID.dustInfinity,
-      0,
-      "a",
-      ItemID.electricalSteel,
-      0,
-      "s",
-      ItemID.platePhotovoltaic,
-      0,
-      "p",
-      ItemID.ironGear,
-      0,
-      "g",
-      BlockID.fusedQuartz,
-      0,
-    ],
+    ["e", ItemID.dustInfinity, 0, "a", ItemID.electricalSteel, 0, "s", ItemID.platePhotovoltaic, 0, "p", ItemID.ironGear, 0, "g", BlockID.fusedQuartz, 0],
   );
 });

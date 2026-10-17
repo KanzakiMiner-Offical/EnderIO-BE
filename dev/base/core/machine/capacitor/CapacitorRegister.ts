@@ -3,7 +3,9 @@ interface ICapacitorData {
   canBeDMG: boolean;
   getLevel?(item: ItemInstance, machine: TileEntity): number;
   getBaseLevel?(item: ItemInstance): number;
+  // Base level for all loot types
   getMachineLevel?(item: ItemInstance): IMachineLevel;
+  // Base level for 1/some loot types
 }
 interface IMachineLevel {
   [key: string]: number;
@@ -45,7 +47,7 @@ class CapacitorLoot extends ItemCommon implements ItemBehavior, ICapacitorData {
 
       let final_name = "";
 
-      for (let i = 0; i++; i >= machine_name.length || i >= machine_level.length) {
+      for (let i = 0; i < machine_name.length && i < machine_level.length; i++) {
         final_name = `${machine_name[i]} ${machine_level[i]}`;
       }
       return `${final_name} ${base_name}`.replace("%s", "");
@@ -71,7 +73,7 @@ class CapacitorLoot extends ItemCommon implements ItemBehavior, ICapacitorData {
     return "";
   }
   getMachineLevel(item: ItemInstance): IMachineLevel {
-    // For 1 or more Machine(s)
+    // For 1 or some Machine(s)
     return item.extra ? item.extra.getSerializable("machine_level") : null; //min: 0
   }
 

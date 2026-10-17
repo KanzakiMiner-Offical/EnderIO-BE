@@ -130,10 +130,10 @@ namespace Machine {
       // So we hardcode 15 as a baseline to keep that density consistent
       let amount = Math.round((base /= CapacitorKey.STIRLING_POWER_GEN.getBaseValue() / 15));
       if (amount > 0) {
-        if (!LiquidItemRegistry.getItemLiquid(item.id, item.data)) {
+        if (!LiquidItemRegistry.getItemLiquid(item.id, item.data, item.extra)) {
           item.count -= 1;
         } else {
-          item.id = LiquidItemRegistry.getEmptyItem(item.id, item.data).id;
+          item.id = LiquidItemRegistry.getEmptyStack(item).id;
         }
         item.validate();
         item.markDirty();
@@ -171,7 +171,6 @@ namespace Machine {
 
       this.container.setScale("burningScale", this.data.burn / this.data.burnMax || 0);
       this.container.setScale("energyScale", this.getRelativeEnergy());
-      Game.message(this.data.energy + "/" + this.energyStorage + " Ratio: " + this.getRelativeEnergy());
       this.container.sendChanges();
     }
 

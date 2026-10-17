@@ -175,7 +175,7 @@ namespace Machine {
           let r_result = recipe.result0;
           let r_energy = recipe.energy;
           if (
-            (output0.id == r_result.id && (output0.data == r_result.data || output0.data == -1) && output0.count >= r_result.count) ||
+            (output0.id == r_result.id && (output0.data == r_result.data || output0.data == -1) && output0.count + r_result.count <= 64) ||
             (!output0.id && ((output1.id == ItemID.soulVesselEmpty && output1.count < 64) || !output1.id))
           ) {
             this.processTime = r_energy;
@@ -238,7 +238,7 @@ namespace Machine {
         extra.putString("fluid", liquid);
         extra.putInt("amount", this.liquidTank.getAmount(liquid));
       }
-      region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.experience_obelisk, 1, 0, extra);
+      region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.soulBinder, 1, 0, extra);
     }
 
     @ContainerEvent(Side.Server)

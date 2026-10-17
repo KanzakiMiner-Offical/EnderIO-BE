@@ -246,7 +246,7 @@ class SoulVessel extends ItemCommon implements ItemBehavior {
       z: coords.relative.z + 0.5,
     };
     let blockSource = BlockSource.getDefaultForActor(player);
-    let entityType = item.extra.getInt("type") || item.extra.getString("type");
+    let entityType = item.extra.getInt("type") ?? item.extra.getString("type");
     let newEntity = blockSource.spawnEntity(newCoords.x, newCoords.y, newCoords.z, entityType);
     entityTag.putInt64("UniqueID", newEntity);
     let posListTag = new NBT.ListTag();
@@ -261,7 +261,7 @@ class SoulVessel extends ItemCommon implements ItemBehavior {
     let tooltip = "\n" + Translation.translate("item.item_soul_vial.tooltip.detailed.line1") + "\n" + Translation.translate("item.item_soul_vial.tooltip.detailed.line2");
     if (item.extra) {
       let mobName = item.extra.getString("name");
-      tooltip += "\n§7Mob:" + mobName + "\n§7Type: " + (item.extra.getInt("type") || item.extra.getString("type"));
+      tooltip += "\n§7Mob:" + mobName + "\n§7Type: " + (item.extra.getInt("type") ?? item.extra.getString("type"));
     }
     return name + tooltip;
   }
@@ -272,7 +272,7 @@ ItemRegistry.registerItem(new SoulVessel());
 Callback.addCallback("EntityHurt", (attackerUid: number, entityUid: number, damageValue: number, damageType: Entity.DamageSource, armorReducesDamage: boolean): void => {
   if (!entityUid || !attackerUid || Entity.getType(attackerUid) !== EEntityType.PLAYER) return;
 
-  if (damageType !== EDamageCause.MOB) return;
+  // if (damageType !== EDamageCause.MOB) return;
 
   if (Entity.getCarriedItem(attackerUid).id !== ItemID.soulVesselEmpty) return;
 

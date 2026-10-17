@@ -84,7 +84,7 @@ Callback.addCallback("PlayerAttack", function (attacker, victim) {
   let c = Entity.getPosition(victim);
   let item = playerEntity.getCarriedItem();
   let region = BlockSource.getDefaultForActor(attacker);
-  if (item.id == ItemID.swordDarkSteel) {
+  if (item.id == ItemID.swordDarkSteel && Entity.getHealth(victim) <= 0) {
     if (Entity.getType(victim) == 32 && Math.random() <= 0.4) {
       region.spawnDroppedItem(c.x + 0.5, c.y + 0.5, c.z + 0.5, ItemID.zombieSkull, 1, 0);
     }

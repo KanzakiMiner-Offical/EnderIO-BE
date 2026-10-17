@@ -66,18 +66,18 @@ let guiTank = MachineRegistry.createInventoryWindow(Translation.translate("ender
   },
 });
 
-MachineRegistry.createStorageInterface(BlockID.tank, {
+MachineRegistry.createStorageInterface(BlockID.eioTank, {
   slots: {
     slotLiquid2: {
       input: true,
       isValid: function (item) {
-        return !!LiquidItemRegistry.getFullItem(item.id, item.data, "water");
+        return !!LiquidItemRegistry.getFullStack(item, "water");
       },
     },
     slotLiquid1: {
       input: true,
       isValid: function (item) {
-        return !!LiquidItemRegistry.getEmptyItem(item.id, item.data);
+        return !!LiquidItemRegistry.getEmptyStack(item);
       },
     },
     slotOut: {
@@ -99,8 +99,8 @@ namespace Machine {
     setupContainer(): void {
       this.liquidTank = this.addLiquidTank("fluid", 16000);
       StorageInterface.setGlobalValidatePolicy(this.container, function (name, id, amount, data) {
-        if (name == "slotLiquid1") return !!LiquidItemRegistry.getEmptyItem(id, data);
-        if (name == "slotLiquid2") return !!LiquidRegistry.getFullItem(id, data, "water");
+        if (name == "slotLiquid1") return !!LiquidItemRegistry.getEmptyStack(new ItemStack(id, amount, data));
+        if (name == "slotLiquid2") return !!LiquidItemRegistry.getFullStack(new ItemStack(id, amount, data), "water");
         if (name == "slotOutput") return false;
         return false;
       });
