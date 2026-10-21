@@ -16,8 +16,8 @@ namespace Machine {
     updateEnergyStorage(newStorage: number): number {
       const energyStorage = newStorage || 0;
       const energyCurrent = this.data.energy;
-      this.data.energy = Math.min(energyCurrent, energyStorage);
-      return newStorage;
+      if (energyStorage > 0) this.data.energy = Math.min(energyCurrent, energyStorage);
+      return energyStorage;
     }
 
     getRelativeEnergy(): number {
@@ -29,13 +29,15 @@ namespace Machine {
 
     chargeSlot(slotName: string) {
       let item = this.container.getSlot(slotName);
+      if (!item || item.id == 0) return;
       let tier = ChargeItemRegistry.getItemData(item.id).tier;
       this.data.energy -= ChargeItemRegistry.addEnergyToSlot(item, "Rf", this.data.energy, tier);
     }
 
     dischargeSlot(slotName: string) {
-      let amount = this.getEnergyStorage() - this.data.energy;
       let item = this.container.getSlot(slotName);
+      if (!item || item.id == 0) return;
+      let amount = this.getEnergyStorage() - this.data.energy;
       let tier = ChargeItemRegistry.getItemData(item.id).tier;
       this.data.energy += ChargeItemRegistry.getEnergyFromSlot(item, "Rf", amount, tier);
     }
@@ -46,7 +48,7 @@ namespace Machine {
 
     energyTick(type: string, src: EnergyTileNode): void {}
 
-    energyReceive(type: string, amount: number, voltage: number): number {
+    energyReceive(type: string, amount: number, power: number): number {
       return 0;
     }
 

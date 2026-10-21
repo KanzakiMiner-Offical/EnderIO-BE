@@ -1,4 +1,4 @@
-# EnderIO PE
+# EnderIO BE
 
 Port of Ender IO for MC Java Edition to Inner Core modloader for Minecraft on Android
 
@@ -15,7 +15,7 @@ Port of Ender IO for MC Java Edition to Inner Core modloader for Minecraft on An
 1. [Visual Studio Code IDE](https://code.visualstudio.com/)
 2. [Python 3.8](https://www.python.org/downloads/) or higher
 3. [Node.js 14.17](https://nodejs.org/en/download/current) or higher
-4. Typescript Compiler (run `npm install -g typescript`, high recommend using `npm install -g typescript@6`)
+4. Typescript Compiler (run `npm install -g typescript`, high recommend using `npm install -g typescript@6`, tsc v7 is not supported now)
 
 ### Building
 
@@ -48,3 +48,4 @@ Thanks to:
 - Team EnderIO for EnderIO For JAVA Edition
 - Zheka Smirnov for Inner Core modloader
 - toncho\_ for first version of EnderIO PE
+- Special thanks to MineExplorer for help me develop this mod

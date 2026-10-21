@@ -1,9 +1,5 @@
 namespace Machine {
   export abstract class Generator extends ProgressingMachine {
-    defaultBonus?: number;
-    defaultEnergyStorage?: number;
-
-    tier = 1;
     energyStorage: number;
     bonus: number;
 
@@ -15,17 +11,28 @@ namespace Machine {
         return false;
       });
     }
-
+    isGenerator(): boolean {
+      return true;
+    }
     canReceiveEnergy(): boolean {
       return false;
     }
 
-    canExtractEnergy(): boolean {
+    canEmitEnergy(): boolean {
       return true;
     }
-
+    /** @deprecated
+     * not use if you define generator
+     * use @getMaxOutput instead
+     */
+    getMaxIntake(): number {
+      return 0;
+    }
+    getMaxOutput(): number {
+      return this.getMaxIntake() > 0 ? this.getMaxIntake() : 0;
+    }
     energyTick(type: string, src: EnergyTileNode): void {
-      let output = Math.min(this.data.energy, this.getMaxIntake());
+      let output = Math.min(this.data.energy, this.getMaxOutput());
       this.data.energy += src.add(output) - output;
     }
 

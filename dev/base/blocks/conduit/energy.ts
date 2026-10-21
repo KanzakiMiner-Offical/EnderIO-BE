@@ -35,30 +35,18 @@ BlockRegistry.createBlock(
 );
 
 Callback.addCallback("PreLoaded", function () {
-  Recipes.addShaped(
-    { id: BlockID.energyConduit, count: 8, data: 0 },
-    ["bbb", "ccc", "bbb"],
-    ["b", ItemID.conduitBinder, 0, "c", ItemID.conductiveIron, 0],
-  );
+  Recipes.addShaped({ id: BlockID.energyConduit, count: 8, data: 0 }, ["bbb", "ccc", "bbb"], ["b", ItemID.conduitBinder, 0, "c", ItemID.conductiveIron, 0]);
 
-  Recipes.addShaped(
-    { id: BlockID.energyConduitAdv, count: 8, data: 0 },
-    ["bbb", "ccc", "bbb"],
-    ["b", ItemID.conduitBinder, 0, "c", ItemID.energeticAlloy, 0],
-  );
+  Recipes.addShaped({ id: BlockID.energyConduitAdv, count: 8, data: 0 }, ["bbb", "ccc", "bbb"], ["b", ItemID.conduitBinder, 0, "c", ItemID.energeticAlloy, 0]);
 
-  Recipes.addShaped(
-    { id: BlockID.energyConduitEnd, count: 8, data: 0 },
-    ["bbb", "ccc", "bbb"],
-    ["b", ItemID.conduitBinder, 0, "c", ItemID.vibrantAlloy, 0],
-  );
+  Recipes.addShaped({ id: BlockID.energyConduitEnd, count: 8, data: 0 }, ["bbb", "ccc", "bbb"], ["b", ItemID.conduitBinder, 0, "c", ItemID.vibrantAlloy, 0]);
 });
 
 ConduitRegistry.registerCable("energyConduit", 1280);
-ConduitRegistry.setupModel(BlockID.energyConduit, ConduitRegistry.ConduitWidth, "rf-wire");
+ConduitRegistry.setupModel(BlockID.energyConduit, ConduitRegistry.ConduitWidth, "rf-conduit");
 
 ConduitRegistry.registerCable("energyConduitAdv", 5120);
-ConduitRegistry.setupModel(BlockID.energyConduitAdv, ConduitRegistry.ConduitWidth, "rf-wire");
+ConduitRegistry.setupModel(BlockID.energyConduitAdv, ConduitRegistry.ConduitWidth, "rf-conduit");
 
 ConduitRegistry.registerCable("energyConduitEnd", 20480);
-ConduitRegistry.setupModel(BlockID.energyConduitEnd, ConduitRegistry.ConduitWidth, "rf-wire");
+ConduitRegistry.setupModel(BlockID.energyConduitEnd, ConduitRegistry.ConduitWidth, "rf-conduit");

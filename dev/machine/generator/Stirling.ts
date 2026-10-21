@@ -87,7 +87,7 @@ namespace Machine {
       burnMax: 0,
     };
 
-    generator = 0;
+    generator = CapacitorKey.SIMPLE_STIRLING_POWER_GEN.getBaseValue();
     efficiency = 1;
 
     bonus = 1;
@@ -105,7 +105,7 @@ namespace Machine {
 
     getBurnTime(name: string): number {
       let item = this.container.getSlot(name);
-      let base = (Recipes.getFuelBurnDuration(item.id, item.data) / (this.generator / CapacitorKey.SIMPLE_STIRLING_POWER_GEN.getBaseValue())) * this.efficiency;
+      let base = (Recipes.getFuelBurnDuration(item.id, item.data) / (this.generator / CapacitorKey.SIMPLE_STIRLING_POWER_GEN.getBaseValue())) * this.efficiency; // In normal case, it return Recipes.getFuelBurnDuration(item.id, item.data)
       if (LiquidRegistry.getItemLiquid(item.id, item.data)) {
         // Lava and other fluid buckets are nerfed, prefer combustion engine for those
         base /= 5;
@@ -114,10 +114,10 @@ namespace Machine {
       // So we hardcode 15 as a baseline to keep that density consistent
       let amount = Math.round((base /= CapacitorKey.SIMPLE_STIRLING_POWER_GEN.getBaseValue() / 15));
       if (amount > 0) {
-        if (!LiquidItemRegistry.getItemLiquid(item.id, item.data)) {
+        if (!LiquidRegistry.getItemLiquid(item.id, item.data)) {
           item.count -= 1;
         } else {
-          item.id = LiquidItemRegistry.getEmptyItem(item.id, item.data).id;
+          item.id = LiquidItemRegistry.getEmptyStack(item).id;
         }
         item.validate();
         item.markDirty();
@@ -149,6 +149,9 @@ namespace Machine {
       this.container.setScale("burningScale", this.data.burn / this.data.burnMax || 0);
       this.container.setScale("energyScale", this.data.energy / 2000);
       this.container.sendChanges();
+    }
+    getMaxOutput(): number {
+      return this.generator;
     }
   }
 

@@ -32,16 +32,8 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
       }
       return list;
     }
-    onOpen(
-      elements: java.util.HashMap<string, UI.Element>,
-      recipe: RecipePattern,
-    ): void {
-      elements
-        .get("textTime")
-        .setBinding(
-          "text",
-          Translation.translate("Energy: ") + recipe.energy + " RF",
-        );
+    onOpen(elements: java.util.HashMap<string, UI.Element>, recipe: RecipePattern): void {
+      elements.get("textTime").setBinding("text", Translation.translate("Energy: ") + recipe.energy + " RF");
     }
   }
   api.RecipeTypeRegistry.register("enderio_alloy", new AlloySmelterRecipe());
@@ -156,12 +148,8 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
             let input1 = prop1.split(":");
             for (let prop2 in recipe.input2) {
               let input2 = prop2.split(":");
-              let input1Multiplier =
-                recipe.input1[input1[0] + ":" + input1[1]] ||
-                recipe.input1[input1[0]];
-              let input2Multiplier =
-                recipe.input2[input2[0]] ||
-                recipe.input2[input2[0] + ":" + input2[1]];
+              let input1Multiplier = recipe.input1[input1[0] + ":" + input1[1]] || recipe.input1[input1[0]];
+              let input2Multiplier = recipe.input2[input2[0]] || recipe.input2[input2[0] + ":" + input2[1]];
               let ingredientMultiplier = input1Multiplier * input2Multiplier;
               list.push({
                 input: [
@@ -188,11 +176,9 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
                 outputLiq: [
                   {
                     liquid: recipe.outputLiquid,
-                    amount:
-                      recipe.inputMutilplier * ingredientMultiplier * 1000,
+                    amount: recipe.inputMutilplier * ingredientMultiplier * 1000,
                     tips: {
-                      amount:
-                        recipe.inputMutilplier * ingredientMultiplier * 1000,
+                      amount: recipe.inputMutilplier * ingredientMultiplier * 1000,
                     },
                   },
                 ],
@@ -203,9 +189,7 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
         } else {
           for (let prop1 in recipe.input1) {
             let input1 = prop1.split(":");
-            let input1Multiplier =
-              recipe.input1[input1[0] + ":" + input1[1]] ||
-              recipe.input1[input1[0]];
+            let input1Multiplier = recipe.input1[input1[0] + ":" + input1[1]] || recipe.input1[input1[0]];
             list.push({
               input: [
                 {
@@ -329,14 +313,7 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
       if (tips) {
         if (tips.soul) return name + "\n Soul: " + tips.soul;
         else if (tips.energy) return name + "\n Energy Use: " + tips.energy;
-        else if (tips.lvl)
-          return (
-            name +
-            "\n Level Require: " +
-            tips.lvl +
-            ".Experience Need: " +
-            ObeliskCore.LVLtoXP(tips.lvl)
-          );
+        else if (tips.lvl) return name + "\n Level Require: " + tips.lvl + ".Experience Need: " + ObeliskCore.LVLtoXP(tips.lvl);
       }
       return name;
     }
@@ -417,9 +394,7 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
   class CombustionProduct extends RecipeType {
     constructor() {
       super("Combustion Fuel", BlockID.combustionGenerator, {
-        drawing: [
-          { type: "bitmap", x: 120, y: 230, bitmap: "fire_scale1", scale: 3.2 },
-        ],
+        drawing: [{ type: "bitmap", x: 120, y: 230, bitmap: "fire_scale1", scale: 3.2 }],
         elements: {
           inputLiq0: { type: "scale", x: 200, y: 120, width: 60, height: 200 },
           inputLiq1: { type: "scale", x: 30, y: 120, width: 60, height: 200 },
@@ -467,30 +442,12 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
       return list;
     }
 
-    tankTooltip(
-      name: string,
-      liquid: LiquidInstance,
-      tips: { [key: string]: any },
-    ): string {
-      return (
-        name +
-        "100 mB <=> Burn Time: " +
-        tips.burn_time / 20 +
-        "s\n Energy Per Tick: " +
-        tips.powerTick +
-        " RF/tick\n Energy Per Cycle: " +
-        tips.power +
-        " RF"
-      );
+    tankTooltip(name: string, liquid: LiquidInstance, tips: { [key: string]: any }): string {
+      return name + "100 mB <=> Burn Time: " + tips.burn_time / 20 + "s\n Energy Per Tick: " + tips.powerTick + " RF/tick\n Energy Per Cycle: " + tips.power + " RF";
     }
 
-    onOpen(
-      elements: java.util.HashMap<string, UI.Element>,
-      recipe: RecipePattern,
-    ): void {
-      elements
-        .get("textWarn")
-        ?.setBinding("text", "Data from normal tier with Basic Capacitor");
+    onOpen(elements: java.util.HashMap<string, UI.Element>, recipe: RecipePattern): void {
+      elements.get("textWarn")?.setBinding("text", "Data from normal tier with Basic Capacitor");
     }
   }
 

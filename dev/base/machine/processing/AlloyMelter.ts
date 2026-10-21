@@ -102,7 +102,7 @@ let smelterGUI = MachineRegistry.createInventoryWindow(Translation.translate("ti
       x: 680,
       y: 170,
     },
-    slotCapacitor: { type: "slot", x: 325, y: 320 },
+    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1 },
     textInstall: {
       type: "text",
       font: { size: 20, color: Color.YELLOW },

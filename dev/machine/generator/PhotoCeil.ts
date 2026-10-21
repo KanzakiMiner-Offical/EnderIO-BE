@@ -7,39 +7,7 @@ BlockRegistry.registerBlock(
 );
 
 namespace Machine {
-  export class SimplePhotovoltaicCell extends Generator {
-    defaultValues = {
-      energy: 0,
-      canSeeSky: false,
-    };
-
-    getScreenByName(): UI.IWindow {
-      return;
-    }
-
-    onInit(): void {
-      this.data.canSeeSky = this.region.canSeeSky(this.x, this.y + 1, this.z);
-    }
-
-    onTick(): void {
-      let energyStorage = this.getEnergyStorage();
-      this.data.energy = Math.min(this.data.energy, energyStorage);
-      if (World.getThreadTime() % 100 == 0) {
-        this.data.canSeeSky = this.region.canSeeSky(this.x, this.y + 1, this.z);
-      }
-      if (this.data.canSeeSky && this.region.getLightLevel(this.x, this.y + 1, this.z) >= 14) {
-        this.data.energy += 20;
-      }
-    }
-    getEnergyStorage(): number {
-      return 20;
-    }
-    energyTick(type: string, src: EnergyTileNode): void {
-      let output = Math.min(this.data.energy, 20);
-      this.data.energy += src.add(output) - output;
-    }
-  }
-  MachineRegistry.registerPrototype(BlockID.simplePhotovoltaicCell, new SimplePhotovoltaicCell());
+  MachineRegistry.registerPrototype(BlockID.simplePhotovoltaicCell, new PhotovoltaicCellBase(20));
 }
 
 Callback.addCallback("PreLoaded", function () {

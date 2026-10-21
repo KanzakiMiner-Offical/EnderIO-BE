@@ -83,7 +83,7 @@ let soulBinderGUI = MachineRegistry.createInventoryWindow(Translation.translate(
     slotInput1: { type: "slot", x: 510, y: 200 },
     slotOutput0: { type: "slot", x: 700, y: 200 },
     slotOutput1: { type: "slot", x: 760, y: 200 },
-    slotCapacitor: { type: "slot", x: 325, y: 320 },
+    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1 },
     // xp
     "xp-1": {
       type: "button",

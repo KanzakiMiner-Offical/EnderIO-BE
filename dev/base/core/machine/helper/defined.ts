@@ -19,6 +19,7 @@ namespace MachineRegistry {
     if (Prototype instanceof Machine.ProgressingMachine) {
       // wire connection
       ICRender.getGroup("ic-wire").add(id, -1);
+      ICRender.getGroup("rf-conduit").add(id, -1);
       // register for energy net
       EnergyTileRegistry.addEnergyTypeForId(id, RF);
       EnergyTileRegistry.addEnergyTypeForId(id, EU);
@@ -84,9 +85,7 @@ namespace MachineRegistry {
       if (item.extra) {
         let name_fluid = item.extra.getString("fluid");
         let amount_fluid = item.extra.getInt("amount");
-        return (
-          name + "\n§7" + Translation.translate("Liquid: ") + name_fluid + "\n§7" + Translation.translate("Amount: ") + "§a" + amount_fluid + " mB"
-        );
+        return name + "\n§7" + Translation.translate("Liquid: ") + name_fluid + "\n§7" + Translation.translate("Amount: ") + "§a" + amount_fluid + " mB";
       }
     });
   }

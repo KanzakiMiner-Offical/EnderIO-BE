@@ -66,7 +66,7 @@ var guiZombieGen = MachineRegistry.createInventoryWindow(Translation.translate("
       bitmap: "redflux_bar1",
       scale: 3.2,
     },
-    slotCapacitor: { type: "slot", x: 325, y: 320 },
+    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1 },
     textInstall: {
       type: "text",
       font: { size: 20, color: Color.YELLOW },
@@ -106,9 +106,6 @@ namespace Machine {
       burn: 0,
       burn_max: 0,
     };
-
-    defaultEnergyStorage = 100000;
-    defaultBonus = 1;
 
     getScreenByName(screenName?: string): UI.IWindow {
       return guiZombieGen;
@@ -165,13 +162,11 @@ namespace Machine {
     getEnergyStorage(): number {
       return this.energyStorage;
     }
-
-    energyTick(type: string, src: EnergyTileNode): void {
-      let output = Math.min(80 * this.bonus, this.data.energy);
-      this.data.energy += src.add(output) - output;
+    getMaxOutput(): number {
+      return 80 * this.bonus;
     }
   }
-  TileEntity.registerPrototype(BlockID.zombieGen, new ZombieGenerator());
+  MachineRegistry.registerPrototype(BlockID.zombieGen, new ZombieGenerator());
   MachineRegistry.createStorageInterface(BlockID.zombieGen, {
     slots: {
       slotLiquid0: { input: true },

@@ -8,14 +8,12 @@ const CapacitorTransferMode = {
 
 namespace Machine {
   export class CapacitorBlock extends ProgressingMachine {
-    readonly tier: number;
     readonly capacity: number;
     readonly guiScreen: UI.StandardWindow;
     readonly maxOutputPower: number;
 
-    constructor(tier: number, maxOutputPower: number, capacity: number, guiScreen: UI.StandardWindow) {
+    constructor(maxOutputPower: number, capacity: number, guiScreen: UI.StandardWindow) {
       super();
-      this.tier = tier;
       this.capacity = capacity;
       this.maxOutputPower = maxOutputPower;
       this.guiScreen = guiScreen;
@@ -49,6 +47,7 @@ namespace Machine {
       const code = parseInt(config.join(""), 3);
       this.data.config = code;
       this.networkData.putInt("config", code);
+      this.rebuildGrid();
     }
 
     getMode(): number[] {
@@ -58,10 +57,6 @@ namespace Machine {
 
     getScreenByName(): UI.StandardWindow {
       return this.guiScreen;
-    }
-
-    getTier(): number {
-      return this.tier;
     }
 
     canRotate(): boolean {
@@ -90,21 +85,17 @@ namespace Machine {
     }
 
     energyTick(type: string, src: EnergyTileNode): void {
-      let output = this.maxOutputPower;
-      if (this.data.energy >= output) {
-        this.data.energy += src.add(output) - output;
-      }
+      let output = Math.min(this.data.energy, this.maxOutputPower);
+      this.data.energy += src.add(output) - output;
     }
 
     getEnergyStorage(): number {
       return this.capacity;
     }
 
-    energyReceive(type: string, amount: number, voltage: number): number {
+    energyReceive(type: string, amount: number, power: number): number {
       let maxVoltage = this.maxOutputPower * 1.5;
-      if (voltage > maxVoltage) {
-        amount = Math.min(amount, maxVoltage);
-      }
+      amount = Math.min(amount, maxVoltage);
       let add = Math.min(amount, this.getEnergyStorage() - this.data.energy);
       this.data.energy += add;
       return add;
@@ -114,7 +105,7 @@ namespace Machine {
       return this.getMode()[side] === CapacitorTransferMode.IN;
     }
 
-    canExtractEnergy(side: number): boolean {
+    canEmitEnergy(side: number): boolean {
       return this.getMode()[side] === CapacitorTransferMode.OUT;
     }
 

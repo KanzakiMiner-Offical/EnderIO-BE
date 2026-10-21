@@ -27,7 +27,7 @@ const guiBasicCapacitor = CapacitorBlockWindow(Translation.translate("tile.block
 namespace Machine {
   class BasicCapcitor extends CapacitorBlock {
     constructor() {
-      super(1, 500, 1000000, guiBasicCapacitor);
+      super(500, 1000000, guiBasicCapacitor);
     }
   }
 

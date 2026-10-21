@@ -95,8 +95,6 @@ Callback.addCallback("PreLoaded", function () {
     Recipes.addShaped({ id: ItemID.dustPhotovoltaic, count: 1, data: 0 }, ["   ", "sgp", "   "], ["s", ItemID.silicon, 0, "p", ItemID.dustLapis, 0, "g", ItemID.dustCoal, 0]);
     SmelterRecipe.addRecipe({
       ingredient1: { id: ItemID.dustPhotovoltaic, data: 0, count: 2 },
-      //ingredient2: { id: 0, data: 0 },
-      //ingredient3: { id: 0, data: 0, count: 0 },
       result: { id: ItemID.platePhotovoltaic, count: 6, data: 0 },
       energy: 15000,
     });
@@ -116,11 +114,16 @@ Callback.addCallback("PreLoaded", function () {
 });
 
 namespace Machine {
-  export class PhotovoltaicCell extends Generator {
+  export class PhotovoltaicCellBase extends Generator {
     defaultValues = {
       energy: 0,
       canSeeSky: false,
     };
+    maxGenerator: number;
+    constructor(maxGenerator: number) {
+      super();
+      this.maxGenerator = maxGenerator;
+    }
 
     getScreenByName(): UI.IWindow {
       return null;
@@ -136,92 +139,20 @@ namespace Machine {
       if (World.getThreadTime() % 100 == 0) {
         this.data.canSeeSky = this.region.canSeeSky(this.x, this.y + 1, this.z);
       }
-      if (this.data.canSeeSky && this.region.getLightLevel(this.x, this.y + 1, this.z) >= 14) {
-        this.data.energy += 40;
+      if (this.data.canSeeSky && this.region.getLightLevel(this.x, this.y + 1, this.z) >= 15) {
+        this.data.energy += this.maxGenerator;
       }
+    }
+    getMaxOutput(): number {
+      return this.maxGenerator;
     }
     getEnergyStorage(): number {
-      return 40;
-    }
-    energyTick(type: string, src: EnergyTileNode): void {
-      let output = Math.min(this.data.energy, 40);
-      this.data.energy += src.add(output) - output;
+      return this.getMaxOutput();
     }
   }
-
-  MachineRegistry.registerPrototype(BlockID.photovoltaicCell, new PhotovoltaicCell());
-}
-
-namespace Machine {
-  export class AdvancePhotovoltaicCell extends Generator {
-    defaultValues = {
-      energy: 0,
-      canSeeSky: false,
-    };
-
-    getScreenByName(): UI.IWindow {
-      return null;
-    }
-
-    onInit(): void {
-      this.data.canSeeSky = this.region.canSeeSky(this.x, this.y + 1, this.z);
-    }
-
-    onTick(): void {
-      let energyStorage = this.getEnergyStorage();
-      this.data.energy = Math.min(this.data.energy, energyStorage);
-      if (World.getThreadTime() % 100 == 0) {
-        this.data.canSeeSky = this.region.canSeeSky(this.x, this.y + 1, this.z);
-      }
-      if (this.data.canSeeSky && this.region.getLightLevel(this.x, this.y + 1, this.z) >= 14) {
-        this.data.energy += 80;
-      }
-    }
-    getEnergyStorage(): number {
-      return 80;
-    }
-    energyTick(type: string, src: EnergyTileNode): void {
-      let output = Math.min(this.data.energy, 80);
-      this.data.energy += src.add(output) - output;
-    }
-  }
-  MachineRegistry.registerPrototype(BlockID.advancedPhotovoltaicCell, new AdvancePhotovoltaicCell());
-}
-
-namespace Machine {
-  export class VibrabtPhotovoltaicCell extends Generator {
-    defaultValues = {
-      energy: 0,
-      canSeeSky: false,
-    };
-
-    getScreenByName(): UI.IWindow {
-      return null;
-    }
-
-    onInit(): void {
-      this.data.canSeeSky = this.region.canSeeSky(this.x, this.y + 1, this.z);
-    }
-
-    onTick(): void {
-      let energyStorage = this.getEnergyStorage();
-      this.data.energy = Math.min(this.data.energy, energyStorage);
-      if (World.getThreadTime() % 100 == 0) {
-        this.data.canSeeSky = this.region.canSeeSky(this.x, this.y + 1, this.z);
-      }
-      if (this.data.canSeeSky && this.region.getLightLevel(this.x, this.y + 1, this.z) >= 14) {
-        this.data.energy += 160;
-      }
-    }
-    getEnergyStorage(): number {
-      return 160;
-    }
-    energyTick(type: string, src: EnergyTileNode): void {
-      let output = Math.min(this.data.energy, 160);
-      this.data.energy += src.add(output) - output;
-    }
-  }
-  MachineRegistry.registerPrototype(BlockID.vibrantPhotovoltaicCell, new VibrabtPhotovoltaicCell());
+  MachineRegistry.registerPrototype(BlockID.photovoltaicCell, new PhotovoltaicCellBase(40));
+  MachineRegistry.registerPrototype(BlockID.advancedPhotovoltaicCell, new PhotovoltaicCellBase(80));
+  MachineRegistry.registerPrototype(BlockID.vibrantPhotovoltaicCell, new PhotovoltaicCellBase(160));
 }
 
 // namespace Machine {

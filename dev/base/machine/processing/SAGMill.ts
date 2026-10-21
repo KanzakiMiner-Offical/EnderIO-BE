@@ -99,7 +99,7 @@ let SAGGui = MachineRegistry.createInventoryWindow(Translation.translate("tile.b
       y: 170,
     },
     slotGrinding: { type: "slot", x: 700, y: 170 },
-    slotCapacitor: { type: "slot", x: 325, y: 310 },
+    slotCapacitor: { type: "slot", x: 325, y: 310, maxStackSize: 1 },
     textInstall: {
       type: "text",
       font: { size: 20, color: Color.YELLOW },

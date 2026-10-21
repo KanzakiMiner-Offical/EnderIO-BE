@@ -20,10 +20,6 @@ namespace Machine {
       this.lossPower = loss.getBaseValue();
     }
 
-    getTier(): number {
-      return 1;
-    }
-
     getEnergyStorage(): number {
       return this.energyStorage;
     }
@@ -44,11 +40,9 @@ namespace Machine {
       return this.maxIntake;
     }
 
-    energyReceive(type: string, amount: number, voltage: number): number {
-      let maxVoltage = this.getMaxIntake();
-      if (voltage > maxVoltage) {
-        amount = Math.min(amount, maxVoltage);
-      }
+    energyReceive(type: string, amount: number, power: number): number {
+      let maxIntake = this.getMaxIntake();
+      amount = Math.min(maxIntake, amount);
       let add = Math.min(amount, this.getEnergyStorage() - this.data.energy);
       this.data.energy += add;
       return add;

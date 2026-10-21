@@ -114,7 +114,7 @@ let combustionGenUI = MachineRegistry.createInventoryWindow(Translation.translat
     slot2: { type: "slot", x: 430, y: 360, bitmap: "slot_fluid_empty" },
 
     // slot capacitor
-    slotCapacitor: { type: "slot", x: 330, y: 290 },
+    slotCapacitor: { type: "slot", x: 330, y: 290, maxStackSize: 1 },
 
     // scale
     energyScale: {
@@ -291,11 +291,9 @@ namespace Machine {
       this.container.sendChanges();
     }
 
-    energyTick(type: string, src: EnergyTileNode): void {
-      let output = Math.min(this.data.energy, CapacitorKey.COMBUSTION_POWER_SEND.getBaseValue());
-      this.data.energy += src.add(output) - output;
+    getMaxOutput(): number {
+      return Math.max(CapacitorKey.COMBUSTION_POWER_SEND.getBaseValue(), this.generated);
     }
-
     @ContainerEvent(Side.Server)
     rotateInterface(): void {
       let _interface = StorageInterface.getInterface(this);

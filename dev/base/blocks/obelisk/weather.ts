@@ -94,7 +94,6 @@ namespace Machine {
     anim: Animation.Item;
     liquidTank: BlockEngine.LiquidTank;
 
-    tier: 2;
     energyConsume: 50;
     processTime: 5000;
 
@@ -122,10 +121,6 @@ namespace Machine {
 
     clientUnload() {
       this.anim && this.anim.destroy();
-    }
-
-    getTier(): number {
-      return 2;
     }
 
     onTick(): void {
@@ -188,10 +183,8 @@ namespace Machine {
       region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.weather_obelisk, 1, 0, extra);
     }
 
-    energyReceive(type: string, amount: number, voltage: number): number {
-      if (voltage > 55) {
-        amount = Math.min(amount, 55);
-      }
+    energyReceive(type: string, amount: number, power: number): number {
+      amount = Math.min(amount, 55);
       let add = Math.min(amount, this.getEnergyStorage() - this.data.energy);
       this.data.energy += add;
       return add;

@@ -4,6 +4,10 @@ ModAPI.addAPICallback("ICore", function (api) {
   //CombustionFuel.addFuel("ethanol", 16, 1000 * 10 * 10)
   //CombustionFuel.addFuel("oil", 8, 1000 * 10 * 10)
   //CombustionFuel.addFuel("biomass", 8, 1000 * 20 * 10)
+  // Conduit can connect with IC2 wire, but I'm not sure IC2 won't explore=)
+  ConduitRegistry.setupModel(BlockID.energyConduit, ConduitRegistry.ConduitWidth, "ic-wire");
+  ConduitRegistry.setupModel(BlockID.energyConduitAdv, ConduitRegistry.ConduitWidth, "ic-wire");
+  ConduitRegistry.setupModel(BlockID.energyConduitEnd, ConduitRegistry.ConduitWidth, "ic-wire");
 
   Callback.addCallback("PreLoaded", function () {
     ICRender.getGroup("liquid_pipe").add(BlockID.semifluidGenerator, -1);

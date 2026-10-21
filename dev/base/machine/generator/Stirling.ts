@@ -79,7 +79,7 @@ let stirlingGenGUI = MachineRegistry.createInventoryWindow(Translation.translate
     },
     slotFuel: { type: "slot", x: 440, y: 150 },
     //"text": { type: "text", x: 400, y: 100, width: 100, height: 30, text: "RF" },
-    slotCapacitor: { type: "slot", x: 325, y: 320 },
+    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1 },
   },
 });
 
@@ -91,8 +91,6 @@ namespace Machine {
       burnMax: 0,
     };
 
-    // defaultBonus = 1
-    // defaultEnergyStorage = 100000
     efficiency = 0;
     generator = 0;
     capacitors = ["capacitor"];
@@ -173,10 +171,8 @@ namespace Machine {
       this.container.setScale("energyScale", this.getRelativeEnergy());
       this.container.sendChanges();
     }
-
-    energyTick(type: string, src: EnergyTileNode): void {
-      let output = Math.min(this.data.energy, 60);
-      this.data.energy += src.add(output) - output;
+    getMaxOutput(): number {
+      return this.generator;
     }
 
     canRotate(side: number): boolean {

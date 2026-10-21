@@ -88,7 +88,7 @@ let SliceAndSpliceGUI = MachineRegistry.createInventoryWindow(Translation.transl
     slotOutput: { type: "slot", x: 720, y: 230 },
     slotAxe: { type: "slot", x: 430, y: 140 },
     slotShears: { type: "slot", x: 490, y: 140 },
-    slotCapacitor: { type: "slot", x: 325, y: 320 },
+    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1 },
     text: {
       type: "text",
       x: 400,
