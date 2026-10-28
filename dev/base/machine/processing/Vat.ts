@@ -8,106 +8,67 @@ Block.createBlock("theVat", [
 ]);
 ICRender.getGroup("liquid_pipe").add(BlockID.theVat, -1);
 
-ModelHelper.setInventoryModel(
-  new ItemStack(BlockID.theVat, 1, 0),
-  "vat/theVat",
-  "vat/theVat",
-  {
-    scale: [1, 1, 1],
-    invertV: false,
-    noRebuild: false,
-  },
-  [0, 0, 0],
-);
+ModelHelper.setInventoryModel(new ItemStack(BlockID.theVat, 1, 0), "vat/theVat", "vat/theVat", {
+  translate: [-0.5, -0.5, -0.5],
+  scale: [1, 1, 1],
+  invertV: false,
+  noRebuild: false,
+});
 ModelHelper.setHandModel(new ItemStack(BlockID.theVat, 1, 0), "vat/theVat", "vat/theVat", {
+  translate: [-0.5, -0.5, -0.5],
   scale: [1, 1, 1],
   invertV: false,
   noRebuild: false,
 });
 
 ModelHelper.registerModelWithRotation(BlockID.theVat, "resources/res/models/vat/theVat", ["theVat", 0], {
-  translate: [0, 0, 0],
+  translate: [-0.5, -0.5, -0.5],
   scale: [1, 1, 1],
   invertV: false,
   noRebuild: false,
 });
 var VatGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_vat.name"), {
-  drawing: [{ type: "bitmap", x: 389, y: -67, bitmap: "backgroundVat", scale: 3.2 }],
+  drawing: [
+    { type: "bitmap", x: 196, y: 85, bitmap: "redflux_bar0", scale: 3 },
+    { type: "bitmap", x: 283, y: 85, bitmap: "fluid_bg", scale: 3.2 },
+    { type: "bitmap", x: 605, y: 85, bitmap: "fluid_bg", scale: 3.2 },
+    { type: "bitmap", x: 446, y: 246, bitmap: "fire_scale0", scale: 3.5 },
+  ],
   elements: {
-    energyScale: {
-      type: "scale",
-      x: 447,
-      y: 140,
-      direction: 1,
-      bitmap: "redflux_bar1",
-      scale: 2.8,
-    },
-    slotCapacitor: {
-      type: "slot",
-      x: 435,
-      y: 300,
-      size: 55,
-      bitmap: "empty",
-      maxStackSize: 1,
-    },
-    slotInput0: {
-      type: "slot",
-      x: 590,
-      y: 141,
-      size: 55,
-      bitmap: "empty",
-    },
-    slotInput1: {
-      type: "slot",
-      x: 744,
-      y: 143,
-      size: 55,
-      bitmap: "empty",
-    },
+    energyScale: { type: "scale", x: 196, y: 85, bitmap: "redflux_bar1", direction: 1, scale: 3 },
+    slotCapacitor: { type: "slot", x: 184, y: 253, size: 60, bitmap: "slot_capacitor" },
+    slotInput0: { type: "slot", x: 519, y: 85, size: 60 },
+    slotInput1: { type: "slot", x: 361, y: 85, size: 60 },
     textInstall: {
       type: "text",
-      font: { size: 20, color: Color.YELLOW },
-      x: 405,
-      y: 93,
+      x: 165,
+      y: 32,
+      text: "",
+      font: { color: Color.parseColor("#ffff00"), size: 20, bold: true, shadow: 1 },
       width: 100,
       height: 30,
-      text: "",
     },
-    liquidScale1: {
-      type: "scale",
-      x: 510,
-      y: 141,
-      direction: 1,
-      bitmap: "liquid_background",
-      scale: 2.6,
-    },
-    liquidScale2: {
-      type: "scale",
-      x: 835,
-      y: 140,
-      direction: 1,
-      bitmap: "liquid_background",
-      scale: 2.6,
-    },
+    liquidScale1: { type: "scale", x: 283, y: 85, bitmap: "fluid_bg", overlay: "fluid_overlay", direction: 1, scale: 3.2 },
+    liquidScale2: { type: "scale", x: 605, y: 85, bitmap: "fluid_bg", overlay: "fluid_overlay", direction: 1, scale: 3.2 },
     progressScale: {
       type: "scale",
-      x: 672,
-      y: 309,
-      direction: 1,
-      bitmap: "fire_scale1",
-      scale: 3.5,
+      x: 446,
+      y: 246,
       clicker: {
         onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("ender_vat");
         },
       },
+      bitmap: "fire_scale1",
+      direction: 1,
+      scale: 3.5,
     },
     // slot input liquid
-    slot1: { type: "slot", x: 503, y: 304, size: 55, bitmap: "slot_fluid_full" },
-    slot3: { type: "slot", x: 828, y: 304, size: 55, bitmap: "slot_fluid_empty" },
+    slot1: { type: "slot", x: 278, y: 249, size: 60, bitmap: "slot_fluid_full" },
+    slot3: { type: "slot", x: 600, y: 249, size: 60, bitmap: "slot_fluid_empty" },
     // slot output liquit
-    slot2: { type: "slot", x: 503, y: 367, size: 55, bitmap: "slot_fluid_empty" },
-    slot4: { type: "slot", x: 828, y: 367, size: 55, bitmap: "slot_fluid_full" },
+    slot2: { type: "slot", x: 278, y: 319, size: 60, bitmap: "slot_fluid_empty" },
+    slot4: { type: "slot", x: 600, y: 319, size: 60, bitmap: "slot_fluid_full" },
   },
 });
 

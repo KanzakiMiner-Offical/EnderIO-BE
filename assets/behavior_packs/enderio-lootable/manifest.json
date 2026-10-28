@@ -1,0 +1,18 @@
+{
+  "format_version": 2,
+  "header": {
+    "description": "Ender IO BE Behavior Pack",
+    "type": "data",
+    "uuid": "f977bbf7-2000-40d8-b68b-725f5744b488",
+    "version": [0, 0, 1],
+    "min_engine_version": [1, 16, 200]
+  },
+  "modules": [
+    {
+      "description": "Ender IO BE Behavior Pack",
+      "type": "data",
+      "uuid": "f7d2e629-cd09-446b-92cf-27410fefec5c",
+      "version": [0, 0, 1]
+    }
+  ]
+}

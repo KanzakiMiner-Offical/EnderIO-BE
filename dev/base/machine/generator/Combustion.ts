@@ -114,7 +114,7 @@ let combustionGenUI = MachineRegistry.createInventoryWindow(Translation.translat
     slot2: { type: "slot", x: 430, y: 360, bitmap: "slot_fluid_empty" },
 
     // slot capacitor
-    slotCapacitor: { type: "slot", x: 330, y: 290, maxStackSize: 1 },
+    slotCapacitor: { type: "slot", x: 330, y: 290, maxStackSize: 1, bitmap: "slot_capacitor" },
 
     // scale
     energyScale: {

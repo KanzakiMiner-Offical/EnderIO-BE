@@ -18,10 +18,6 @@
       "type": "gui"
     },
     {
-      "path": "assets/resource_packs/*",
-      "type": "minecraft_resource_pack"
-    },
-    {
       "path": "assets/behavior_packs/*",
       "type": "minecraft_behavior_pack"
     }

@@ -119,22 +119,13 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
   class TheVatRecipe extends RecipeType {
     constructor() {
       super("The Vat", BlockID.theVat, {
-        drawing: [
-          {
-            type: "bitmap",
-            x: 350,
-            y: -80,
-            bitmap: "backgroundVat",
-            scale: 3.4,
-          },
-          { type: "bitmap", x: 646, y: 317, bitmap: "fire_scale1", scale: 3.4 },
-        ],
+        drawing: [{ type: "bitmap", x: 245, y: 54, bitmap: "bg_vat", scale: 6 }],
         elements: {
-          input0: { type: "slot", x: 560, y: 140, size: 60 },
-          input1: { type: "slot", x: 728, y: 140, size: 60 },
-          inputLiq0: { x: 502, y: 130, width: 50, height: 200 },
-          outputLiq0: { x: 824, y: 132, width: 50, height: 200 },
-          textTime: { type: "text", x: 325, y: 50, width: 100, height: 30 },
+          input0: { type: "slot", x: 591, y: 78, size: 100 },
+          input1: { type: "slot", x: 306, y: 78, size: 100 },
+          inputLiq0: { x: 156, y: 78, bitmap: "fluid_bg", scale: 6 },
+          outputLiq0: { x: 753, y: 78, bitmap: "fluid_bg", scale: 6 },
+          textTime: { type: "text", x: 442, y: 394, width: 100, height: 30 },
         },
       });
       this.setTankLimit(5000);

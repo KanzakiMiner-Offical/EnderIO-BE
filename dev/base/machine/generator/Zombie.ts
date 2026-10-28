@@ -66,7 +66,7 @@ var guiZombieGen = MachineRegistry.createInventoryWindow(Translation.translate("
       bitmap: "redflux_bar1",
       scale: 3.2,
     },
-    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1 },
+    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1, bitmap: "slot_capacitor" },
     textInstall: {
       type: "text",
       font: { size: 20, color: Color.YELLOW },

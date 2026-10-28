@@ -11,10 +11,7 @@ const EnderAPI = {
   },
 };
 
-Logger.Log(
-  `EnderIO loading finished in ${Debug.sysTime() - startTime} ms`,
-  "INFO",
-);
+Logger.Log(`EnderIO loading finished in ${Debug.sysTime() - startTime} ms`, "INFO");
 
 ModAPI.registerAPI("EnderAPI", EnderAPI);
 

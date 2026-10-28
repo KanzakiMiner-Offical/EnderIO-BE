@@ -79,7 +79,7 @@ let stirlingGenGUI = MachineRegistry.createInventoryWindow(Translation.translate
     },
     slotFuel: { type: "slot", x: 440, y: 150 },
     //"text": { type: "text", x: 400, y: 100, width: 100, height: 30, text: "RF" },
-    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1 },
+    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1, bitmap: "slot_capacitor" },
   },
 });
 

@@ -49,8 +49,6 @@ let smelterGUI = MachineRegistry.createInventoryWindow(Translation.translate("ti
     { type: "bitmap", x: 527, y: 235, bitmap: "fire_scale0", scale: 3.2 },
     { type: "bitmap", x: 687, y: 235, bitmap: "fire_scale0", scale: 3.2 },
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
-    //{ type: "bitmap", x: 527, y: 235, bitmap: "fire_scale0", scale: 3.2 },
-    //{ type: "bitmap", x: 600, y: 170, bitmap: "bar_alloy", scale: 4.5 },
   ],
   elements: {
     progressScale0: {
@@ -102,7 +100,7 @@ let smelterGUI = MachineRegistry.createInventoryWindow(Translation.translate("ti
       x: 680,
       y: 170,
     },
-    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1 },
+    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1, bitmap: "slot_capacitor" },
     textInstall: {
       type: "text",
       font: { size: 20, color: Color.YELLOW },
@@ -134,14 +132,12 @@ Callback.addCallback("PreLoaded", function () {
   SmelterRecipe.addRecipe({
     ingredient1: { id: 331, data: 0, count: 1 },
     ingredient2: { id: 265, data: 0, count: 1 },
-    //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.conductiveIron, count: 1, data: 0 },
     energy: 10000,
   });
   SmelterRecipe.addRecipe({
     ingredient1: { id: VanillaItemID.gold_ingot, data: 0, count: 1 },
     ingredient2: { id: VanillaBlockID.soul_sand, data: 0, count: 1 },
-    //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.soularium, count: 1, data: 0 },
     energy: 10000,
   });
@@ -155,14 +151,12 @@ Callback.addCallback("PreLoaded", function () {
   SmelterRecipe.addRecipe({
     ingredient1: { id: ItemID.energeticAlloy, data: 0, count: 1 },
     ingredient2: { id: 368, data: 0, count: 1 },
-    //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.vibrantAlloy, count: 1, data: 0 },
     energy: 10000,
   });
   SmelterRecipe.addRecipe({
     ingredient1: { id: 265, data: 0, count: 1 },
     ingredient2: { id: 368, data: 0, count: 1 },
-    //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.pulsatingIron, count: 1, data: 0 },
     energy: 10000,
   });

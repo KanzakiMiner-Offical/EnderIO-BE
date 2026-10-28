@@ -31,7 +31,7 @@ Callback.addCallback("PreLoaded", function () {
 //   textInstall: { type: "text", font: { size: 20, color: Color.YELLOW }, x: 325, y: 50, width: 100, height: 30, text: "" },
 //   energyScale: { type: "scale", x: 370, y: 60, direction: 1, bitmap: "redflux_bar1", scale: 3.2 },
 //   // Capacitor
-//   slotCapacitor: { type: "slot", x: 370, y: 230, size: 60, maxStackSize: 1 },
+//   slotCapacitor: { type: "slot", x: 370, y: 230, size: 60, maxStackSize: 1, bitmap: "slot_capacitor" },
 //   // Input
 
 //   slotGrid0: { type: "slot", x: 470, y: 110, size: 60, maxStackSize: 1 },
