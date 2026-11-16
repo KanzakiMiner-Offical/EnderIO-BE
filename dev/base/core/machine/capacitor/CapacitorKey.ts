@@ -47,7 +47,7 @@ class CapacitorKey {
     COMBUSTION_POWER_GEN: "kaboom",
     ENHANCED_COMBUSTION_POWER_GEN: "fatman", // not use
     LEGACY_ENERGY_INTAKE: "intake",
-    LEGACY_ENERGY_BUFFER: "buffer"
+    LEGACY_ENERGY_BUFFER: "buffer",
   };
   static Type: string[] = [
     "ATTRACTOR_RANGE",
@@ -63,7 +63,7 @@ class CapacitorKey {
     "COMBUSTION_POWER_GEN",
     "ENHANCED_COMBUSTION_POWER_GEN",
     "LEGACY_ENERGY_INTAKE",
-    "LEGACY_ENERGY_BUFFER"
+    "LEGACY_ENERGY_BUFFER",
   ];
 
   static STIRLING_POWER_BUFFER = new CapacitorKey("buffer", 100000, ScalerFactory.POWER, CapacitorKey.Key.LEGACY_ENERGY_BUFFER);

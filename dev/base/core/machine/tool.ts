@@ -18,12 +18,12 @@ namespace EnderTool {
     return !!getWrenchData(id);
   }
 
-  export function isUseableWrench(item: ItemInstance, damage: number = 1): boolean {
+  export function isUseableWrench(item: ItemInstance, damage: number = 0): boolean {
     const wrench = getWrenchData(item.id);
     return wrench?.isUseable(item, damage);
   }
 
-  export function useWrench(item: ItemStack, damage: number, player: number): void {
+  export function useWrench(item: ItemStack, damage: number = 0, player: number): void {
     const wrench = getWrenchData(item.id);
     wrench?.useItem(item, damage, player);
   }
@@ -79,10 +79,28 @@ namespace EnderTool {
     return false;
   }
 
+  export function demontageMachine(client: NetworkClient, coords: Vector) {
+    const player = client.getPlayerUid();
+    const region = WorldRegion.getForActor(player);
+    const blockID = region.getBlockId(coords);
+    if (!MachineRegistry.isMachine(blockID)) return;
+    const item = new ItemStack(Entity.getCarriedItem(player));
+    if (!EnderTool.isUseableWrench(item)) return;
+
+    const tileEntity = (region.getTileEntity(coords) || region.addTileEntity(coords)) as Machine.IWrench;
+    if (!tileEntity) return;
+
+    const drop = tileEntity.getDemontaged();
+    TileEntity.destroyTileEntity(tileEntity);
+    region.setBlock(coords, 0, 0);
+    region.dropAtBlock(coords.x, coords.y, coords.z, drop);
+    EnderTool.useWrench(item, 0, player);
+  }
+
   Callback.addCallback("DestroyBlockStart", function (coords: Callback.ItemUseCoordinates, block: Tile) {
     if (MachineRegistry.isMachine(block.id)) {
       const item = Player.getCarriedItem();
-      if (EnderTool.isUseableWrench(item, 10)) {
+      if (EnderTool.isUseableWrench(item)) {
         Network.sendToServer("EnderCore.demontageMachine", {
           x: coords.x,
           y: coords.y,
@@ -92,23 +110,8 @@ namespace EnderTool {
     }
   });
 
-  Network.addServerPacket("EnderCore.demontageMachine", function (client: NetworkClient, data: Vector) {
-    const player = client.getPlayerUid();
-    const region = WorldRegion.getForActor(player);
-    const blockID = region.getBlockId(data);
-    if (MachineRegistry.isMachine(blockID)) {
-      const item = new ItemStack(Entity.getCarriedItem(player));
-      if (EnderTool.isUseableWrench(item, 10)) {
-        const tileEntity = (region.getTileEntity(data) || region.addTileEntity(data)) as Machine.IWrench;
-        if (!tileEntity) return;
-
-        const drop = tileEntity.adjustDrop(new ItemStack(tileEntity.blockID, 1, 0));
-        TileEntity.destroyTileEntity(tileEntity);
-        region.setBlock(data, 0, 0);
-        region.dropAtBlock(data.x, data.y, data.z, drop);
-        EnderTool.useWrench(item, 10, player);
-      }
-    }
+  Network.addServerPacket("EnderCore.demontageMachine", (client: NetworkClient, data: Vector) => {
+    EnderTool.demontageMachine(client, data);
   });
 }
 

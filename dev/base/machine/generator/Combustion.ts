@@ -184,10 +184,25 @@ namespace Machine {
     getScreenByName(): UI.IWindow {
       return combustionGenUI;
     }
-
+    tankName = ["coolTank", "heatTank"];
     setupContainer(): void {
       this.coolTank = this.addLiquidTank("coolTank", 5000, CombustionFuel.getCoolArray());
       this.heatTank = this.addLiquidTank("heatTank", 5000, CombustionFuel.getHeatArray());
+
+      StorageInterface.setGlobalValidatePolicy(this.container, (name, id, amount, data, extra) => {
+        if (name == "slot1") {
+          let liquid = LiquidItemRegistry.getItemLiquid(id, data, extra);
+          if (this.heatTank.getLiquidStored()) return liquid == this.heatTank.getLiquidStored();
+          else return CombustionFuel.getHeatArray().indexOf(liquid) !== -1;
+        }
+        if (name == "slot3") {
+          let liquid = LiquidItemRegistry.getItemLiquid(id, data, extra);
+          if (this.coolTank.getLiquidStored()) return liquid == this.coolTank.getLiquidStored();
+          else return CombustionFuel.getCoolArray().indexOf(liquid) !== -1;
+        }
+        if (name.startsWith("slotCapacitor")) return CapacitorData.isValidCapacitor(id, this);
+        return false;
+      });
     }
 
     initCapacitor(): void {
@@ -270,7 +285,7 @@ namespace Machine {
       StorageInterface.checkHoppers(this);
       let capacitor = this.container.getSlot("slotCapacitor");
       if (CapacitorData.isValidCapacitor(capacitor.id, this)) {
-        this.container.setText("textInstall", "Installed");
+        this.container.setText("textInstall", "");
         this.run();
       } else {
         this.container.setText("textInstall", "Please put Capacitor in slot capacitor to install function for machine");
@@ -338,25 +353,31 @@ namespace Machine {
     slots: {
       slot1: {
         input: true,
+        isValid: (item, side, tileEntity: CombustionGenerator) => {
+          let liquid = LiquidItemRegistry.getItemLiquid(item.id, item.data, item.extra);
+          if (tileEntity.heatTank.getLiquidStored()) return liquid == tileEntity.heatTank.getLiquidStored();
+          else return CombustionFuel.getHeatArray().indexOf(liquid) !== -1;
+        },
       },
       slot2: {
         output: true,
-        isValid: (item: ItemInstance) => {
-          return item.id == VanillaItemID.bucket;
-        },
       },
       slot3: {
         input: true,
-        isValid: (item: ItemInstance) => {
-          return item.id == VanillaItemID.bucket;
+        isValid: (item, side, tileEntity: CombustionGenerator) => {
+          let liquid = LiquidItemRegistry.getItemLiquid(item.id, item.data, item.extra);
+          if (tileEntity.coolTank.getLiquidStored()) return liquid == tileEntity.coolTank.getLiquidStored();
+          else return CombustionFuel.getCoolArray().indexOf(liquid) !== -1;
         },
       },
       slot4: {
         output: true,
       },
     },
-    canReceiveLiquid: () => true,
-    canTransportLiquid: () => true,
+    canReceiveLiquid: (liquid: string, side: number, tileEntity: TileEntity) => {
+      return CombustionFuel.getHeatArray().indexOf(liquid) !== -1 || CombustionFuel.getCoolArray().indexOf(liquid) !== -1;
+    },
+    canTransportLiquid: () => false,
     getInputTank: function (side: number) {
       if (side == EBlockSide.WEST) return this.tileEntity.coolTank;
       else if (side == EBlockSide.EAST) return this.tileEntity.heatTank;

@@ -44,72 +44,44 @@ TileRenderer.registerModelWithRotation(BlockID.simplePoweredFurnace, 2, [
 
 TileRenderer.setRotationFunction(BlockID.simplePoweredFurnace);
 
-/*
-function setSimpleAlloyRender() {
-  let simpleAlloyRender = new ICRender.Model();
-  BlockRenderer.setStaticICRender(BlockID.simplePoweredFurnace, 0, simpleAlloyRender);
-  let model = BlockRenderer.createModel();
-  //model.addBox(x, y, z, x, y, z, texture, 0);
-  model.addBox(1 / 16, 12 / 16, 14.75 / 16, 15 / 16, 15 / 16, 15.75 / 16, "machineBottom", 0);
-  model.addBox(9 / 16, 4 / 16, 0 / 16, 16 / 16, 16 / 16, 16 / 16, "machineBottom", 0);
-  model.addBox(0 / 16, 4 / 16, 0 / 16, 7 / 16, 16 / 16, 16 / 16, "machineBottom", 0);
-  model.addBox(7 / 16, 4 / 16, 4 / 16, 9 / 16, 11 / 16, 12 / 16, "machineBottom", 0);
-  model.addBox(7 / 16, 8 / 16, 4 / 16, 9 / 16, 10 / 16, 18 / 16, "machineBottom", 0);
-  model.addBox(7 / 16, 12 / 16, 4 / 16, 9 / 16, 14 / 16, 12 / 16, "machineBottom", 0);
-
-  simpleAlloyRender.addEntry(model);
-}
-
-setSimpleAlloyRender();*/
-
 let simpleFurnaceUI = MachineRegistry.createInventoryWindow("Simple Powered Furnace", {
   drawing: [
-    { type: "bitmap", x: 527, y: 235, bitmap: "fire_scale0", scale: 3.2 },
-    { type: "bitmap", x: 687, y: 235, bitmap: "fire_scale0", scale: 3.2 },
-    { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
-    //{type: "bitmap", x: 600, y: 170, bitmap: "bar_alloy", scale: 4.5},
+    { type: "bitmap", x: 425, y: 235, bitmap: "fire_scale0", scale: 5 },
+    { type: "bitmap", x: 205, y: 235, bitmap: "fire_scale0", scale: 5 },
+    { type: "bitmap", x: 76, y: 96, bitmap: "redflux_bar0", scale: 4 },
   ],
   elements: {
     progressScale0: {
       type: "scale",
-      x: 527,
+      x: 425,
       y: 235,
-      direction: 1,
-      bitmap: "fire_scale1",
-      scale: 3.2,
       clicker: {
         onClick: function () {
-          RV?.RecipeTypeRegistry.openRecipePage("furnace");
+          RV?.RecipeTypeRegistry.openRecipePage("enderio_alloy");
         },
       },
+      bitmap: "fire_scale1",
+      direction: 1,
+      scale: 5,
     },
     progressScale1: {
       type: "scale",
-      x: 687,
+      x: 205,
       y: 235,
-      direction: 1,
-      bitmap: "fire_scale1",
-      scale: 3.2,
       clicker: {
         onClick: function () {
-          RV?.RecipeTypeRegistry.openRecipePage("furnace");
+          RV?.RecipeTypeRegistry.openRecipePage("enderio_alloy");
         },
       },
-    },
-    energyScale: {
-      type: "scale",
-      x: 335,
-      y: 140,
+      bitmap: "fire_scale1",
       direction: 1,
-      bitmap: "redflux_bar1",
-      scale: 3.2,
+      scale: 5,
     },
-    sourceSlot: { type: "slot", x: 600, y: 140 },
-    //"text": { type: "text", x: 400, y: 100, width: 100, height: 30, text: "RF" },
-    slotResult: { type: "slot", x: 600, y: 320 },
+    energyScale: { type: "scale", x: 76, y: 96, bitmap: "redflux_bar1", direction: 1, scale: 4 },
+    sourceSlot: { type: "slot", x: 310, y: 44, size: 80 },
+    slotResult: { type: "slot", x: 310, y: 285, size: 80 },
   },
 });
-
 Callback.addCallback("PreLoaded", function () {
   Recipes.addShaped(
     { id: BlockID.simplePoweredFurnace, count: 1, data: 0 },

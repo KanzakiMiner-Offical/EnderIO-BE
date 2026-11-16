@@ -43,10 +43,10 @@ Callback.addCallback("PreLoaded", function () {
 });
 
 ConduitRegistry.registerCable("energyConduit", 1280);
-ConduitRegistry.setupModel(BlockID.energyConduit, ConduitRegistry.ConduitWidth, "rf-conduit");
+ConduitRegistry.setupModel(BlockID.energyConduit, ConduitRegistry.ConduitWidth, "rf-wire");
 
 ConduitRegistry.registerCable("energyConduitAdv", 5120);
-ConduitRegistry.setupModel(BlockID.energyConduitAdv, ConduitRegistry.ConduitWidth, "rf-conduit");
+ConduitRegistry.setupModel(BlockID.energyConduitAdv, ConduitRegistry.ConduitWidth, "rf-wire");
 
 ConduitRegistry.registerCable("energyConduitEnd", 20480);
-ConduitRegistry.setupModel(BlockID.energyConduitEnd, ConduitRegistry.ConduitWidth, "rf-conduit");
+ConduitRegistry.setupModel(BlockID.energyConduitEnd, ConduitRegistry.ConduitWidth, "rf-wire");

@@ -32,5 +32,4 @@ namespace Machine {
   }
 
   MachineRegistry.registerPrototype(BlockID.bankVibrant, new VibrantCapcitor());
-  MachineRegistry.setStoragePlaceFunction("bankVibrant", true);
 }

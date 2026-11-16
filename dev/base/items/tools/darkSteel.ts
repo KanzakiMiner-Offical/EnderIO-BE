@@ -80,7 +80,7 @@ Item.registerNameOverrideFunction(ItemID.swordDarkSteel, function (item, name) {
 });
 
 Callback.addCallback("PlayerAttack", function (attacker, victim) {
-  var playerEntity = new PlayerEntity(attacker);
+  const playerEntity = new PlayerEntity(attacker);
   let c = Entity.getPosition(victim);
   let item = playerEntity.getCarriedItem();
   let region = BlockSource.getDefaultForActor(attacker);

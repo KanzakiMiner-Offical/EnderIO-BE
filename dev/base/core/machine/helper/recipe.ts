@@ -132,7 +132,6 @@ namespace CrusherRecipe {
     result2?: { id: number; data: number; chance: number };
     result3?: { id: number; data: number; chance: number };
     energy: number;
-    by: string;
   };
 
   export let recipes: SagMillRecipeFormat[] = [];
@@ -372,7 +371,6 @@ namespace SoulRecipe {
     result0: { id: number; data: number; count: number; extra?: ItemExtraData };
     //result1 : { id: number, data: number, count: number },
     energy: number;
-    by?: string;
   };
 
   export let recipes: SoulBinderRecipeFormat[] = [];

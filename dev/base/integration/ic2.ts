@@ -40,7 +40,6 @@ ModAPI.addAPICallback("ICore", function (api) {
       result2: { id: ItemID.dustGold, data: 0, chance: 0.1 },
       result3: { id: 4, data: 0, chance: 0.15 },
       energy: 3600,
-      by: "IC2",
     });
     /*
         RecipeRegistry.addCrusher({
@@ -51,7 +50,6 @@ ModAPI.addAPICallback("ICore", function (api) {
           result2: { id: ItemID.dustLead, data: 0, chance: 0.1 },
           result3: { id: 4, data: 0, chance: 0.15 },
           energy: 3600,
-          by: "IC2"
         });
     */
 
@@ -62,7 +60,6 @@ ModAPI.addAPICallback("ICore", function (api) {
       result1: { id: ItemID.dustSilver, data: 0, chance: 0.1 },
       result2: { id: 4, data: 0, chance: 0.15 },
       energy: 3600,
-      by: "IC2",
     });
 
     RecipeRegistry.addCrusher({
@@ -72,7 +69,6 @@ ModAPI.addAPICallback("ICore", function (api) {
       result1: { id: ItemID.dustSilver, data: 0, chance: 0.1 },
       result2: { id: 4, data: 0, chance: 0.15 },
       energy: 3600,
-      by: "IC2",
     });
   });
 });

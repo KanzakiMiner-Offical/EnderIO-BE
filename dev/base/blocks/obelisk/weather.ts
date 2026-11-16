@@ -94,11 +94,14 @@ namespace Machine {
     anim: Animation.Item;
     liquidTank: BlockEngine.LiquidTank;
 
-    energyConsume: 50;
-    processTime: 5000;
-
     setupContainer(): void {
       this.liquidTank = this.addLiquidTank("fluid", 6000, ["sunshine", "cloudSeedConcentrated", "cloudSeed"]);
+
+      StorageInterface.setGlobalValidatePolicy(this.container, (name, id, amount, data, extra) => {
+        if (name == "slot0") return !!LiquidItemRegistry.getItemLiquid(id, data, extra);
+        if (name.startsWith("slotInput")) return id == VanillaItemID.firework_rocket;
+        return false;
+      });
     }
 
     getScreenByName(): UI.IWindow {
@@ -171,18 +174,6 @@ namespace Machine {
       return this.data.energy / this.getEnergyStorage();
     }
 
-    destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
-      let extra: ItemExtraData = null;
-      let region = BlockSource.getDefaultForActor(player);
-      let liquid = this.liquidTank.getLiquidStored();
-      if (liquid) {
-        extra = new ItemExtraData();
-        extra.putString("fluid", liquid);
-        extra.putInt("amount", this.liquidTank.getAmount(liquid));
-      }
-      region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.weather_obelisk, 1, 0, extra);
-    }
-
     energyReceive(type: string, amount: number, power: number): number {
       amount = Math.min(amount, 55);
       let add = Math.min(amount, this.getEnergyStorage() - this.data.energy);
@@ -197,9 +188,26 @@ namespace Machine {
   }
   MachineRegistry.registerPrototype(BlockID.weather_obelisk, new WeatherObelisk());
 
-  MachineRegistry.setTankPlaceFunction("weather_obelisk");
   StorageInterface.createInterface(BlockID.weather_obelisk, {
-    canReceiveLiquid: () => true,
+    slots: {
+      slotInput1: {
+        input: true,
+        isValid: (item, side, tileEntity) => {
+          return item.id == VanillaItemID.firework_rocket;
+        },
+      },
+      slot0: {
+        input: true,
+        isValid: (item, side, tileEntity: WeatherObelisk) => {
+          let liquid = LiquidItemRegistry.getItemLiquid(item.id, item.data, item.extra);
+          if (tileEntity.liquidTank.getLiquidStored()) return liquid == tileEntity.liquidTank.getLiquidStored();
+          else return ["sunshine", "cloudSeedConcentrated", "cloudSeed"].indexOf(liquid) !== -1;
+        },
+      },
+    },
+    canReceiveLiquid: (liquid: string, side: number, tileEntity: TileEntity) => {
+      return ["sunshine", "cloudSeedConcentrated", "cloudSeed"].indexOf(liquid) !== -1;
+    },
     canTransportLiquid: () => true,
   });
 }

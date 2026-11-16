@@ -16,7 +16,7 @@ class ItemLiquidBucket extends ItemCommon implements ItemBehavior {
   constructor(stringID: string, liquid: string) {
     let liquid_name = LiquidRegistry.getLiquidName(liquid);
     super(stringID, `${liquid_name} Bucket`, `bucket_${liquid}`);
-    LiquidItemRegistry.registerItem(liquid, 325, this.id, 1000);
+    LiquidItemRegistry.registerItem(liquid, { id: VanillaItemID.bucket, data: 0 }, { id: this.id, data: 0 }, 1000);
   }
 
   onNameOverride(item: ItemInstance, name: string): string {

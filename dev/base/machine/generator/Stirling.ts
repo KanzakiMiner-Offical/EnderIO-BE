@@ -102,8 +102,8 @@ namespace Machine {
 
     initCapacitor(): void {
       let capacitors = CapacitorData.useCapacitor(this);
-      this.efficiency = capacitors.getValue(CapacitorKey.STIRLING_POWER_EFFICIENCY);
-      this.generator = capacitors.getValue(CapacitorKey.STIRLING_POWER_GEN);
+      this.efficiency = capacitors.getValue(CapacitorKey.STIRLING_POWER_EFFICIENCY) || 0;
+      this.generator = capacitors.getValue(CapacitorKey.STIRLING_POWER_GEN) || 0;
       this.energyStorage = this.updateEnergyStorage(capacitors.getValue(CapacitorKey.STIRLING_POWER_BUFFER));
     }
 
@@ -118,6 +118,7 @@ namespace Machine {
     }
 
     getBurnTime(name: string): number {
+      if (this.generator <= 0) return 0;
       let item = this.container.getSlot(name);
       let base = (Recipes.getFuelBurnDuration(item.id, item.data) / (this.generator / CapacitorKey.STIRLING_POWER_GEN.getBaseValue())) * this.efficiency;
       if (LiquidRegistry.getItemLiquid(item.id, item.data)) {
@@ -161,7 +162,7 @@ namespace Machine {
 
       let capacitor = this.container.getSlot("slotCapacitor");
       if (!!CapacitorData.isValidCapacitor(capacitor.id, this)) {
-        this.container.setText("textInstall", "Installed");
+        this.container.setText("textInstall", "");
         this.run();
       } else {
         this.container.setText("textInstall", "Please put Capacitor in slot capacitor to install function for machine");

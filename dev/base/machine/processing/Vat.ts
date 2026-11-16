@@ -9,33 +9,33 @@ Block.createBlock("theVat", [
 ICRender.getGroup("liquid_pipe").add(BlockID.theVat, -1);
 
 ModelHelper.setInventoryModel(new ItemStack(BlockID.theVat, 1, 0), "vat/theVat", "vat/theVat", {
-  translate: [-0.5, -0.5, -0.5],
+  translate: [0.5, 0.5, 0.5],
   scale: [1, 1, 1],
   invertV: false,
   noRebuild: false,
 });
 ModelHelper.setHandModel(new ItemStack(BlockID.theVat, 1, 0), "vat/theVat", "vat/theVat", {
-  translate: [-0.5, -0.5, -0.5],
+  translate: [0.5, 0.5, 0.5],
   scale: [1, 1, 1],
   invertV: false,
   noRebuild: false,
 });
 
 ModelHelper.registerModelWithRotation(BlockID.theVat, "resources/res/models/vat/theVat", ["theVat", 0], {
-  translate: [-0.5, -0.5, -0.5],
+  translate: [0.5, 0.5, 0.5],
   scale: [1, 1, 1],
   invertV: false,
   noRebuild: false,
 });
-var VatGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_vat.name"), {
+const VatGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_vat.name"), {
   drawing: [
-    { type: "bitmap", x: 196, y: 85, bitmap: "redflux_bar0", scale: 3 },
+    { type: "bitmap", x: 196, y: 85, bitmap: "redflux_bar0", scale: GUI_SCALE_NEW },
     { type: "bitmap", x: 283, y: 85, bitmap: "fluid_bg", scale: 3.2 },
     { type: "bitmap", x: 605, y: 85, bitmap: "fluid_bg", scale: 3.2 },
     { type: "bitmap", x: 446, y: 246, bitmap: "fire_scale0", scale: 3.5 },
   ],
   elements: {
-    energyScale: { type: "scale", x: 196, y: 85, bitmap: "redflux_bar1", direction: 1, scale: 3 },
+    energyScale: { type: "scale", x: 196, y: 85, bitmap: "redflux_bar1", direction: 1, scale: GUI_SCALE_NEW },
     slotCapacitor: { type: "slot", x: 184, y: 253, size: 60, bitmap: "slot_capacitor" },
     slotInput0: { type: "slot", x: 519, y: 85, size: 60 },
     slotInput1: { type: "slot", x: 361, y: 85, size: 60 },
@@ -245,11 +245,17 @@ namespace Machine {
     getScreenByName(): UI.IWindow {
       return VatGUI;
     }
-
+    tankName = ["inputTank", "outputTank"];
     setupContainer(): void {
       this.inputTank = this.addLiquidTank("inputTank", 5000, VatRecipe.getLiquidInput());
       this.outputTank = this.addLiquidTank("outputTank", 5000, VatRecipe.getLiquidOutput());
-      StorageInterface.setGlobalValidatePolicy(this.container, (name, id, amount, data) => {
+      StorageInterface.setGlobalValidatePolicy(this.container, (name, id, amount, data, extra) => {
+        if (name == "slot1") {
+          let liquid = LiquidItemRegistry.getItemLiquid(id, data, extra);
+          if (this.inputTank.getLiquidStored()) return liquid == this.inputTank.getLiquidStored();
+          else return VatRecipe.getLiquidInput().indexOf(liquid) !== -1;
+        }
+        if (name == "slot3") return LiquidItemRegistry.canBeFilledWithLiquid(id, data, extra, this.outputTank.getLiquidStored() || "water");
         if (name.startsWith("slotCapacitor")) return CapacitorData.isValidCapacitor(id, this);
         if (name.startsWith("slot")) return true;
         return false;
@@ -290,7 +296,7 @@ namespace Machine {
 
       let capacitor = this.container.getSlot("slotCapacitor");
       if (CapacitorData.isValidCapacitor(capacitor.id, this)) {
-        this.container.setText("textInstall", "Installed");
+        this.container.setText("textInstall", "");
         this.run();
       } else {
         this.container.setText("textInstall", "Please put Capacitor in slot capacitor to install function for machine");
@@ -323,25 +329,31 @@ namespace Machine {
       },
       slot1: {
         input: true,
+        isValid: (item, side, tileEntity: TheVat_Basic) => {
+          let liquid = LiquidItemRegistry.getItemLiquid(item.id, item.data, item.extra);
+          if (tileEntity.inputTank.getLiquidStored()) return liquid == tileEntity.inputTank.getLiquidStored();
+          else return VatRecipe.getLiquidInput().indexOf(liquid) !== -1;
+        },
       },
       slot2: {
         output: true,
-        isValid: (item: ItemInstance) => {
-          return item.id == VanillaItemID.bucket;
-        },
       },
       slot3: {
         input: true,
-        isValid: (item: ItemInstance) => {
-          return item.id == VanillaItemID.bucket;
+        isValid: (item, side, tileEntity: TheVat_Basic) => {
+          return LiquidItemRegistry.canBeFilledWithLiquid(item.id, item.data, item.extra, tileEntity.outputTank.getLiquidStored() || "water");
         },
       },
       slot4: {
         output: true,
       },
     },
-    canReceiveLiquid: () => true,
-    canTransportLiquid: () => true,
+    canReceiveLiquid: (liquid: string, side: number, tileEntity: TileEntity) => {
+      return VatRecipe.getLiquidInput().indexOf(liquid) !== -1;
+    },
+    canTransportLiquid: (liquid: string, side: number, tileEntity: TileEntity) => {
+      return VatRecipe.getLiquidOutput().indexOf(liquid) !== -1;
+    },
     getInputTank: function (side: number) {
       return this.tileEntity.inputTank;
     },

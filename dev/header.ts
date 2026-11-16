@@ -17,11 +17,6 @@ let startTime = Debug.sysTime();
 let GUI_SCALE = 3.2;
 let GUI_SCALE_NEW = 3;
 
-function isPlayer(entity: number): boolean {
-  let type = Entity.getType(entity);
-  return type == 1 || type == 63;
-}
-
 namespace MathHelper {
   export function randomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;

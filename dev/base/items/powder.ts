@@ -50,7 +50,6 @@ Callback.addCallback("PreLoaded", function () {
     result2: { id: ItemID.clipAndTrim, data: 0, chance: 0.1 },
     result3: { id: ItemID.twigAndPrun, data: 0, chance: 0.05 },
     energy: 1200,
-    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -61,7 +60,6 @@ Callback.addCallback("PreLoaded", function () {
     result2: { id: ItemID.clipAndTrim, data: 0, chance: 0.1 },
     result3: { id: ItemID.twigAndPrun, data: 0, chance: 0.05 },
     energy: 1200,
-    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -74,7 +72,6 @@ Callback.addCallback("PreLoaded", function () {
     result2: { id: ItemID.clipAndTrim, data: 0, chance: 0.1 },
     result3: { id: ItemID.twigAndPrun, data: 0, chance: 0.05 },
     energy: 900,
-    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -85,7 +82,6 @@ Callback.addCallback("PreLoaded", function () {
     result2: { id: ItemID.clipAndTrim, data: 0, chance: 0.1 },
     result3: { id: ItemID.twigAndPrun, data: 0, chance: 0.05 },
     energy: 900,
-    by: "EnderIO",
   });
 
   RecipeRegistry.addCrusher({
@@ -96,7 +92,6 @@ Callback.addCallback("PreLoaded", function () {
     result2: { id: VanillaItemID.red_dye, data: 0, chance: 0.3 },
     result3: { id: ItemID.clipAndTrim, data: 0, chance: 0.1 },
     energy: 900,
-    by: "EnderIO",
   });
   RecipeRegistry.addCrusher({
     isGrinding: true,
@@ -106,7 +101,6 @@ Callback.addCallback("PreLoaded", function () {
     result2: { id: VanillaItemID.yellow_dye, data: 0, chance: 0.3 },
     result3: { id: ItemID.clipAndTrim, data: 0, chance: 0.1 },
     energy: 900,
-    by: "EnderIO",
   });
   RecipeRegistry.addCrusher({
     isGrinding: true,
@@ -116,7 +110,6 @@ Callback.addCallback("PreLoaded", function () {
     result2: { id: ItemID.twigAndPrun, data: 0, chance: 0.1 },
     result3: { id: 0, data: 0, chance: 0 },
     energy: 900,
-    by: "EnderIO",
   });
   // Green
 
@@ -126,7 +119,6 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.greenDye, count: 2, data: 0 },
     energy: 1500,
-    by: "EnderIO",
   });
 
   SmelterRecipe.addRecipe({
@@ -135,7 +127,6 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.greenDye, count: 2, data: 0 },
     energy: 2000,
-    by: "EnderIO",
   });
 
   SmelterRecipe.addRecipe({
@@ -144,7 +135,6 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.greenDye, count: 2, data: 0 },
     energy: 2000,
-    by: "EnderIO",
   });
 
   SmelterRecipe.addRecipe({
@@ -153,7 +143,6 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.greenDye, count: 2, data: 0 },
     energy: 1500,
-    by: "EnderIO",
   });
   // Brown
 
@@ -163,7 +152,6 @@ Callback.addCallback("PreLoaded", function () {
     ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.brownDye, count: 2, data: 0 },
     energy: 2000,
-    by: "EnderIO",
   });
 
   SmelterRecipe.addRecipe({
@@ -172,7 +160,6 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.brownDye, count: 2, data: 0 },
     energy: 1500,
-    by: "EnderIO",
   });
 
   SmelterRecipe.addRecipe({
@@ -181,7 +168,6 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.brownDye, count: 2, data: 0 },
     energy: 1500,
-    by: "EnderIO",
   });
 
   SmelterRecipe.addRecipe({
@@ -190,7 +176,6 @@ Callback.addCallback("PreLoaded", function () {
     ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.brownDye, count: 2, data: 0 },
     energy: 2000,
-    by: "EnderIO",
   });
 
   SmelterRecipe.addRecipe({
@@ -199,7 +184,6 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.brownDye, count: 2, data: 0 },
     energy: 1500,
-    by: "EnderIO",
   });
 
   // Black
@@ -210,7 +194,6 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.blackDye, count: 2, data: 0 },
     energy: 2000,
-    by: "EnderIO",
   });
 
   SmelterRecipe.addRecipe({
@@ -219,7 +202,6 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.blackDye, count: 2, data: 0 },
     energy: 1500,
-    by: "EnderIO",
   });
 
   SmelterRecipe.addRecipe({
@@ -228,7 +210,6 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.blackDye, count: 2, data: 0 },
     energy: 2000,
-    by: "EnderIO",
   });
 
   SmelterRecipe.addRecipe({
@@ -237,7 +218,6 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: ItemID.blackDye, count: 2, data: 0 },
     energy: 1500,
-    by: "EnderIO",
   });
   // chassis
 
@@ -247,7 +227,6 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: BlockID.machineChassis, count: 1, data: 0 },
     energy: 250,
-    by: "EnderIO",
   });
 
   SmelterRecipe.addRecipe({
@@ -256,6 +235,5 @@ Callback.addCallback("PreLoaded", function () {
     //ingredient3: { id: 0, data: 0, count: 0 },
     result: { id: BlockID.machineChassisSoul, count: 1, data: 0 },
     energy: 250,
-    by: "EnderIO",
   });
 });

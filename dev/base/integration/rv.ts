@@ -6,15 +6,15 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
     constructor() {
       super("Alloy Smelter", BlockID.alloySmelter, {
         drawing: [
-          { type: "bitmap", x: 527, y: 235, bitmap: "fire_scale0", scale: 3.2 },
-          { type: "bitmap", x: 687, y: 235, bitmap: "fire_scale0", scale: 3.2 },
+          { type: "bitmap", x: 637, y: 255.5, bitmap: "fire_scale0", scale: 5 },
+          { type: "bitmap", x: 417, y: 255.5, bitmap: "fire_scale0", scale: 5 },
         ],
         elements: {
-          input0: { type: "slot", x: 520, y: 170 },
-          input1: { type: "slot", x: 600, y: 140 },
-          input2: { type: "slot", x: 680, y: 170 },
-          output0: { type: "slot", x: 600, y: 320 },
-          textTime: { type: "text", x: 750, y: 200 },
+          input0: { type: "slot", x: 412, y: 116.5, size: 80 },
+          input1: { type: "slot", x: 522, y: 64.5, size: 80 },
+          input2: { type: "slot", x: 632, y: 116.5, size: 80 },
+          output0: { type: "slot", x: 522, y: 305.5, size: 80 },
+          textTime: { type: "text", x: 637, y: 385.5 },
         },
       });
       this.setDescription("Alloy");
@@ -41,21 +41,13 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
   class SAGMillRecipe extends RecipeType {
     constructor() {
       super("SAG Mill", BlockID.sagmill, {
-        drawing: [
-          {
-            type: "bitmap",
-            x: 595,
-            y: 250,
-            bitmap: "bar_progress_down0",
-            scale: 4.2,
-          },
-        ],
+        drawing: [{ type: "bitmap", x: 426.4, y: 186, bitmap: "bar_progress_down0", scale: 4 }],
         elements: {
           input0: { type: "slot", x: 602, y: 170, size: 65 },
-          output0: { type: "slot", x: 505, y: 340, size: 65 },
-          output1: { type: "slot", x: 570, y: 340, size: 65 },
-          output2: { type: "slot", x: 635, y: 340, size: 65 },
-          output3: { type: "slot", x: 700, y: 340, size: 65 },
+          output0: { type: "slot", x: 298.4, y: 300, size: 80 },
+          output1: { type: "slot", x: 460, y: 300, size: 80 },
+          output2: { type: "slot", x: 378.4, y: 300, size: 80 },
+          output3: { type: "slot", x: 540, y: 300, size: 80 },
         },
       });
       this.setDescription("Crusher");
@@ -116,10 +108,60 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
   }
   api.RecipeTypeRegistry.register("enderio_sag", new SAGMillRecipe());
 
+  class GrindingBallRecipe extends RecipeType {
+    constructor() {
+      super("Grinding Ball", ItemID.ball_dark_steel, {
+        elements: {
+          input0: { type: "slot", x: 280, y: 165, size: 90 },
+          textMain: { type: "text", x: 420, y: 135 },
+          textBonus: { type: "text", x: 420, y: 180 },
+          textUse: { type: "text", x: 420, y: 225 },
+          textDura: { type: "text", x: 420, y: 270 },
+        },
+      });
+      this.setDescription("Grinding Ball");
+    }
+
+    getAllList(): RecipePattern[] {
+      const list: RecipePattern[] = [];
+      for (const key in GrindingBall.idBall) {
+        const id = parseInt(key);
+        if (isNaN(id) || id == 0) continue;
+        const ball = GrindingBall.idBall[key];
+        list.push({
+          input: [
+            {
+              id: id,
+              count: 1,
+              data: 0,
+            },
+          ],
+          main: ball.main,
+          bonus: ball.bonus,
+          use: ball.use,
+          durability: ball.durability,
+        });
+      }
+      return list;
+    }
+
+    onOpen(elements: java.util.HashMap<string, UI.Element>, recipe: RecipePattern): void {
+      elements.get("textMain")?.setBinding("text", "Main Output: " + Math.round((recipe.main + 1) * 100) + "%");
+      elements.get("textBonus")?.setBinding("text", "Bonus Output: " + Math.round(recipe.bonus * 100) + "%");
+      elements.get("textUse")?.setBinding("text", "Power Use: " + Math.round(recipe.use * 100) + "%");
+      elements.get("textDura")?.setBinding("text", "Durability: " + recipe.durability * 2400);
+    }
+  }
+  api.RecipeTypeRegistry.register("enderio_sag_ball", new GrindingBallRecipe());
+
   class TheVatRecipe extends RecipeType {
     constructor() {
       super("The Vat", BlockID.theVat, {
-        drawing: [{ type: "bitmap", x: 245, y: 54, bitmap: "bg_vat", scale: 6 }],
+        drawing: [
+          { type: "bitmap", x: 245, y: 54, bitmap: "bg_vat", scale: 6 },
+          { type: "bitmap", x: 156, y: 78, bitmap: "fluid_bg", scale: 6 },
+          { type: "bitmap", x: 753, y: 78, bitmap: "fluid_bg", scale: 6 },
+        ],
         elements: {
           input0: { type: "slot", x: 591, y: 78, size: 100 },
           input1: { type: "slot", x: 306, y: 78, size: 100 },
@@ -241,20 +283,12 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
   class SoulBinderRecipe extends RecipeType {
     constructor() {
       super("Soul Binder", BlockID.soulBinder, {
-        drawing: [
-          {
-            type: "bitmap",
-            x: 600,
-            y: 205,
-            bitmap: "bar_progress1",
-            scale: 3.2,
-          },
-        ],
+        drawing: [{ type: "bitmap", x: 459, y: 190, bitmap: "bar_progress1", scale: 5 }],
         elements: {
-          input0: { type: "slot", x: 450, y: 200 },
-          input1: { type: "slot", x: 510, y: 200 },
-          output0: { type: "slot", x: 700, y: 200 },
-          output1: { type: "slot", x: 760, y: 200 },
+          input0: { type: "slot", x: 267, y: 185, size: 90 },
+          input1: { type: "slot", x: 357, y: 185, size: 90 },
+          output0: { type: "slot", x: 604, y: 185, size: 90 },
+          output1: { type: "slot", x: 694, y: 185, size: 90 },
         },
       });
     }
@@ -315,23 +349,15 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
   class SliceNSpliceRecipe extends RecipeType {
     constructor() {
       super("Slice 'n' splice", BlockID.sliceAndSplice, {
-        drawing: [
-          {
-            type: "bitmap",
-            x: 600,
-            y: 235,
-            bitmap: "bar_progress1",
-            scale: 3.2,
-          },
-        ],
+        drawing: [{ type: "bitmap", x: 500, y: 235, bitmap: "bar_progress1", scale: 5 }],
         elements: {
-          input0: { type: "slot", x: 400, y: 200 },
-          input1: { type: "slot", x: 460, y: 200 },
-          input2: { type: "slot", x: 520, y: 200 },
-          input3: { type: "slot", x: 400, y: 260 },
-          input4: { type: "slot", x: 460, y: 260 },
-          input5: { type: "slot", x: 520, y: 260 },
-          output: { type: "slot", x: 720, y: 230 },
+          input0: { type: "slot", x: 240, y: 195, size: 80 },
+          input1: { type: "slot", x: 320, y: 195, size: 80 },
+          input2: { type: "slot", x: 400, y: 195, size: 80 },
+          input3: { type: "slot", x: 240, y: 275, size: 80 },
+          input4: { type: "slot", x: 320, y: 275, size: 80 },
+          input5: { type: "slot", x: 400, y: 275, size: 80 },
+          output: { type: "slot", x: 665, y: 225, size: 90 },
         },
       });
     }
@@ -380,16 +406,20 @@ ModAPI.addAPICallback("RecipeViewer", (api: typeof RV) => {
       return name;
     }
   }
-  api.RecipeTypeRegistry.register("ender_snads", new SliceNSpliceRecipe());
+  api.RecipeTypeRegistry.register("ender_sands", new SliceNSpliceRecipe());
 
   class CombustionProduct extends RecipeType {
     constructor() {
       super("Combustion Fuel", BlockID.combustionGenerator, {
-        drawing: [{ type: "bitmap", x: 120, y: 230, bitmap: "fire_scale1", scale: 3.2 }],
+        drawing: [
+          { type: "bitmap", x: 458, y: 288, bitmap: "fire_scale1", scale: 6 },
+          { type: "bitmap", x: 689, y: 78, bitmap: "fluid_bg", scale: 6 },
+          { type: "bitmap", x: 215, y: 78, bitmap: "fluid_bg", scale: 6 },
+        ],
         elements: {
-          inputLiq0: { type: "scale", x: 200, y: 120, width: 60, height: 200 },
-          inputLiq1: { type: "scale", x: 30, y: 120, width: 60, height: 200 },
-          textWarn: { type: "text", x: 350, y: 200 },
+          inputLiq0: { type: "scale", x: 689, y: 78, bitmap: "fluid_bg", scale: 6 },
+          inputLiq1: { type: "scale", x: 215, y: 78, bitmap: "fluid_bg", scale: 6 },
+          textWarn: { type: "text", x: 442, y: 120 },
         },
       });
       this.setTankLimit(300);

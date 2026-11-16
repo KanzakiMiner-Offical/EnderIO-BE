@@ -7,11 +7,16 @@ namespace Machine {
     data: this["defaultValues"];
 
     onInit(): void {
-      // this.networkData.putInt("blockId", this.blockID);
-      // this.networkData.putInt("facing", this.getFacing());
-      // this.networkData.sendChanges();
       this.setupContainer();
       delete this.liquidStorage;
+    }
+    tankName: string[];
+
+    getTankName(): string[] {
+      return this.tankName || (this["liquidTank"] ? ["liquidTank"] : []);
+    }
+    getDemontaged(): ItemInstance {
+      return null;
     }
 
     setupContainer(): void {}

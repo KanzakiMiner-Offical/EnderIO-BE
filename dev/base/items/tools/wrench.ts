@@ -2,7 +2,6 @@ class ToolWrench extends ItemCommon implements IWrech {
   constructor(stringID: string, name: string, icon: string) {
     super(stringID, name, icon);
     this.setMaxStack(1);
-    this.setMaxDamage(161);
     this.setCategory(ItemCategory.EQUIPMENT);
     EnderTool.registerWrench(this.id, this);
   }

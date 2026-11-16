@@ -1,4 +1,4 @@
-var GLASS_TYPE_ANTI_EXPLO = Block.createSpecialType({
+const GLASS_TYPE_ANTI_EXPLO = Block.createSpecialType({
   destroytime: 1,
   explosionres: 3600000.8,
   sound: "glass",
@@ -34,10 +34,7 @@ Block.createBlock(
 
 // ConnectedTexture.setModelForGlass(BlockID.fusedQuartz, -1, "fusedQuartzItem");
 
-Item.addCreativeGroup("glass_modded", Translation.translate("Glass"), [
-  BlockID.fusedGlass,
-  BlockID.fusedQuartz,
-]);
+Item.addCreativeGroup("glass_modded", Translation.translate("Glass"), [BlockID.fusedGlass, BlockID.fusedQuartz]);
 
 Callback.addCallback("PreLoaded", function () {
   SmelterRecipe.addRecipe({

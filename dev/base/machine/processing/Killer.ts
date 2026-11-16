@@ -34,20 +34,13 @@ function setKillerJoeRender(): void {
 }
 setKillerJoeRender();
 let guiKillerJoe = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_killer_joe.name"), {
-  drawing: [{ type: "bitmap", x: 470, y: 66, bitmap: "fluid_scale", scale: 3.2 }],
+  drawing: [{ type: "bitmap", x: 175, y: 33, bitmap: "fluid_bg", scale: 6 }],
 
   elements: {
-    liquidScale: {
-      type: "scale",
-      x: 470,
-      y: 66,
-      direction: 1,
-      bitmap: "fluid_scale",
-      scale: 3.2,
-    },
-    slotSword: { type: "slot", x: 600, y: 60 },
-    slotLiquid1: { type: "slot", x: 600, y: 240 },
-    slotLiquid0: { type: "slot", x: 600, y: 180 },
+    liquidScale: { type: "scale", x: 175, y: 33, bitmap: "fluid_bg", direction: 1, scale: 6 },
+    slotSword: { type: "slot", x: 455, y: 73.57, size: 90 },
+    slotLiquid1: { type: "slot", x: 290, y: 195, size: 90, bitmap: "slot_fluid_empty" },
+    slotLiquid0: { type: "slot", x: 290, y: 73.57, size: 90, bitmap: "slot_fluid_full" },
   },
 });
 
@@ -101,32 +94,30 @@ namespace Machine {
 
     setupContainer(): void {
       this.liquidTank = this.addLiquidTank("fluid", 16000, ["nutrientDistillation"]);
+
+      StorageInterface.setGlobalValidatePolicy(this.container, (name, id, amount, data, extra) => {
+        if (name == "slotLiquid0") {
+          let liquid = LiquidItemRegistry.getItemLiquid(id, data, extra);
+          return liquid == "nutrientDistillation";
+        }
+        if (name == "slotOutput") return false;
+        return false;
+      });
     }
 
     onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean {
       if (Entity.getSneaking(player) && item.id != ItemID.itemYetaWrench) {
         MachineRegistry.fillTankOnClick(this.liquidTank, item, player);
-      } else if (Entity.getSneaking(player) && item.id == ItemID.itemYetaWrench) {
-        let extra: ItemExtraData;
-        let liquid = this.liquidTank.getLiquidStored();
-        if (liquid == "nutrientDistillation") {
-          extra = new ItemExtraData();
-          extra.putString("fluid", liquid);
-          extra.putInt("amount", this.liquidTank.getAmount(liquid));
-          return true;
-        }
-        this.blockSource.spawnDroppedItem(this.x + 0.5, this.y + 0.5, this.z + 0.5, BlockID.killerJoe, 1, 0);
-        this.blockSource.destroyBlock(this.x, this.y, this.z, false);
       }
       return false;
     }
 
-    applyDamage(slot: any): void {
+    applyDamage(slot: ItemContainerSlot): void {
       let damage = 1;
       if (ChargeItemRegistry.isValidItem(slot.id, "Rf", 5)) {
-        ChargeItemRegistry.getEnergyFrom(slot.id, "Rf", 500, 5);
+        ChargeItemRegistry.getEnergyFrom(slot, "Rf", 500, 5);
       } else if (ChargeItemRegistry.isValidItem(slot.id, "Eu", 5)) {
-        ChargeItemRegistry.getEnergyFrom(slot.id, "Eu", 500, 5);
+        ChargeItemRegistry.getEnergyFrom(slot, "Eu", 500, 5);
       } else if (slot.extra && !ChargeItemRegistry.isValidItem(slot.id, "Rf", 5) && !ChargeItemRegistry.isValidItem(slot.id, "Eu", 5)) {
         let unbreakingLevel = slot.extra.getEnchantLevel(EEnchantment.UNBREAKING);
         if (Math.random() < 1 / (unbreakingLevel + 1)) {
@@ -154,10 +145,10 @@ namespace Machine {
         let dataTool = ToolAPI.getToolData(slotSword.id);
         if (dataTool) {
           let damageTool = dataTool.damage + dataTool.toolMaterial.damage;
-          if (damageTool > 0) {
+          if (damageTool > 0 && World.getThreadTime() % 10 == 0) {
             for (let i in MOBS) {
               let ent = Entity.findNearest({ x: this.x, y: this.y, z: this.z }, MOBS[i], 7);
-              if (ent && storage.getAmount("nutrientDistillation") >= 0.02 && World.getThreadTime() % 10 == 0) {
+              if (ent && storage.getAmount("nutrientDistillation") >= 0.25 && World.getThreadTime() % 10 == 0) {
                 Entity.damageEntity(ent, damageTool);
                 this.applyDamage(slotSword);
                 storage.getLiquid("nutrientDistillation", 250);
@@ -168,23 +159,54 @@ namespace Machine {
       }
       this.container.sendChanges();
     }
-
     destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
-      let extra: ItemExtraData;
-      let _region = BlockSource.getDefaultForActor(player);
-      let liquid = this.liquidTank.getLiquidStored();
-      if (liquid == "nutrientDistillation") {
-        extra = new ItemExtraData();
-        extra.putString("fluid", liquid);
-        extra.putInt("amount", this.liquidTank.getAmount(liquid));
+      let region = BlockSource.getDefaultForActor(player);
+      let item = this.getDemontaged();
+      region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, item.id, item.count, item.data, item.extra);
+    }
+
+    // Default function for  Machine drop
+    getDemontaged(): ItemInstance {
+      let item = new ItemStack(this.blockID, 1, 0);
+      let extra = new ItemExtraData();
+      if (this.getTankName().length > 0) {
+        let data: { [name: string]: { fluid: string; amount: number } } = {};
+        this.getTankName().forEach((tank_name) => {
+          if (this[tank_name]) {
+            let liquidTank = this[tank_name] as BlockEngine.LiquidTank;
+            let liquid = liquidTank.getLiquidStored();
+            let amount = liquidTank.getAmount(liquid);
+            data[tank_name] = {
+              fluid: liquid,
+              amount: amount,
+            };
+          }
+        });
+        extra.putSerializable("liquid_tank", data);
       }
-      if (extra) _region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.killerJoe, 1, 0, extra);
-      else _region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.killerJoe, 1, 0);
+      if (this.container) {
+        extra.putSerializable("container", this.container);
+      }
+      if (extra) item.extra = extra;
+      return item;
     }
   }
   MachineRegistry.registerPrototype(BlockID.killerJoe, new KillerJoe());
-  MachineRegistry.setTankPlaceFunction("killerJoe");
-  MachineRegistry.addTankTooltip(BlockID.killerJoe);
+  MachineRegistry.createStorageInterface(BlockID.killerJoe, {
+    slots: {
+      slotLiquid0: {
+        input: true,
+        isValid: (item, side, tileEntity: KillerJoe) => {
+          let liquid = LiquidItemRegistry.getItemLiquid(item.id, item.data, item.extra);
+          return liquid == "nutrientDistillation";
+        },
+      },
+    },
+    canReceiveLiquid: (liquid: string, side: number, tileEntity: TileEntity) => {
+      return VatRecipe.getLiquidInput().indexOf(liquid) !== -1;
+    },
+    canTransportLiquid: () => true,
+  });
 }
 
 Callback.addCallback("PreLoaded", function () {

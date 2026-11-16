@@ -3,5 +3,6 @@ namespace Machine {
     canRotate(side: number): boolean;
     getFacing(): number;
     setFacing(side: number): void;
+    getDemontaged(): ItemInstance;
   }
 }

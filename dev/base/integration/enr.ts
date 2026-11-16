@@ -21,7 +21,6 @@ ModAPI.addAPICallback("ENR", function (Ex) {
       result2: { id: 0, data: 0, chance: 0 },
       result3: { id: 0, data: 0, chance: 0 },
       time: 180,
-      by: "Ex Nihilo Origin"
     });
     
     RecipeRegistry.addCrusher({
@@ -32,7 +31,6 @@ ModAPI.addAPICallback("ENR", function (Ex) {
       result2: { id: 0, data: 0, chance: 0 },
       result3: { id: 0, data: 0, chance: 0 },
       time: 180,
-      by: "Ex Nihilo Origin"
     });
     */
     RecipeRegistry.addCrusher({
@@ -43,7 +41,6 @@ ModAPI.addAPICallback("ENR", function (Ex) {
       result2: { id: 0, data: 0, chance: 0 },
       result3: { id: 0, data: 0, chance: 0 },
       energy: 1800,
-      by: "Ex Nihilo Origin",
     });
 
     RecipeRegistry.addCrusher({
@@ -54,7 +51,6 @@ ModAPI.addAPICallback("ENR", function (Ex) {
       result2: { id: 0, data: 0, chance: 0 },
       result3: { id: 0, data: 0, chance: 0 },
       energy: 1800,
-      by: "Ex Nihilo Origin",
     });
   });
 });

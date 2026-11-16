@@ -108,14 +108,6 @@ namespace Machine {
     canEmitEnergy(side: number): boolean {
       return this.getMode()[side] === CapacitorTransferMode.OUT;
     }
-
-    adjustDrop(item: ItemInstance): ItemInstance {
-      if (item.id == this.blockID && this.data.energy > 0) {
-        let extra = new ItemExtraData();
-        item.extra = extra.putInt("energy", this.data.energy);
-      }
-      return item;
-    }
   }
 }
 

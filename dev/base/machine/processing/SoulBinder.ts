@@ -46,74 +46,52 @@ TileRenderer.setRotationFunction(BlockID.soulBinder);
 
 let soulBinderGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_soul_binder.name"), {
   drawing: [
-    { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
-    { type: "bitmap", x: 600, y: 205, bitmap: "bar_progress0", scale: 3.2 },
+    { type: "bitmap", x: 180, y: 74, bitmap: "redflux_bar0", scale: 4 },
+    { type: "bitmap", x: 459, y: 190, bitmap: "bar_progress0", scale: 5 },
   ],
   elements: {
-    textInstall: {
-      type: "text",
-      font: { size: 20, color: Color.YELLOW },
-      x: 325,
-      y: 50,
-      width: 100,
-      height: 30,
-      text: "",
-    },
+    textInstall: { type: "text", x: 325, y: 50, text: "", font: { color: Color.YELLOW, size: 30 } },
     energyScale: {
       type: "scale",
-      x: 335,
-      y: 140,
-      direction: 1,
+      x: 180,
+      y: 74,
       bitmap: "redflux_bar1",
-      scale: 3.2,
+      direction: 1,
+      scale: 4,
     },
     progressScale: {
       type: "scale",
-      x: 600,
-      y: 205,
-      bitmap: "bar_progress2",
-      scale: 3.2,
+      x: 465,
+      y: 112,
       clicker: {
         onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("ender_soulbinder");
         },
       },
+      bitmap: "bar_progress2",
+      scale: 5,
     },
-    slotInput0: { type: "slot", x: 450, y: 200 },
-    slotInput1: { type: "slot", x: 510, y: 200 },
-    slotOutput0: { type: "slot", x: 700, y: 200 },
-    slotOutput1: { type: "slot", x: 760, y: 200 },
-    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1, bitmap: "slot_capacitor" },
+    slotInput0: { type: "slot", x: 267, y: 185, size: 90 },
+    slotInput1: { type: "slot", x: 357, y: 185, size: 90 },
+    slotOutput0: { type: "slot", x: 604, y: 185, size: 90 },
+    slotOutput1: { type: "slot", x: 694, y: 185, size: 90 },
+    slotCapacitor: { type: "slot", x: 159, y: 287, size: 90, bitmap: "slot_capacitor", maxStackSize: 1 },
     // xp
     "xp-1": {
       type: "button",
-      x: 460,
-      y: 320,
-      bitmap: "RS_empty_button",
-      bitmap2: "RS_empty_button_pressed",
-      scale: 2.2,
+      x: 293,
+      y: 298,
       clicker: {
         onClick: function (_, container: ItemContainer) {
           container.sendEvent("addXP", {});
         },
       },
+      bitmap: "RS_empty_button",
+      bitmap2: "classic_button_down",
+      scale: 3.2,
     },
-    "xp-1_image": {
-      type: "image",
-      x: 460,
-      y: 320,
-      z: 10,
-      bitmap: "ExperienceObelisk-1",
-      scale: 2.2,
-    },
-    xp: {
-      type: "text",
-      x: 560,
-      y: 330,
-      z: 10,
-      text: "0",
-      font: { color: Color.GREEN, shadow: 0.5, size: 20 },
-    },
+    "xp-1_image": { type: "image", x: 293, y: 298, z: 10, bitmap: "ExperienceObelisk-1", scale: 3.2 },
+    xp: { type: "text", x: 423, y: 308, z: 10, text: "0", font: { color: Color.GREEN, size: 40, shadow: 0.5 } },
   },
 });
 Callback.addCallback("PreLoaded", function () {
@@ -199,7 +177,7 @@ namespace Machine {
               output1.count++;
               output1.extra = null;
               output1.markDirty();
-              this.liquidTank.getLiquid("xpjuice", ObeliskCore.XPtoLiquid(r_lvl));
+              this.liquidTank.getLiquid("xpjuice", ObeliskCore.XPtoLiquid(ObeliskCore.LVLtoXP(r_lvl)));
               this.container.validateAll();
               this.data.progress = 0;
             }
@@ -216,7 +194,7 @@ namespace Machine {
       StorageInterface.checkHoppers(this);
       let capacitor = this.container.getSlot("slotCapacitor");
       if (CapacitorData.isValidCapacitor(capacitor.id, this)) {
-        this.container.setText("textInstall", "Installed");
+        this.container.setText("textInstall", "");
         this.run();
       } else {
         this.container.setText("textInstall", "Please put Capacitor in slot capacitor to install function for machine");
@@ -229,20 +207,8 @@ namespace Machine {
       this.container.sendChanges();
     }
 
-    destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
-      let extra: ItemExtraData;
-      let region = BlockSource.getDefaultForActor(player);
-      let liquid = this.liquidTank.getLiquidStored();
-      if (liquid == "xpjuice") {
-        extra = new ItemExtraData();
-        extra.putString("fluid", liquid);
-        extra.putInt("amount", this.liquidTank.getAmount(liquid));
-      }
-      region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.soulBinder, 1, 0, extra);
-    }
-
     @ContainerEvent(Side.Server)
-    addXP(eventData, connectedClient): void {
+    addXP(eventData, connectedClient: NetworkClient): void {
       let player = new PlayerActor(connectedClient.getPlayerUid());
       let player_lvl = player.getLevel();
       if (player_lvl == 0) return;
@@ -254,6 +220,4 @@ namespace Machine {
   }
 
   MachineRegistry.registerPrototype(BlockID.soulBinder, new SoulBinder());
-  MachineRegistry.setTankPlaceFunction("soulBinder");
-  MachineRegistry.addTankTooltip(BlockID.soulBinder);
 }

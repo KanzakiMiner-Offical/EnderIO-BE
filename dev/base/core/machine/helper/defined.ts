@@ -1,6 +1,7 @@
 /// <reference path="../../machine/tileentity/Base.ts" />
 /// <reference path="../../machine/tileentity/ProgressingMachine.ts" />
 /// <reference path="../..//machine/tileentity/Generator.ts" />
+let microInfinity = EnergyTypeRegistry.assureEnergyType("μI", 0.25);
 let RF = EnergyTypeRegistry.assureEnergyType("Rf", 0.25);
 let EU = EnergyTypeRegistry.assureEnergyType("Eu", 1);
 let RF_type2 = EnergyTypeRegistry.assureEnergyType("RF", 0.25);
@@ -19,11 +20,14 @@ namespace MachineRegistry {
     if (Prototype instanceof Machine.ProgressingMachine) {
       // wire connection
       ICRender.getGroup("ic-wire").add(id, -1);
-      ICRender.getGroup("rf-conduit").add(id, -1);
+      ICRender.getGroup("rf-wire").add(id, -1);
       // register for energy net
       EnergyTileRegistry.addEnergyTypeForId(id, RF);
-      EnergyTileRegistry.addEnergyTypeForId(id, EU);
+      // EnergyTileRegistry.addEnergyTypeForId(id, EU);
       EnergyTileRegistry.addEnergyTypeForId(id, RF_type2);
+
+      MachineRegistry.setMachinePlaceFunction(id, true);
+      MachineRegistry.addMachineTooltip(id);
     }
   }
 
@@ -43,7 +47,7 @@ namespace MachineRegistry {
   }
 
   /**
-   * For Energy Storage
+   * @deprecated
    */
   export function setStoragePlaceFunction(blockID: string | number, hasVerticalRotation?: boolean) {
     Block.registerPlaceFunction(blockID, function (coords, item, block, player, blockSource) {
@@ -60,7 +64,7 @@ namespace MachineRegistry {
   }
 
   /**
-   * For Liquid Storage
+   * @deprecated
    */
   export function setTankPlaceFunction(blockID: string | number, hasVerticalRotation?: boolean) {
     Block.registerPlaceFunction(blockID, function (coords, item, block, player, blockSource) {
@@ -80,13 +84,61 @@ namespace MachineRegistry {
     });
   }
 
-  export function addTankTooltip(id: string | number) {
+  /**
+   * Setup machine that save Energy Storage, Fluid Tank, Container place function
+   */
+  export function setMachinePlaceFunction(blockID: string | number, hasVerticalRotation?: boolean) {
+    Block.registerPlaceFunction(blockID, function (coords, item, block, player, blockSource) {
+      const region = new WorldRegion(blockSource);
+      const place = World.canTileBeReplaced(block.id, block.data) ? coords : coords.relative;
+      const rotation = TileRenderer.getBlockRotation(player, hasVerticalRotation);
+      region.setBlock(place, item.id, rotation);
+      const tile = region.addTileEntity(place) as Machine.ProgressingMachine;
+      if (item.extra) {
+        if (item.extra.getInt("energy") != null) tile.data.energy = item.extra.getInt("energy");
+        if (item.extra.getSerializable("saved_container") != null) {
+          let containerData: { [slots: string]: ItemInstance } = item.extra.getSerializable("saved_container");
+          tile.setupContainer();
+
+          for (let name in containerData) {
+            let slot = tile.container.getSlot(name);
+            let item = containerData[name];
+            slot.id = item.id;
+            slot.count = item.count;
+            slot.data = item.data;
+            slot.extra = item.extra;
+          }
+          tile.container.validateAll();
+          tile.container.sendChanges();
+        }
+        if (item.extra.getSerializable("liquid_tank") != null) {
+          let tankData: { [name: string]: { fluid: string; amount: number } } = item.extra.getSerializable("liquid_tank");
+          for (const tankName in tankData) {
+            const tankValue = tankData[tankName];
+            if (!tile[tankName]) tile.setupContainer();
+
+            (tile[tankName] as BlockEngine.LiquidTank).addLiquid(tankValue.fluid, tankValue.amount);
+          }
+        }
+      }
+      return place;
+    });
+  }
+
+  export function addMachineTooltip(id: string | number) {
     Item.registerNameOverrideFunction(id, (item: ItemInstance, name: string): string => {
       if (item.extra) {
-        let name_fluid = item.extra.getString("fluid");
-        let amount_fluid = item.extra.getInt("amount");
-        return name + "\n§7" + Translation.translate("Liquid: ") + name_fluid + "\n§7" + Translation.translate("Amount: ") + "§a" + amount_fluid + " mB";
+        if (item.extra.getInt("energy") != null) name += "\n§7Energy Stored: " + "§e" + item.extra.getInt("energy") + " mB";
+        if (item.extra.getSerializable("container") != null) name += "\n§7Container saved";
+        if (item.extra.getSerializable("liquid_tank") != null) {
+          let tankData: { [name: string]: { fluid: string; amount: number } } = item.extra.getSerializable("liquid_tank");
+          for (const tankName in tankData) {
+            const tankValue = tankData[tankName];
+            name += "\n§7Liquid stored (from " + tankName + "): §a" + tankValue.fluid + "§7 - " + "§a" + tankValue.amount + " mB";
+          }
+        }
       }
+      return name;
     });
   }
 

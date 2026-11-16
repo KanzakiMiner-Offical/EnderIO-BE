@@ -66,28 +66,6 @@ let guiTank = MachineRegistry.createInventoryWindow(Translation.translate("ender
   },
 });
 
-MachineRegistry.createStorageInterface(BlockID.eioTank, {
-  slots: {
-    slotLiquid2: {
-      input: true,
-      isValid: function (item) {
-        return !!LiquidItemRegistry.getFullStack(item, "water");
-      },
-    },
-    slotLiquid1: {
-      input: true,
-      isValid: function (item) {
-        return !!LiquidItemRegistry.getEmptyStack(item);
-      },
-    },
-    slotOut: {
-      output: true,
-    },
-  },
-  canReceiveLiquid: () => true,
-  canTransportLiquid: () => true,
-});
-
 namespace Machine {
   export class Tank extends MachineBase {
     liquidTank: BlockEngine.LiquidTank;
@@ -98,9 +76,13 @@ namespace Machine {
 
     setupContainer(): void {
       this.liquidTank = this.addLiquidTank("fluid", 16000);
-      StorageInterface.setGlobalValidatePolicy(this.container, function (name, id, amount, data) {
-        if (name == "slotLiquid1") return !!LiquidItemRegistry.getEmptyStack(new ItemStack(id, amount, data));
-        if (name == "slotLiquid2") return !!LiquidItemRegistry.getFullStack(new ItemStack(id, amount, data), "water");
+      StorageInterface.setGlobalValidatePolicy(this.container, (name, id, amount, data, extra) => {
+        if (name == "slotLiquid1") {
+          let liquid = LiquidItemRegistry.getItemLiquid(id, data, extra);
+          if (this.liquidTank.getLiquidStored()) return liquid == this.liquidTank.getLiquidStored();
+          else return !!liquid;
+        }
+        if (name == "slotLiquid2") return LiquidItemRegistry.canBeFilledWithLiquid(id, data, extra, this.liquidTank.getLiquidStored() || "water");
         if (name == "slotOutput") return false;
         return false;
       });
@@ -108,9 +90,10 @@ namespace Machine {
 
     onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean {
       if (Entity.getSneaking(player)) {
-        MachineRegistry.fillTankOnClick(this.liquidTank, item, player);
-        this.preventClick();
-        return true;
+        if (MachineRegistry.fillTankOnClick(this.liquidTank, item, player) || MachineRegistry.emptyTankOnClick(this.liquidTank, item, player)) {
+          this.preventClick();
+          return true;
+        }
       }
       return super.onItemUse(coords, item, player);
     }
@@ -124,20 +107,30 @@ namespace Machine {
       this.liquidTank.updateUiScale("liquidScale");
       this.container.sendChanges();
     }
-
-    destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
-      let extra: ItemExtraData = null;
-      let region = BlockSource.getDefaultForActor(player);
-      let liquid = this.liquidTank.getLiquidStored();
-      if (liquid) {
-        extra = new ItemExtraData();
-        extra.putString("fluid", liquid);
-        extra.putInt("amount", this.liquidTank.getAmount(liquid));
-      }
-      BlockSource.getDefaultForActor(player).spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.eioTank, 1, 0, extra);
-    }
   }
   MachineRegistry.registerPrototype(BlockID.eioTank, new Tank());
-  MachineRegistry.setTankPlaceFunction("eioTank");
-  MachineRegistry.addTankTooltip(BlockID.eioTank);
+
+  MachineRegistry.createStorageInterface(BlockID.eioTank, {
+    slots: {
+      slotLiquid2: {
+        input: true,
+        isValid: (item, side, tileEntity: Tank) => {
+          return LiquidItemRegistry.canBeFilledWithLiquid(item.id, item.data, item.extra, tileEntity.liquidTank.getLiquidStored() || "water");
+        },
+      },
+      slotLiquid1: {
+        input: true,
+        isValid: (item, side, tileEntity: Tank) => {
+          let liquid = LiquidItemRegistry.getItemLiquid(item.id, item.data, item.extra);
+          if (tileEntity.liquidTank.getLiquidStored()) return liquid == tileEntity.liquidTank.getLiquidStored();
+          else return !!liquid;
+        },
+      },
+      slotOut: {
+        output: true,
+      },
+    },
+    canReceiveLiquid: () => true,
+    canTransportLiquid: () => true,
+  });
 }

@@ -244,7 +244,7 @@ namespace Machine {
     }
 
     onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean {
-      if (item.id == ItemID.itemXpTransfer) {
+      if (item.id == ItemID.itemXpTransfer && !Entity.getSneaking(player)) {
         this.preventClick();
         let playerActor = new PlayerActor(player);
         playerActor.addExperience(ObeliskCore.LiquidtoXP(this.liquidTank.getAmount("xpjuice")));
@@ -285,18 +285,6 @@ namespace Machine {
         }
         Entity.remove(ent);
       }
-    }
-
-    destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
-      let extra: ItemExtraData = null;
-      let region = BlockSource.getDefaultForActor(player);
-      let liquid = this.liquidTank.getLiquidStored();
-      if (liquid == "xpjuice") {
-        extra = new ItemExtraData();
-        extra.putString("fluid", liquid);
-        extra.putInt("amount", this.liquidTank.getAmount(liquid));
-      }
-      region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, BlockID.experience_obelisk, 1, 0, extra);
     }
 
     containerEvents = {
@@ -352,9 +340,10 @@ namespace Machine {
   }
   MachineRegistry.registerPrototype(BlockID.experience_obelisk, new XP_Obelisk());
 
-  MachineRegistry.setTankPlaceFunction("experience_obelisk");
   StorageInterface.createInterface(BlockID.experience_obelisk, {
-    canReceiveLiquid: () => true,
+    canReceiveLiquid: (liquid: string, side: number, tileEntity: TileEntity) => {
+      return liquid == "xpjuice";
+    },
     canTransportLiquid: () => true,
   });
 }

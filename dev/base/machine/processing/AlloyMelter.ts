@@ -46,77 +46,58 @@ TileRenderer.setRotationFunction(BlockID.alloySmelter);
 
 let smelterGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_alloy_smelter.name"), {
   drawing: [
-    { type: "bitmap", x: 527, y: 235, bitmap: "fire_scale0", scale: 3.2 },
-    { type: "bitmap", x: 687, y: 235, bitmap: "fire_scale0", scale: 3.2 },
-    { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
+    { type: "bitmap", x: 425, y: 235, bitmap: "fire_scale0", scale: 5 },
+    { type: "bitmap", x: 205, y: 235, bitmap: "fire_scale0", scale: 5 },
+    { type: "bitmap", x: 76, y: 96, bitmap: "redflux_bar0", scale: 4 },
   ],
   elements: {
     progressScale0: {
       type: "scale",
-      x: 527,
+      x: 425,
       y: 235,
-      direction: 1,
-      bitmap: "fire_scale1",
-      scale: 3.2,
       clicker: {
         onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("enderio_alloy");
         },
       },
+      bitmap: "fire_scale1",
+      direction: 1,
+      scale: 5,
     },
     progressScale1: {
       type: "scale",
-      x: 687,
+      x: 205,
       y: 235,
-      direction: 1,
-      bitmap: "fire_scale1",
-      scale: 3.2,
       clicker: {
         onClick: function () {
           RV?.RecipeTypeRegistry.openRecipePage("enderio_alloy");
         },
       },
-    },
-    energyScale: {
-      type: "scale",
-      x: 335,
-      y: 140,
+      bitmap: "fire_scale1",
       direction: 1,
-      bitmap: "redflux_bar1",
-      scale: 3.2,
+      scale: 5,
     },
-    ingredient1: {
-      type: "slot",
-      x: 520,
-      y: 170,
-    },
-    ingredient2: {
-      type: "slot",
-      x: 600,
-      y: 140,
-    },
-    ingredient3: {
-      type: "slot",
-      x: 680,
-      y: 170,
-    },
-    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1, bitmap: "slot_capacitor" },
+    energyScale: { type: "scale", x: 76, y: 96, bitmap: "redflux_bar1", direction: 1, scale: 4 },
+    ingredient1: { type: "slot", x: 200, y: 96, size: 80 },
+    ingredient2: { type: "slot", x: 310, y: 44, size: 80 },
+    ingredient3: { type: "slot", x: 420, y: 96, size: 80 },
+    slotCapacitor: { type: "slot", x: 55, y: 305, size: 90, maxStackSize: 1, bitmap: "slot_capacitor" },
     textInstall: {
       type: "text",
-      font: { size: 20, color: Color.YELLOW },
-      x: 325,
+      font: { size: 30, color: Color.YELLOW },
+      x: 76,
       y: 50,
       width: 100,
       height: 30,
       text: "",
     },
-    slotResult: { type: "slot", x: 600, y: 320 },
+    slotResult: { type: "slot", x: 310, y: 285, size: 80 },
     changeMode: {
       type: "button",
-      x: 787,
-      y: 300,
+      x: 520,
+      y: 325,
       bitmap: "alloy0",
-      scale: 2.2,
+      scale: 3,
       clicker: {
         onClick: function (_, container: ItemContainer) {
           container.sendEvent("switchMode", {});
@@ -220,7 +201,10 @@ namespace Machine {
         return false;
       });
     }
-
+    onInit(): void {
+      this.container.sendEvent("setModeIcon", { mode: this.data.mode });
+      super.onInit;
+    }
     getScreenByName(): UI.IWindow {
       return smelterGUI;
     }
@@ -296,11 +280,10 @@ namespace Machine {
 
     onTick(): void {
       this.initCapacitor();
-      this.container.sendEvent("setModeIcon", { mode: this.data.mode });
       StorageInterface.checkHoppers(this);
       let capacitor = this.container.getSlot("slotCapacitor");
       if (CapacitorData.isValidCapacitor(capacitor.id, this)) {
-        this.container.setText("textInstall", "Installed");
+        this.container.setText("textInstall", "");
         this.run();
       } else if (!CapacitorData.isValidCapacitor(capacitor.id, this)) {
         this.container.setText("textInstall", "Please put Capacitor in slot capacitor to install function for machine");

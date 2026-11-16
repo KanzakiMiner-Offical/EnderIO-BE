@@ -32,5 +32,4 @@ namespace Machine {
   }
 
   MachineRegistry.registerPrototype(BlockID.bankBasic, new BasicCapcitor());
-  MachineRegistry.setStoragePlaceFunction("bankBasic", true);
 }

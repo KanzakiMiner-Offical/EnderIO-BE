@@ -11,7 +11,7 @@ namespace GrindingBall {
     durability: number;
   };
 
-  export const idBall = {};
+  export const idBall: { [key: string]: GrindingBallData } = {};
 
   export function regItem(id: string, name: string): void {
     let texture = "item_alloy_ball_" + id;
@@ -36,8 +36,7 @@ namespace GrindingBall {
   }
 
   export function regBall(id: string | number, main: number, bonus: number, powUse: number, dura: number): void {
-    let n_id = id;
-    if (typeof id == "string") n_id = ItemID[n_id];
+    if (typeof id == "string") id = ItemID[id];
 
     idBall[id] = {
       main: (main - 100) / 100,
@@ -48,15 +47,13 @@ namespace GrindingBall {
   }
 
   export function isBallID(id: string | number): boolean {
-    let n_id = id;
-    if (typeof id == "string") n_id = ItemID[id];
-    return !!idBall[n_id];
+    if (typeof id == "string") id = ItemID[id];
+    return !!idBall[id];
   }
 
   export function getBallID(id: string | number): GrindingBallData {
-    let n_id = id;
-    if (typeof id == "string") n_id = ItemID[id];
-    return idBall[n_id];
+    if (typeof id == "string") id = ItemID[id];
+    return idBall[id];
   }
 }
 // ender io resource
@@ -85,6 +82,6 @@ The grinding balls from Thermal's resources are registered at: dev/Base/Integrat
 // endergy
 
 /*
-Say bye to Endergy Ball here :(
+Say bye to Endergy Ball here :)
 The grinding balls from Endergy's resources are moved at: dev/Endergy/Item/ball.ts
 */

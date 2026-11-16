@@ -46,57 +46,49 @@ TileRenderer.setRotationFunction(BlockID.sliceAndSplice);
 
 let SliceAndSpliceGUI = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_slice.name"), {
   drawing: [
-    { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
-    { type: "bitmap", x: 630, y: 235, bitmap: "bar_progress0", scale: 3.2 },
+    { type: "bitmap", x: 94, y: 131, bitmap: "redflux_bar0", scale: 4 },
+    { type: "bitmap", x: 500, y: 235, bitmap: "bar_progress0", scale: 5 },
   ],
   elements: {
     textInstall: {
       type: "text",
       font: { size: 20, color: Color.YELLOW },
-      x: 325,
-      y: 50,
+      x: 90,
+      y: 70,
       width: 100,
-      height: 30,
+      height: 40,
       text: "",
     },
     energyScale: {
       type: "scale",
-      x: 335,
-      y: 140,
-      direction: 1,
+      x: 94,
+      y: 131,
       bitmap: "redflux_bar1",
-      scale: 3.2,
+      direction: 1,
+      scale: 4,
     },
     progressScale: {
       type: "scale",
-      x: 630,
-      y: 235,
-      bitmap: "bar_progress2",
-      scale: 3.2,
+      x: 500,
+      y: 230,
       clicker: {
         onClick: function () {
-          RV && RV.RecipeTypeRegistry.openRecipePage("enderio_sas");
+          RV && RV.RecipeTypeRegistry.openRecipePage("enderio_sands");
         },
       },
+      bitmap: "bar_progress2",
+      scale: 5,
     },
-    slotInput0: { type: "slot", x: 400, y: 200 },
-    slotInput1: { type: "slot", x: 460, y: 200 },
-    slotInput2: { type: "slot", x: 520, y: 200 },
-    slotInput3: { type: "slot", x: 400, y: 260 },
-    slotInput4: { type: "slot", x: 460, y: 260 },
-    slotInput5: { type: "slot", x: 520, y: 260 },
-    slotOutput: { type: "slot", x: 720, y: 230 },
-    slotAxe: { type: "slot", x: 430, y: 140 },
-    slotShears: { type: "slot", x: 490, y: 140 },
-    slotCapacitor: { type: "slot", x: 325, y: 320, maxStackSize: 1, bitmap: "slot_capacitor" },
-    text: {
-      type: "text",
-      x: 400,
-      y: 100,
-      width: 100,
-      height: 30,
-      text: "RF",
-    },
+    slotInput0: { type: "slot", x: 240, y: 195, size: 80 },
+    slotInput1: { type: "slot", x: 320, y: 195, size: 80 },
+    slotInput2: { type: "slot", x: 400, y: 195, size: 80 },
+    slotInput3: { type: "slot", x: 240, y: 275, size: 80 },
+    slotInput4: { type: "slot", x: 320, y: 275, size: 80 },
+    slotInput5: { type: "slot", x: 400, y: 275, size: 80 },
+    slotOutput: { type: "slot", x: 665, y: 225, size: 90 },
+    slotAxe: { type: "slot", x: 280, y: 115, size: 80 },
+    slotShears: { type: "slot", x: 360, y: 115, size: 80 },
+    slotCapacitor: { type: "slot", x: 73, y: 339, size: 90, bitmap: "slot_capacitor", maxStackSize: 1 },
   },
 });
 
@@ -269,7 +261,7 @@ namespace Machine {
       StorageInterface.checkHoppers(this);
       let capacitor = this.container.getSlot("slotCapacitor");
       if (CapacitorData.isValidCapacitor(capacitor.id, this)) {
-        this.container.setText("textInstall", "Installed");
+        this.container.setText("textInstall", "");
         this.run();
       } else {
         this.container.setText("textInstall", "Please put Capacitor in slot capacitor to install function for machine");
@@ -278,7 +270,6 @@ namespace Machine {
       this.data.energy = Math.min(this.data.energy, energyStorage);
       this.container.setScale("energyScale", this.data.energy / energyStorage);
       this.container.setScale("progressScale", this.data.progress / this.processTime || 0);
-      this.container.setText("text", "RF: " + this.data.energy + "/" + energyStorage);
       this.container.sendChanges();
     }
 

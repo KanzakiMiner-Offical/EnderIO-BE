@@ -51,7 +51,7 @@ Callback.addCallback("PreLoaded", function () {
     ["s", VanillaBlockID.stonebrick, 0, "f", BlockID.machineChassisSimple, 0, "g", ItemID.ironGear, 0, "p", VanillaBlockID.piston, 0, "a", 61, 0],
   );
 });
-var simpleStirlingGenGUI = MachineRegistry.createInventoryWindow("Simple Stirling Generator", {
+const simpleStirlingGenGUI = MachineRegistry.createInventoryWindow("Simple Stirling Generator", {
   drawing: [
     { type: "bitmap", x: 450, y: 135, bitmap: "fire_scale0", scale: 3.2 },
     { type: "bitmap", x: 335, y: 140, bitmap: "redflux_bar0", scale: 3.2 },
@@ -147,7 +147,7 @@ namespace Machine {
       this.setActive(newActive);
 
       this.container.setScale("burningScale", this.data.burn / this.data.burnMax || 0);
-      this.container.setScale("energyScale", this.data.energy / 2000);
+      this.container.setScale("energyScale", this.getRelativeEnergy() || 0);
       this.container.sendChanges();
     }
     getMaxOutput(): number {

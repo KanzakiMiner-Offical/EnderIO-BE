@@ -18,8 +18,8 @@ Callback.addCallback("PreLoaded", function () {
   );
 });
 
-var zombieGenRender = new ICRender.Model();
-var model = BlockRenderer.createModel();
+let zombieGenRender = new ICRender.Model();
+let model = BlockRenderer.createModel();
 
 model.addBox(1 / 16, 0 / 16, 1 / 16, 15 / 16, 1 / 16, 15 / 16, "darkSteelBlock", 0);
 model.addBox(1 / 16, 1 / 16, 14 / 16, 2 / 16, 13 / 16, 15 / 16, "darkSteelBlock", 0);
@@ -41,7 +41,7 @@ BlockRenderer.setStaticICRender(BlockID.zombieGen, -1, zombieGenRender);
 
 Block.setBlockShape(BlockID.zombieGen, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1 });
 
-var guiZombieGen = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_zombie_generator.name"), {
+const guiZombieGen = MachineRegistry.createInventoryWindow(Translation.translate("tile.block_zombie_generator.name"), {
   drawing: [
     { type: "bitmap", x: 470, y: 66, bitmap: "fluid_scale", scale: 3.2 },
     { type: "bitmap", x: 66, y: 135, bitmap: "fire_scale0", scale: 3.2 },
@@ -139,8 +139,8 @@ namespace Machine {
       this.liquidTank.updateUiScale("liquidScale");
 
       if (CapacitorData.isValidCapacitor(capacitor.id, this)) {
-        this.container.setText("textInstall", "Installed");
-        if (this.liquidTank.getAmount("nutrientDistillation") >= 1400 && this.data.energy <= this.getEnergyStorage() + 80 * this.bonus) {
+        this.container.setText("textInstall", "");
+        if (this.liquidTank.getAmount("nutrientDistillation") >= 1400 && this.data.energy + 80 * this.bonus <= this.getEnergyStorage()) {
           this.data.energy += 80 * this.bonus;
           this.liquidTank.getLiquid("nutrientDistillation", 0.08);
           this.setActive(true);
@@ -153,7 +153,7 @@ namespace Machine {
 
       this.liquidTank.getLiquidFromItem(slot0, slot1);
 
-      var energyStorage = this.getEnergyStorage();
+      let energyStorage = this.getEnergyStorage();
       this.data.energy = Math.min(this.data.energy, energyStorage);
       this.container.setText("text", "RF: " + this.data.energy + "/" + this.getEnergyStorage() + ".Bonus energy: x" + this.bonus + ".0");
       this.container.setScale("energyScale", this.data.energy / this.getEnergyStorage());

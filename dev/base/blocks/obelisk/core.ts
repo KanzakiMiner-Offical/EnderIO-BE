@@ -77,19 +77,16 @@ namespace ObeliskCore {
           rain: 0,
           thunder: 0,
         };
-        break;
       case "cloudSeed":
         return {
           rain: 10,
           thunder: 0,
         };
-        break;
       case "cloudSeedConcentrated":
         return {
           rain: 10,
           thunder: 10,
         };
-        break;
       default:
         return null;
     }

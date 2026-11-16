@@ -42,6 +42,12 @@ namespace Machine {
       this.data.energy += ChargeItemRegistry.getEnergyFromSlot(item, "Rf", amount, tier);
     }
 
+    consumeSlot(inputSlot: ItemContainerSlot) {
+      inputSlot.count--;
+      inputSlot.validate();
+      inputSlot.markDirty();
+    }
+
     onItemUse(coords: Callback.ItemUseCoordinates, item: ItemStack, player: number): boolean {
       return super.onItemUse(coords, item, player);
     }
@@ -80,5 +86,62 @@ namespace Machine {
       this.energyNode.resetConnections();
       EnergyGridBuilder.buildGridForTile(this);
     }
+
+    destroyBlock(coords: Callback.ItemUseCoordinates, player: number): void {
+      let region = BlockSource.getDefaultForActor(player);
+      let item = this.getDemontaged();
+      region.spawnDroppedItem(coords.x + 0.5, coords.y + 0.5, coords.z + 0.5, item.id, item.count, item.data, item.extra);
+    }
+
+    // Default function for Energy Machine drop
+    getDemontaged(): ItemInstance {
+      let item = new ItemStack(this.blockID, 1, 0);
+      let extra = new ItemExtraData();
+      if (this.data.energy && this.data.energy > 0) {
+        extra.putInt("energy", this.data.energy);
+      }
+      if (this.getTankName().length > 0) {
+        let data: { [name: string]: { fluid: string; amount: number } } = {};
+        this.getTankName().forEach((tank_name) => {
+          if (this[tank_name]) {
+            let liquidTank = this[tank_name] as BlockEngine.LiquidTank;
+            let liquid = liquidTank.getLiquidStored();
+            let amount = liquidTank.getAmount(liquid);
+            data[tank_name] = {
+              fluid: liquid,
+              amount: amount,
+            };
+          }
+        });
+        extra.putSerializable("liquid_tank", data);
+      }
+      if (this.container && this.container.slots) {
+        let items: { [slots: string]: ItemInstance } = {};
+        for (let name in this.container.slots) {
+          if (name.startsWith("slotVisual")) continue;
+          let slot = this.container.getSlot(name);
+          if (slot.id && slot.count > 0) {
+            items[name] = new ItemStack(slot);
+          }
+        }
+        extra.putSerializable("saved_container", items);
+      }
+      if (extra) item.extra = extra;
+      return item;
+    }
   }
 }
+/*
+energy: 0
+
+{
+    tank_1: {
+      fluid: fluid,
+      amount: 0
+    },
+    tank_2: {
+      fluid: fluid,
+      amount: 0
+    }
+}
+*/
